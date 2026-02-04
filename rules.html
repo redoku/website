@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Правила — Redoku</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { brand: { red: '#ff2e43', dark: '#0a0a0f' } },
+                    fontFamily: { sans: ['Outfit', 'sans-serif'], mono: ['Space Grotesk', 'monospace'] }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #050505; color: #e2e8f0; }
+        .grid-bg {
+            position: fixed; inset: 0; z-index: -1;
+            background-image: linear-gradient(rgba(255, 46, 67, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 46, 67, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+        }
+        .cyber-card {
+            background: rgba(20, 20, 25, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1.5rem;
+            transition: all 0.3s;
+        }
+        .cyber-card:hover { border-color: rgba(255, 46, 67, 0.4); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="grid-bg"></div>
+
+    <nav class="fixed top-0 w-full z-40 pt-6 px-4">
+        <div class="max-w-6xl mx-auto bg-black/80 backdrop-blur-xl border border-white/10 rounded-full px-6 py-3 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 font-mono font-bold text-xl text-white">
+                <span class="text-brand-red">R</span> REDOKU
+            </a>
+            <a href="index.html" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">
+                <i class="fa-solid fa-arrow-left mr-2"></i> Вернуться назад
+            </a>
+        </div>
+    </nav>
+
+    <div class="max-w-4xl mx-auto px-4 pt-32 pb-20">
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-black text-white mb-4">СВОД <span class="text-brand-red">ПРАВИЛ</span></h1>
+            <p class="text-gray-500">Незнание правил не освобождает от ответственности.</p>
+        </div>
+
+        <div class="space-y-6">
+            <div class="cyber-card p-8">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500 text-xl"><i class="fa-solid fa-shield-virus"></i></div>
+                    <h2 class="text-2xl font-bold text-white">Запрещенное ПО и Читы</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-black/40 p-4 rounded-lg border border-red-500/20">
+                        <span class="text-red-400 font-bold block mb-1">Боевые читы</span>
+                        <p class="text-xs text-gray-400">KillAura, HitBox, Reach, AutoClicker.</p>
+                        <p class="text-xs text-red-500 mt-2 font-bold">Наказание: Бан 30 дней / Перманент</p>
+                    </div>
+                    <div class="bg-black/40 p-4 rounded-lg border border-red-500/20">
+                        <span class="text-red-400 font-bold block mb-1">Передвижение</span>
+                        <p class="text-xs text-gray-400">Fly, Speed, Jesus, ElytraFly, Spider.</p>
+                        <p class="text-xs text-red-500 mt-2 font-bold">Наказание: Бан 14 дней</p>
+                    </div>
+                    <div class="bg-black/40 p-4 rounded-lg border border-red-500/20">
+                        <span class="text-red-400 font-bold block mb-1">Визуальные читы</span>
+                        <p class="text-xs text-gray-400">X-Ray, FreeCam, Tracers, ESP.</p>
+                        <p class="text-xs text-red-500 mt-2 font-bold">Наказание: Бан 21 день + конфискация</p>
+                    </div>
+                    <div class="bg-black/40 p-4 rounded-lg border border-red-500/20">
+                        <span class="text-red-400 font-bold block mb-1">Автоматизация</span>
+                        <p class="text-xs text-gray-400">Baritone, скрипты на авто-рыбалку.</p>
+                        <p class="text-xs text-red-500 mt-2 font-bold">Наказание: Бан 7 дней</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cyber-card p-8">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-500 text-xl"><i class="fa-solid fa-hammer"></i></div>
+                    <h2 class="text-2xl font-bold text-white">Гриферство и Воровство</h2>
+                </div>
+                <div class="space-y-3 text-gray-400 text-sm">
+                    <p>● <b class="text-white">Разрушение:</b> Ломать чужие постройки запрещено. <span class="text-orange-400">(Бан 7-30 дней)</span></p>
+                    <p>● <b class="text-white">Воровство:</b> Брать вещи из чужих сундуков нельзя. <span class="text-orange-400">(Бан 14 дней)</span></p>
+                    <p>● <b class="text-white">Вредительство:</b> Заливать дома лавой/водой. <span class="text-orange-400">(Бан 30 дней)</span></p>
+                </div>
+            </div>
+
+            <div class="cyber-card p-8">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500 text-xl"><i class="fa-solid fa-comments"></i></div>
+                    <h2 class="text-2xl font-bold text-white">Общение</h2>
+                </div>
+                <div class="space-y-3 text-gray-400 text-sm">
+                    <p>● Оскорбления игроков: <span class="text-blue-400 font-bold">Мут 2 часа</span></p>
+                    <p>● Упоминание родных: <span class="text-blue-400 font-bold">Бан 7 дней</span></p>
+                    <p>● Реклама: <span class="text-blue-400 font-bold">Перманент</span></p>
+                    <p>● Спам/Капс: <span class="text-blue-400 font-bold">Мут 30 минут</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
