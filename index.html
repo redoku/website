@@ -3,15 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redoku — Новое измерение Minecraft</title>
-    <meta name="description" content="Топовый сервер Minecraft Redoku. Версия 1.21.11.">
+    <title>Redoku — Новое измерение Minecraft 1.21</title>
+    <meta name="description" content="Топовый сервер Minecraft Redoku. Версия 1.21.">
     
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script>
@@ -21,8 +18,8 @@
                     colors: {
                         brand: {
                             red: '#ff2e43',
-                            dark: '#0a0a0f',
-                            accent: '#ff9f43',
+                            bg: '#0F1116', // Чуть светлее черного для контраста
+                            card: 'rgba(255, 255, 255, 0.03)',
                         }
                     },
                     fontFamily: {
@@ -31,6 +28,7 @@
                     },
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
                         float: {
@@ -44,52 +42,68 @@
     </script>
 
     <style>
-        :root {
-            --primary: #ff2e43;
-            --bg-color: #050505;
-        }
-
         body {
-            background-color: var(--bg-color);
+            background-color: #0F1116;
             color: #e2e8f0;
             overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 46, 67, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 40%);
         }
 
-        /* Фоновая сетка без шума */
+        /* Улучшенная сетка */
         .grid-bg {
             position: absolute;
             inset: 0;
             background-image: 
-                linear-gradient(rgba(255, 46, 67, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 46, 67, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
             z-index: -1;
+            pointer-events: none;
         }
 
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-track { background: #0a0a0f; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+        ::-webkit-scrollbar-thumb:hover { background: #ff2e43; }
 
-        .cyber-card {
-            background: rgba(20, 20, 25, 0.6); /* Более прозрачный и чистый фон */
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        /* Эффект матового стекла */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             border-radius: 1.5rem;
-            position: relative;
-            overflow: hidden;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform-style: preserve-3d;
+            overflow: hidden;
+            position: relative;
         }
 
-        .cyber-card:hover {
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            transition: 0.5s;
+            pointer-events: none;
+        }
+
+        .glass-card:hover::before { left: 100%; }
+        
+        .glass-card:hover {
             transform: translateY(-5px);
-            border-color: rgba(255, 46, 67, 0.4);
-            box-shadow: 0 15px 30px -10px rgba(255, 46, 67, 0.15);
+            border-color: rgba(255, 46, 67, 0.5);
+            box-shadow: 0 20px 40px -10px rgba(255, 46, 67, 0.15);
+            background: rgba(255, 255, 255, 0.06);
         }
 
-        /* Анимация появления */
+        .text-glow {
+            text-shadow: 0 0 20px rgba(255, 46, 67, 0.5);
+        }
+
         .fade-up {
             opacity: 0;
             transform: translateY(30px);
@@ -103,28 +117,27 @@
 </head>
 <body class="antialiased selection:bg-brand-red selection:text-white">
 
-    <nav class="fixed top-0 w-full z-40 pt-6 px-4">
-        <div class="max-w-6xl mx-auto bg-black/80 backdrop-blur-xl border border-white/10 rounded-full px-6 py-3 flex items-center justify-between shadow-2xl shadow-brand-red/5">
+    <nav class="fixed top-0 w-full z-50 pt-4 px-4">
+        <div class="max-w-6xl mx-auto glass-card !rounded-full !bg-black/60 px-6 py-3 flex items-center justify-between shadow-2xl shadow-brand-red/5">
             <a href="index.html" class="flex items-center gap-3 group" onclick="window.scrollTo(0,0)">
                 <div class="relative w-10 h-10 flex items-center justify-center">
-                    <div class="absolute inset-0 bg-brand-red rounded-lg rotate-3 group-hover:rotate-12 transition-transform opacity-80 blur-sm"></div>
-                    <div class="relative bg-black border border-white/20 w-full h-full rounded-lg flex items-center justify-center text-brand-red font-black text-xl">R</div>
+                    <div class="absolute inset-0 bg-brand-red rounded-lg rotate-3 group-hover:rotate-12 transition-transform opacity-80 blur-md"></div>
+                    <div class="relative bg-[#1a1a20] border border-white/20 w-full h-full rounded-lg flex items-center justify-center text-brand-red font-black text-xl z-10">R</div>
                 </div>
-                <span class="font-mono font-bold text-xl tracking-wider text-white">REDOKU</span>
+                <span class="font-mono font-bold text-xl tracking-wider text-white group-hover:text-glow transition-all">REDOKU</span>
             </a>
 
             <div class="hidden md:flex items-center gap-8">
-                <a href="#hero" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Главная</a>
+                <a href="index.html" class="text-sm font-medium text-white hover:text-brand-red transition-colors">Главная</a>
                 <a href="#features" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">О нас</a>
-                <a href="#" class="text-sm font-medium text-gray-400 hover:text-yellow-400 transition-colors"><i class="fa-solid fa-crown mr-1"></i> Магазин</a>
+                <a href="donate.html" class="text-sm font-medium text-yellow-400 hover:text-yellow-300 transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-crown text-xs"></i> Магазин
+                </a>
                 <a href="rules.html" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Правила</a>
             </div>
 
             <div class="flex items-center gap-4">
-                <div class="hidden md:block text-xs font-mono text-gray-500 bg-white/5 px-3 py-1.5 rounded-md border border-white/5">
-                    онлайн: <span class="text-green-400 animate-pulse">●</span> 15
-                </div>
-                <button onclick="copyIp()" class="hidden md:flex items-center gap-2 bg-brand-red hover:bg-red-600 text-white px-5 py-2 rounded-full font-bold text-sm transition-all shadow-[0_0_20px_rgba(255,46,67,0.3)] hover:shadow-[0_0_30px_rgba(255,46,67,0.5)]">
+                <button onclick="copyIp()" class="hidden md:flex items-center gap-2 bg-gradient-to-r from-brand-red to-red-600 hover:to-red-500 text-white px-6 py-2 rounded-full font-bold text-sm transition-all shadow-[0_0_20px_rgba(255,46,67,0.4)] hover:shadow-[0_0_35px_rgba(255,46,67,0.6)] hover:-translate-y-1">
                     <i class="fa-solid fa-play text-xs"></i>
                     <span>ИГРАТЬ</span>
                 </button>
@@ -135,219 +148,156 @@
     <section id="hero" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
         <div class="grid-bg"></div>
         
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-red/15 blur-[120px] rounded-full pointer-events-none"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-red/10 blur-[150px] rounded-full pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 relative z-10 w-full text-center">
             <div class="fade-up" style="transition-delay: 100ms;">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand-red/30 bg-brand-red/10 text-brand-red text-xs font-bold tracking-widest uppercase mb-6 backdrop-blur-md">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-brand-red/40 bg-brand-red/10 text-brand-red text-xs font-bold tracking-widest uppercase mb-8 backdrop-blur-md shadow-[0_0_15px_rgba(255,46,67,0.2)]">
                     <span class="w-1.5 h-1.5 rounded-full bg-brand-red animate-pulse"></span>
-                    III СЕЗОН В РАЗГАРЕ
+                    СЕЗОН III УЖЕ ОТКРЫТ
                 </div>
                 
-                <h1 class="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-white mb-6 leading-[0.9]">
+                <h1 class="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-white mb-8 leading-[0.95] drop-shadow-2xl">
                     СОЗДАВАЙ.<br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-red via-orange-500 to-yellow-500">РАЗРУШАЙ.</span><br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-red via-orange-400 to-yellow-400 animate-pulse-slow">ИССЛЕДУЙ.</span><br>
                     ЖИВИ.
                 </h1>
                 
-                <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light leading-relaxed">
-                    Redoku — это экосистема с уникальной генерацией, сюжетом и экономикой. Присоединяйся к элите.
+                <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-light leading-relaxed">
+                    Redoku — это экосистема с уникальной генерацией, сюжетом и экономикой. Присоединяйся к элите майнкрафта.
                 </p>
 
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <div class="relative group cursor-pointer" onclick="copyIp()">
-                        <div class="absolute -inset-1 bg-gradient-to-r from-brand-red to-orange-600 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
-                        <div class="relative bg-black border border-white/10 hover:border-brand-red/50 text-white px-8 py-4 rounded-xl flex items-center gap-4 transition-all">
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
+                    <div class="relative group cursor-pointer w-full sm:w-auto" onclick="copyIp()">
+                        <div class="absolute -inset-0.5 bg-gradient-to-r from-brand-red to-orange-600 rounded-2xl blur opacity-30 group-hover:opacity-80 transition duration-500"></div>
+                        <div class="relative bg-[#15151a] border border-white/10 hover:border-brand-red/50 text-white px-8 py-4 rounded-xl flex items-center justify-center gap-4 transition-all h-full">
                             <i class="fa-regular fa-copy text-gray-400 group-hover:text-white transition-colors"></i>
                             <div class="text-left">
-                                <div class="text-xs text-gray-500 font-mono uppercase">IP Сервера</div>
-                                <div class="text-xl font-bold font-mono tracking-wide" id="ip-display">redoku.bisquit.host</div>
+                                <div class="text-[10px] text-gray-500 font-mono uppercase tracking-wider">IP Сервера (Нажми)</div>
+                                <div class="text-xl font-bold font-mono tracking-wide group-hover:text-brand-red transition-colors" id="ip-display">redoku.bisquit.host</div>
                             </div>
                         </div>
-                        <div id="copy-toast" class="absolute -top-10 left-1/2 -translate-x-1/2 bg-green-500 text-black text-xs font-bold px-3 py-1 rounded-full opacity-0 transition-opacity pointer-events-none">
-                            Скопировано!
+                        <div id="copy-toast" class="absolute -top-12 left-1/2 -translate-x-1/2 bg-green-500 text-black text-xs font-bold px-4 py-2 rounded-lg opacity-0 transition-all transform translate-y-2 pointer-events-none shadow-lg">
+                            IP Скопирован!
                         </div>
                     </div>
 
-                    <a href="http://redoku.bisquit.host:25903/" target="_blank" class="px-8 py-4 rounded-xl border border-white/10 hover:bg-white/5 text-white font-medium transition-all flex items-center gap-2">
-                        <i class="fa-solid fa-map"></i> Онлайн Карта
+                    <a href="donate.html" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-card text-white font-bold transition-all flex items-center justify-center gap-2 hover:bg-white/10">
+                        <i class="fa-solid fa-cart-shopping text-yellow-400"></i> Магазин
                     </a>
                 </div>
             </div>
         </div>
         
-        <div class="absolute bottom-10 right-10 hidden lg:block animate-float opacity-50">
-             <i class="fa-solid fa-cube text-9xl text-white/5 rotate-12"></i>
+        <div class="absolute bottom-20 right-10 hidden lg:block animate-float opacity-30 blur-[2px]">
+             <i class="fa-solid fa-cube text-9xl text-white rotate-12 drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]"></i>
         </div>
     </section>
 
-    <div class="border-y border-white/5 bg-white/[0.02] backdrop-blur-sm">
-        <div class="max-w-7xl mx-auto px-4 py-8 flex flex-wrap justify-center md:justify-between gap-8 text-center md:text-left">
+    <div class="border-y border-white/5 bg-white/[0.02] backdrop-blur-sm relative z-20">
+        <div class="max-w-7xl mx-auto px-4 py-10 flex flex-wrap justify-center md:justify-between gap-10 text-center md:text-left">
             <div>
-                <div class="text-3xl font-black text-white">1.21.11</div>
-                <div class="text-xs text-gray-500 font-mono uppercase tracking-widest">Версия</div>
+                <div class="text-4xl font-black text-white mb-1">1.21</div>
+                <div class="text-xs text-brand-red font-mono uppercase tracking-widest font-bold">Версия</div>
             </div>
             <div>
-                <div class="text-3xl font-black text-white">99.9%</div>
-                <div class="text-xs text-gray-500 font-mono uppercase tracking-widest">Uptime</div>
+                <div class="text-4xl font-black text-white mb-1">99%</div>
+                <div class="text-xs text-brand-red font-mono uppercase tracking-widest font-bold">Uptime</div>
             </div>
             <div>
-                <div class="text-3xl font-black text-white">ДОЛГИЕ СЕЗОНЫ</div>
-                <div class="text-xs text-gray-500 font-mono uppercase tracking-widest">Без вайпов</div>
+                <div class="text-4xl font-black text-white mb-1">NO WIPE</div>
+                <div class="text-xs text-brand-red font-mono uppercase tracking-widest font-bold">Долгие сезоны</div>
             </div>
             <div>
-                <div class="text-3xl font-black text-white">16+</div>
-                <div class="text-xs text-gray-500 font-mono uppercase tracking-widest">Комьюнити</div>
+                <div class="text-4xl font-black text-white mb-1">16+</div>
+                <div class="text-xs text-brand-red font-mono uppercase tracking-widest font-bold">Комьюнити</div>
             </div>
         </div>
     </div>
 
     <section id="features" class="py-32 relative">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="mb-16 text-center fade-up">
-                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Почему <span class="text-brand-red">Redoku</span>?</h2>
-                <p class="text-gray-500">Технологии и атмосфера, которых ты не найдешь больше нигде.</p>
+            <div class="mb-20 text-center fade-up">
+                <h2 class="text-4xl md:text-6xl font-black text-white mb-6">Почему <span class="text-brand-red text-glow">Redoku</span>?</h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">Технологии, атмосфера и внимание к деталям, которых ты не найдешь больше нигде.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="cyber-card p-8 fade-up group">
-                    <div class="w-14 h-14 bg-orange-500/10 rounded-2xl flex items-center justify-center mb-6 border border-orange-500/20">
-                        <i class="fa-solid fa-mountain-sun text-2xl text-orange-500"></i>
+                <div class="glass-card p-8 fade-up group">
+                    <div class="w-16 h-16 bg-gradient-to-br from-orange-500/20 to-orange-500/5 rounded-2xl flex items-center justify-center mb-6 border border-orange-500/20 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fa-solid fa-mountain-sun text-3xl text-orange-400 drop-shadow-lg"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Живой Мир</h3>
+                    <h3 class="text-2xl font-bold text-white mb-4">Живой Мир</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
                         Забудь про скучные равнины. Наша кастомная генерация создает невероятные ландшафты: парящие горы и детализированные пещеры.
                     </p>
                 </div>
 
-                <div class="cyber-card p-8 fade-up group" style="transition-delay: 100ms;">
-                    <div class="w-14 h-14 bg-brand-red/10 rounded-2xl flex items-center justify-center mb-6 border border-brand-red/20">
-                        <i class="fa-solid fa-book-skull text-2xl text-brand-red"></i>
+                <div class="glass-card p-8 fade-up group" style="transition-delay: 100ms;">
+                    <div class="w-16 h-16 bg-gradient-to-br from-red-500/20 to-red-500/5 rounded-2xl flex items-center justify-center mb-6 border border-red-500/20 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fa-solid fa-book-skull text-3xl text-red-400 drop-shadow-lg"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Сюжетный Лор</h3>
+                    <h3 class="text-2xl font-bold text-white mb-4">Сюжетный Лор</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
                         Redoku — это история. Каждое событие вписывается в уникальный сюжет. Участвуй в ивентах, которые меняют мир.
                     </p>
                 </div>
 
-                <div class="cyber-card p-8 fade-up group" style="transition-delay: 200ms;">
-                    <div class="w-14 h-14 bg-green-500/10 rounded-2xl flex items-center justify-center mb-6 border border-green-500/20">
-                        <i class="fa-solid fa-balance-scale text-2xl text-green-500"></i>
+                <div class="glass-card p-8 fade-up group" style="transition-delay: 200ms;">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-500/20 to-green-500/5 rounded-2xl flex items-center justify-center mb-6 border border-green-500/20 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fa-solid fa-balance-scale text-3xl text-green-400 drop-shadow-lg"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Честный Баланс</h3>
+                    <h3 class="text-2xl font-bold text-white mb-4">Честный Баланс</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
                         Мы строго против Pay-to-Win. Весь донат носит косметический характер. Побеждает тот, кто лучше играет.
                     </p>
                 </div>
 
-                <div class="cyber-card p-8 fade-up group" style="transition-delay: 300ms;">
-                    <div class="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6 border border-blue-500/20">
-                        <i class="fa-brands fa-discord text-2xl text-blue-400"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Discord Support</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Возникла проблема? Наша команда модераторов в Discord ответит моментально. Мы ценим каждого игрока.
-                    </p>
-                </div>
-
-                <div class="cyber-card p-8 fade-up group" style="transition-delay: 350ms;">
-                    <div class="w-14 h-14 bg-cyan-500/10 rounded-2xl flex items-center justify-center mb-6 border border-cyan-500/20">
-                        <i class="fa-solid fa-users text-2xl text-cyan-400"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Взрослое Комьюнити</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Средний возраст игроков — 16+. У нас нет места токсичности. Только адекватное общение и творчество.
-                    </p>
-                </div>
-
-                <div class="cyber-card p-8 fade-up group" style="transition-delay: 400ms;">
-                    <div class="w-14 h-14 bg-red-600/10 rounded-2xl flex items-center justify-center mb-6 border border-red-600/20">
-                        <i class="fa-solid fa-user-secret text-2xl text-red-500"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Контроль Админов</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Жесткий контроль персонала. Никакого "креатива" для друзей. Заметили нарушение? Пишите Создателю.
-                    </p>
-                </div>
-
-                <div class="cyber-card p-8 md:col-span-3 fade-up group flex flex-col md:flex-row items-center gap-8" style="transition-delay: 500ms;">
-                    <div class="flex-1">
-                        <div class="inline-block px-3 py-1 bg-green-500/10 text-green-400 text-xs font-bold rounded mb-4 border border-green-500/20">БЕЗОПАСНОСТЬ</div>
-                        <h3 class="text-2xl font-bold text-white mb-3">Анти-Гриф & Логи</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                            Мы используем CoreProtect для полного логирования каждого блока. Даже если вас загриферили, мы восстановим постройку одной командой, а нарушитель будет наказан.
+                <div class="glass-card p-10 md:col-span-3 fade-up group flex flex-col md:flex-row items-center gap-10 overflow-hidden" style="transition-delay: 300ms;">
+                    <div class="flex-1 relative z-10">
+                        <div class="inline-block px-3 py-1 bg-green-500/10 text-green-400 text-xs font-bold rounded mb-4 border border-green-500/20 shadow-[0_0_10px_rgba(74,222,128,0.2)]">БЕЗОПАСНОСТЬ</div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Анти-Гриф & Логи</h3>
+                        <p class="text-gray-300 text-base leading-relaxed mb-8">
+                            Мы используем продвинутую систему CoreProtect. Каждый блок, каждое действие записывается. Если вас загриферили — мы восстановим всё одной командой, а нарушитель получит мгновенный бан. Ваше творчество под защитой.
                         </p>
-                        <a href="rules.html" class="text-white underline decoration-brand-red decoration-2 underline-offset-4 hover:text-brand-red transition-colors">Читать правила</a>
+                        <a href="rules.html" class="inline-flex items-center gap-2 text-white font-bold border-b-2 border-brand-red pb-1 hover:text-brand-red transition-colors">
+                            Читать правила <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
                     </div>
-                    <div class="w-full md:w-1/3 h-32 md:h-full bg-black/40 rounded-xl border border-white/5 flex items-center justify-center">
-                        <i class="fa-solid fa-shield-cat text-5xl text-gray-600 group-hover:text-green-400 transition-colors duration-500"></i>
+                    <div class="w-full md:w-1/3 flex items-center justify-center relative">
+                         <div class="absolute inset-0 bg-green-500/20 blur-[50px] rounded-full"></div>
+                         <i class="fa-solid fa-shield-cat text-8xl text-gray-200 group-hover:text-green-400 transition-colors duration-500 relative z-10 drop-shadow-2xl transform group-hover:rotate-12"></i>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="faq" class="py-24 bg-[#08080a]">
-        <div class="max-w-3xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-white mb-12 text-center fade-up">Частые вопросы</h2>
+    <section id="faq" class="py-24 relative overflow-hidden">
+        <div class="max-w-3xl mx-auto px-4 relative z-10">
+            <h2 class="text-4xl font-bold text-white mb-12 text-center fade-up">Частые вопросы</h2>
             
             <div class="space-y-4 fade-up">
-                <div class="cyber-card group cursor-pointer" onclick="toggleAccordion(this)">
+                <div class="glass-card group cursor-pointer hover:bg-white/5" onclick="toggleAccordion(this)">
                     <div class="p-6 flex justify-between items-center">
-                        <span class="font-medium text-white group-hover:text-brand-red transition-colors">На какой версии работает сервер?</span>
+                        <span class="font-medium text-white group-hover:text-brand-red transition-colors text-lg">На какой версии работает сервер?</span>
                         <i class="fa-solid fa-plus text-gray-500 transition-transform duration-300 transform group-hover:rotate-90"></i>
                     </div>
-                    <div class="px-6 pb-0 max-h-0 overflow-hidden transition-all duration-300 opacity-50 content">
-                        <p class="pb-6 text-gray-400 text-sm">
-                            Сервер работает на версии <b>1.21.11</b>. Используйте именно её для корректной игры.
+                    <div class="px-6 pb-0 max-h-0 overflow-hidden transition-all duration-300 opacity-50 content border-t border-white/0">
+                        <p class="pb-6 pt-4 text-gray-300 text-sm leading-relaxed">
+                            Сервер работает на новейшей версии <b>1.21</b>. Мы рекомендуем использовать лицензионный лаунчер или проверенные аналоги для стабильной игры.
                         </p>
                     </div>
                 </div>
 
-                <div class="cyber-card group cursor-pointer" onclick="toggleAccordion(this)">
+                <div class="glass-card group cursor-pointer hover:bg-white/5" onclick="toggleAccordion(this)">
                     <div class="p-6 flex justify-between items-center">
-                        <span class="font-medium text-white group-hover:text-brand-red transition-colors">Нужна ли лицензия?</span>
+                        <span class="font-medium text-white group-hover:text-brand-red transition-colors text-lg">Нужна ли лицензия?</span>
                         <i class="fa-solid fa-plus text-gray-500 transition-transform duration-300 transform group-hover:rotate-90"></i>
                     </div>
-                    <div class="px-6 pb-0 max-h-0 overflow-hidden transition-all duration-300 opacity-50 content">
-                        <p class="pb-6 text-gray-400 text-sm">
-                            Нет, можно играть как с лицензии, так и с пиратского лаунчера (TLauncher и др.).
-                        </p>
-                    </div>
-                </div>
-
-                <div class="cyber-card group cursor-pointer" onclick="toggleAccordion(this)">
-                    <div class="p-6 flex justify-between items-center">
-                        <span class="font-medium text-white group-hover:text-brand-red transition-colors">Как попасть в "Спонсоры"?</span>
-                        <i class="fa-solid fa-plus text-gray-500 transition-transform duration-300 transform group-hover:rotate-90"></i>
-                    </div>
-                    <div class="px-6 pb-0 max-h-0 overflow-hidden transition-all duration-300 opacity-50 content">
-                        <p class="pb-6 text-gray-400 text-sm">
-                            Статус можно приобрести в разделе "Магазин". Это помогает нам оплачивать оборудование.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="cyber-card group cursor-pointer" onclick="toggleAccordion(this)">
-                    <div class="p-6 flex justify-between items-center">
-                        <span class="font-medium text-white group-hover:text-brand-red transition-colors">Меня загриферили, что делать?</span>
-                        <i class="fa-solid fa-plus text-gray-500 transition-transform duration-300 transform group-hover:rotate-90"></i>
-                    </div>
-                    <div class="px-6 pb-0 max-h-0 overflow-hidden transition-all duration-300 opacity-50 content">
-                        <p class="pb-6 text-gray-400 text-sm">
-                            Не паникуйте! Создайте тикет в Discord. Мы проверим логи и восстановим постройку.
-                        </p>
-                    </div>
-                </div>
-                
-                 <div class="cyber-card group cursor-pointer" onclick="toggleAccordion(this)">
-                    <div class="p-6 flex justify-between items-center">
-                        <span class="font-medium text-white group-hover:text-brand-red transition-colors">Админ читерит, куда сообщить?</span>
-                        <i class="fa-solid fa-plus text-gray-500 transition-transform duration-300 transform group-hover:rotate-90"></i>
-                    </div>
-                    <div class="px-6 pb-0 max-h-0 overflow-hidden transition-all duration-300 opacity-50 content">
-                        <p class="pb-6 text-gray-400 text-sm">
-                            Сообщите Создателю в Discord. Мы не терпим нечестной игры от персонала.
+                    <div class="px-6 pb-0 max-h-0 overflow-hidden transition-all duration-300 opacity-50 content border-t border-white/0">
+                        <p class="pb-6 pt-4 text-gray-300 text-sm leading-relaxed">
+                            Нет, вход доступен с любого лаунчера (TLauncher, Legacy и др.). Главное — соблюдать правила и не использовать читы.
                         </p>
                     </div>
                 </div>
@@ -355,31 +305,31 @@
         </div>
     </section>
 
-    <footer class="border-t border-white/5 bg-black pt-20 pb-10 relative z-10">
+    <footer class="border-t border-white/10 bg-[#050508] pt-20 pb-10 relative z-10">
         <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-10">
             <div class="text-center md:text-left">
                 <div class="flex items-center justify-center md:justify-start gap-3 mb-4">
-                    <div class="w-8 h-8 bg-brand-red rounded flex items-center justify-center font-bold text-white">R</div>
-                    <span class="font-bold text-2xl text-white">Redoku</span>
+                    <div class="w-10 h-10 bg-brand-red rounded-lg flex items-center justify-center font-bold text-white text-xl shadow-[0_0_15px_rgba(255,46,67,0.4)]">R</div>
+                    <span class="font-bold text-3xl text-white tracking-wide">Redoku</span>
                 </div>
-                <p class="text-gray-500 text-sm max-w-xs">
-                    Лучший сервер для комфортного выживания. Создано с любовью к кубам.
+                <p class="text-gray-500 text-sm max-w-xs leading-relaxed">
+                    Лучший сервер для комфортного выживания. Создано с любовью к кубам и игрокам.
                 </p>
             </div>
             <div class="flex gap-4">
-                <a href="https://dsc.gg/redoku" target="_blank" class="w-12 h-12 rounded-xl bg-[#5865F2]/10 text-[#5865F2] hover:bg-[#5865F2] hover:text-white flex items-center justify-center text-xl transition-all hover:-translate-y-2 border border-[#5865F2]/20">
+                <a href="https://dsc.gg/redoku" target="_blank" class="w-12 h-12 rounded-xl bg-[#5865F2]/10 text-[#5865F2] hover:bg-[#5865F2] hover:text-white flex items-center justify-center text-xl transition-all hover:-translate-y-2 border border-[#5865F2]/20 shadow-lg hover:shadow-[#5865F2]/50">
                     <i class="fa-brands fa-discord"></i>
                 </a>
-                <a href="https://t.me/Redoku" target="_blank" class="w-12 h-12 rounded-xl bg-[#229ED9]/10 text-[#229ED9] hover:bg-[#229ED9] hover:text-white flex items-center justify-center text-xl transition-all hover:-translate-y-2 border border-[#229ED9]/20">
+                <a href="https://t.me/Redoku" target="_blank" class="w-12 h-12 rounded-xl bg-[#229ED9]/10 text-[#229ED9] hover:bg-[#229ED9] hover:text-white flex items-center justify-center text-xl transition-all hover:-translate-y-2 border border-[#229ED9]/20 shadow-lg hover:shadow-[#229ED9]/50">
                     <i class="fa-brands fa-telegram"></i>
                 </a>
-                <a href="https://www.tiktok.com/@redoku_mc" target="_blank" class="w-12 h-12 rounded-xl bg-[#ff0050]/10 text-[#ff0050] hover:bg-[#ff0050] hover:text-white flex items-center justify-center text-xl transition-all hover:-translate-y-2 border border-[#ff0050]/20">
+                <a href="https://www.tiktok.com/@redoku_mc" target="_blank" class="w-12 h-12 rounded-xl bg-[#ff0050]/10 text-[#ff0050] hover:bg-[#ff0050] hover:text-white flex items-center justify-center text-xl transition-all hover:-translate-y-2 border border-[#ff0050]/20 shadow-lg hover:shadow-[#ff0050]/50">
                     <i class="fa-brands fa-tiktok"></i>
                 </a>
             </div>
         </div>
-        <div class="mt-16 text-center text-gray-700 text-xs border-t border-white/5 pt-8">
-            &copy; 2024 Redoku Project. <br> Designed with <span class="text-brand-red">♥</span> for players.
+        <div class="mt-16 text-center text-gray-600 text-xs border-t border-white/5 pt-8">
+            &copy; 2025 Redoku Project. <br> Designed with <span class="text-brand-red animate-pulse">♥</span> for players.
         </div>
     </footer>
 
@@ -389,27 +339,35 @@
             navigator.clipboard.writeText(ip).then(() => {
                 const toast = document.getElementById('copy-toast');
                 const display = document.getElementById('ip-display');
-                toast.classList.remove('opacity-0');
+                
+                toast.classList.remove('opacity-0', 'translate-y-2');
                 display.classList.add('text-green-400');
+                
                 setTimeout(() => {
-                    toast.classList.add('opacity-0');
+                    toast.classList.add('opacity-0', 'translate-y-2');
                     display.classList.remove('text-green-400');
                 }, 2000);
             });
         }
+
         function toggleAccordion(el) {
             const content = el.querySelector('.content');
             const icon = el.querySelector('.fa-plus');
             if (content.style.maxHeight) {
                 content.style.maxHeight = null;
                 content.style.opacity = '0.5';
+                content.classList.remove('border-white/10');
+                content.classList.add('border-white/0');
                 icon.style.transform = 'rotate(0deg)';
             } else {
                 content.style.maxHeight = content.scrollHeight + "px";
                 content.style.opacity = '1';
+                content.classList.add('border-white/10');
+                content.classList.remove('border-white/0');
                 icon.style.transform = 'rotate(45deg)';
             }
         }
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) entry.target.classList.add('visible');
