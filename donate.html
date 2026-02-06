@@ -14,7 +14,7 @@
             theme: {
                 extend: {
                     colors: { brand: { red: '#ff2e43', gold: '#ffcc00' } },
-                    fontFamily: { sans: ['Outfit', 'sans-serif'], mono: ['Space Grotesk', 'monospace'] }
+                    fontFamily: { sans: ['Outfit', 'sans-serif'], mono: ['Space Grotesk', 'monospace'] },
                 }
             }
         }
@@ -27,6 +27,17 @@
             background-image: radial-gradient(circle at top center, rgba(255, 204, 0, 0.05) 0%, transparent 60%);
         }
         
+        /* ВАЖНО: Добавлена анимация */
+        @keyframes enter {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-on-load { opacity: 0; animation: enter 1s ease-out forwards; }
+        
+        /* Fallback */
+        @media (scripting: none) { .animate-on-load { opacity: 1 !important; transform: none !important; } }
+
         .glass-card {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(25px);
@@ -49,12 +60,15 @@
 </head>
 <body class="antialiased">
 
-    <nav class="fixed top-0 w-full z-40 pt-6 px-4">
+    <nav class="fixed top-0 w-full z-40 pt-6 px-4 animate-on-load">
         <div class="max-w-6xl mx-auto bg-[#141418]/80 backdrop-blur-xl border border-white/10 rounded-full px-6 py-3 flex items-center justify-between shadow-lg">
             <a href="index.html" class="flex items-center gap-3 font-mono font-bold text-xl text-white group">
                 <span class="text-brand-red group-hover:text-white transition-colors">R</span> REDOKU
             </a>
             <div class="flex items-center gap-4">
+                <a href="info.html" class="text-sm font-medium text-gray-400 hover:text-white transition-colors hidden sm:block">
+                     Инфо
+                </a>
                  <a href="http://ВАША_ССЫЛКА_НА_КАРТУ" target="_blank" class="text-sm font-medium text-gray-400 hover:text-white transition-colors hidden sm:block">
                     <i class="fa-solid fa-map mr-1"></i> Карта
                 </a>
@@ -66,14 +80,14 @@
     </nav>
 
     <div class="pt-36 pb-20 px-4 max-w-7xl mx-auto">
-        <div class="text-center mb-16">
+        <div class="text-center mb-16 animate-on-load" style="animation-delay: 0.2s;">
             <h1 class="text-4xl md:text-6xl font-black text-white mb-4">МАГАЗИН <span class="text-yellow-400">СПОНСОРСТВА</span></h1>
             <p class="text-gray-400 max-w-xl mx-auto">Стань спонсором, чтобы получить уникальные косметические возможности и поддержать сервер.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start animate-on-load" style="animation-delay: 0.3s;">
             
-            <div class="glass-card p-8 text-center h-full border-t-4 border-t-gray-500">
+            <div class="glass-card p-8 text-center h-full border-t-4 border-t-gray-500 group">
                 <h3 class="text-lg font-bold text-gray-400 uppercase tracking-widest mb-2">Тест-драйв</h3>
                 <h2 class="text-3xl font-black text-white mb-4">1 НЕДЕЛЯ</h2>
                 <div class="text-4xl font-black text-white mb-6">49 ₽</div>
@@ -89,13 +103,13 @@
                     <li class="flex items-center gap-2"><i class="fa-solid fa-check text-yellow-500"></i> +1 Точка дома</li>
                 </ul>
 
-                <a href="#" class="w-full mt-auto py-3 rounded-xl bg-gray-700 hover:bg-gray-600 text-white font-bold transition-all">
+                <a href="#" class="w-full mt-auto py-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/20 text-white font-bold transition-all">
                     Купить
                 </a>
             </div>
 
-            <div class="glass-card p-8 text-center h-full transform md:-translate-y-4 border-t-4 border-t-yellow-400 relative shadow-[0_0_30px_rgba(250,204,21,0.1)]">
-                <div class="absolute top-4 right-4 text-xs font-bold bg-yellow-400 text-black px-3 py-1 rounded-full">ХИТ</div>
+            <div class="glass-card p-8 text-center h-full transform md:-translate-y-4 border-t-4 border-t-yellow-400 relative shadow-[0_0_30px_rgba(250,204,21,0.1)] group">
+                <div class="absolute top-4 right-4 text-xs font-bold bg-yellow-400 text-black px-3 py-1 rounded-full animate-pulse">ХИТ</div>
                 
                 <h3 class="text-lg font-bold text-yellow-400 uppercase tracking-widest mb-2">Стандарт</h3>
                 <h2 class="text-3xl font-black text-white mb-4">1 МЕСЯЦ</h2>
@@ -109,12 +123,12 @@
                     <li class="flex items-center gap-2"><i class="fa-solid fa-heart text-red-500"></i> Помощь серверу</li>
                 </ul>
 
-                <a href="#" class="w-full mt-auto py-4 rounded-xl bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black font-black transition-all shadow-lg hover:shadow-yellow-500/40">
+                <a href="#" class="w-full mt-auto py-4 rounded-xl bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black font-black transition-all shadow-lg hover:shadow-yellow-500/40 hover:scale-[1.03]">
                     Купить сейчас
                 </a>
             </div>
 
-            <div class="glass-card p-8 text-center h-full border-t-4 border-t-brand-red">
+            <div class="glass-card p-8 text-center h-full border-t-4 border-t-brand-red group">
                 <h3 class="text-lg font-bold text-brand-red uppercase tracking-widest mb-2">Легенда</h3>
                 <h2 class="text-3xl font-black text-white mb-4">6 МЕСЯЦЕВ</h2>
                 <div class="text-4xl font-black text-white mb-6">690 ₽</div>
@@ -128,14 +142,14 @@
                      <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-red"></i> Все функции навсегда</li>
                 </ul>
 
-                <a href="#" class="w-full mt-auto py-3 rounded-xl bg-brand-red hover:bg-red-600 text-white font-bold transition-all shadow-lg hover:shadow-brand-red/30">
+                <a href="#" class="w-full mt-auto py-4 rounded-xl bg-brand-red hover:bg-red-600 text-white font-bold transition-all shadow-lg hover:shadow-brand-red/30">
                     Купить
                 </a>
             </div>
 
         </div>
 
-        <div class="mt-16 max-w-2xl mx-auto">
+        <div class="mt-16 max-w-2xl mx-auto animate-on-load" style="animation-delay: 0.5s;">
              <div class="glass-card p-6 flex flex-col sm:flex-row items-center gap-6 border border-red-500/30 bg-red-500/5">
                 <div class="w-16 h-16 shrink-0 rounded-full bg-red-500/10 flex items-center justify-center text-2xl text-red-500 border border-red-500/20">
                     <i class="fa-solid fa-handcuffs"></i>
@@ -154,7 +168,7 @@
              </div>
         </div>
         
-        <div class="mt-16 text-center">
+        <div class="mt-16 text-center animate-on-load" style="animation-delay: 0.6s;">
             <div class="inline-flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 text-gray-400 text-sm">
                 <i class="fa-solid fa-circle-info text-blue-400 text-xl"></i>
                 <span class="text-left">Все средства идут на оплату хостинга.<br>Мы не продаем админки за деньги.</span>
@@ -162,9 +176,26 @@
         </div>
     </div>
 
-    <footer class="border-t border-white/5 bg-black/50 pt-10 pb-10">
-        <div class="text-center text-gray-700 text-xs">
-            &copy; 2025 Redoku Project.
+    <footer class="relative pt-20 pb-10 overflow-hidden border-t border-white/5 bg-[#050508] mt-20">
+        <div class="absolute inset-0 bg-gradient-to-t from-yellow-500/5 to-transparent pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
+                <div>
+                     <div class="flex items-center justify-center md:justify-start gap-3 mb-4">
+                         <div class="w-8 h-8 bg-brand-red rounded flex items-center justify-center font-bold text-white text-lg">R</div>
+                         <span class="font-bold text-2xl text-white">Redoku</span>
+                    </div>
+                    <p class="text-gray-500 text-sm">Спасибо за поддержку сервера!</p>
+                </div>
+                <div class="md:col-span-2 flex justify-center md:justify-end gap-6 items-center">
+                     <a href="https://dsc.gg/redoku" class="text-gray-400 hover:text-white transition-colors">Discord</a>
+                     <a href="info.html" class="text-gray-400 hover:text-white transition-colors">Инфо</a>
+                     <a href="index.html" class="text-gray-400 hover:text-white transition-colors">Главная</a>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-white/5 text-center text-gray-700 text-xs">
+                &copy; 2025 Redoku Project.
+            </div>
         </div>
     </footer>
 
