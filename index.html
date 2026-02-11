@@ -40,7 +40,8 @@
             overflow-x: hidden;
             background-image: 
                 radial-gradient(circle at 10% 20%, rgba(255, 46, 67, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 40%);
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 50% 10%, rgba(16, 185, 129, 0.03) 0%, transparent 30%);
         }
 
         /* ВАЖНО: Анимация прописана явно в CSS */
@@ -158,6 +159,8 @@
             <div class="hidden lg:flex items-center gap-8">
                 <a href="index.html" class="text-sm font-medium text-white hover:text-brand-red transition-colors">Главная</a>
                 <a href="info.html" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Инфо</a>
+                <a href="lore.html" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Лор</a>
+                <a href="news.html" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Новости</a>
                 <a href="http://ВАША_ССЫЛКА_НА_КАРТУ" target="_blank" class="text-sm font-medium text-gray-400 hover:text-white transition-colors flex items-center gap-2">
                     <i class="fa-solid fa-map"></i> Карта
                 </a>
@@ -354,6 +357,20 @@
 
                     <div class="flex flex-col md:flex-row items-center gap-8 relative group">
                         <div class="md:w-1/2 text-center md:text-right group-hover:-translate-x-2 transition-transform">
+                            <div class="inline-block px-4 py-1 bg-orange-700/10 text-orange-600 rounded-full text-xs font-bold border border-orange-700/20 mb-2 shadow-[0_0_10px_rgba(184,115,51,0.3)]">СКОРО</div>
+                            <h3 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-yellow-600 drop-shadow-[0_0_10px_rgba(184,115,51,0.5)]">Медные Раскопки</h3>
+                            <p class="text-gray-400 text-sm mt-2">Массовые раскопки медных рудников. Уникальные ресурсы и награды для всех участников.</p>
+                        </div>
+                        <div class="w-6 h-6 bg-[#1a1a20] border-2 border-orange-600 rounded-full z-10 shrink-0 shadow-[0_0_20px_rgba(184,115,51,0.5)] relative">
+                             <div class="absolute inset-0 bg-orange-600 rounded-full animate-ping opacity-20"></div>
+                        </div>
+                        <div class="md:w-1/2">
+                            <div class="text-4xl font-black text-white/10 font-mono group-hover:text-orange-600/20 transition-colors">Copper</div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row items-center gap-8 relative group">
+                        <div class="md:w-1/2 text-center md:text-right group-hover:-translate-x-2 transition-transform">
                             <div class="inline-block px-4 py-1 bg-purple-600/10 text-purple-400 rounded-full text-xs font-bold border border-purple-600/20 mb-2 shadow-[0_0_10px_rgba(147,51,234,0.3)]">СКОРО</div>
                             <h3 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]">Битва с Драконом</h3>
                             <p class="text-gray-400 text-sm mt-2">Масштабный ивент. Открытие Энда и элитр. Финальная битва.</p>
@@ -499,8 +516,8 @@
                     &copy; 2025 Redoku Project. All rights reserved.
                 </div>
                 <div class="flex gap-6 text-gray-600 text-xs">
-                    <a href="#" class="hover:text-gray-400">Политика конфиденциальности</a>
-                    <a href="#" class="hover:text-gray-400">Публичная оферта</a>
+                    <a href="privacy.html" class="hover:text-gray-400">Политика конфиденциальности</a>
+                    <a href="offer.html" class="hover:text-gray-400">Публичная оферта</a>
                 </div>
             </div>
         </div>

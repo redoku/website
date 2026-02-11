@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Публичная оферта — Redoku</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { brand: { red: '#ff2e43', green: '#10b981' } },
+                    fontFamily: { sans: ['Outfit', 'sans-serif'], mono: ['Space Grotesk', 'monospace'] },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { 
+            background-color: #0F1116; 
+            color: #e2e8f0;
+            background-image: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+        }
+        
+        @keyframes enter {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-on-load { opacity: 0; animation: enter 1s ease-out forwards; }
+        
+        @media (scripting: none) { .animate-on-load { opacity: 1 !important; transform: none !important; } }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .spotlight-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.06), transparent 40%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .spotlight-card:hover::before { opacity: 1; }
+        .spotlight-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <nav class="fixed top-0 w-full z-50 pt-6 px-4 animate-on-load">
+        <div class="max-w-6xl mx-auto bg-[#141418]/90 backdrop-blur-xl border border-white/10 rounded-full px-6 py-3 flex items-center justify-between shadow-lg">
+            <a href="index.html" class="flex items-center gap-3 font-mono font-bold text-xl text-white group">
+                <span class="text-brand-red group-hover:text-white transition-colors">R</span> REDOKU
+            </a>
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors bg-white/5 px-4 py-2 rounded-full border border-white/5 hover:border-white/20 hover:bg-white/10">
+                    <i class="fa-solid fa-house mr-2"></i> На главную
+                </a>
+                <a href="info.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors bg-white/5 px-4 py-2 rounded-full border border-white/5 hover:border-white/20 hover:bg-white/10">
+                    <i class="fa-solid fa-info-circle mr-2"></i> Инфо
+                </a>
+                <a href="lore.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors bg-white/5 px-4 py-2 rounded-full border border-white/5 hover:border-white/20 hover:bg-white/10">
+                    <i class="fa-solid fa-book mr-2"></i> Лор
+                </a>
+                <a href="news.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors bg-white/5 px-4 py-2 rounded-full border border-white/5 hover:border-white/20 hover:bg-white/10">
+                    <i class="fa-solid fa-newspaper mr-2"></i> Новости
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-40 pb-20 px-4 max-w-4xl mx-auto">
+        <div class="text-center mb-20 animate-on-load" style="animation-delay: 0.2s;">
+            <h1 class="text-4xl md:text-6xl font-black text-white mb-6">ПУБЛИЧНАЯ <span class="text-brand-red">ОФЕРТА</span></h1>
+            <p class="text-gray-400 text-lg">Условия использования игровых услуг Redoku</p>
+        </div>
+
+        <div class="space-y-8 animate-on-load" style="animation-delay: 0.3s;">
+            <div class="glass-card spotlight-card p-8">
+                <h2 class="text-2xl font-bold text-white mb-4">1. Термины и определения</h2>
+                <p class="text-gray-300 leading-relaxed mb-4">
+                    В настоящей оферте используются следующие термины:
+                </p>
+                <ul class="list-disc list-inside text-gray-400 space-y-2 ml-4">
+                    <li><strong>Redoku</strong> — игровой Minecraft сервер и сопутствующие услуги</li>
+                    <li><strong>Пользователь</strong> — физическое лицо, принимающее условия оферты</li>
+                    <li><strong>Услуги</strong> — доступ к игровому серверу и дополнительный функционал</li>
+                    <li><strong>Донат</strong> — платные услуги и виртуальные предметы</li>
+                </ul>
+            </div>
+
+            <div class="glass-card spotlight-card p-8">
+                <h2 class="text-2xl font-bold text-white mb-4">2. Предмет оферты</h2>
+                <p class="text-gray-300 leading-relaxed">
+                    Администрация сервера Redoku обязуется предоставить Пользователю доступ к игровому серверу Minecraft 
+                    и сопутствующим услугам на условиях, изложенных в настоящем документе.
+                </p>
+            </div>
+
+            <div class="glass-card spotlight-card p-8">
+                <h2 class="text-2xl font-bold text-white mb-4">3. Порядок заключения договора</h2>
+                <p class="text-gray-300 leading-relaxed mb-4">
+                    Договор заключается путем акцепта оферты:
+                </p>
+                <ul class="list-disc list-inside text-gray-400 space-y-2 ml-4">
+                    <li>Подключение к игровому серверу</li>
+                    <li>Регистрация на сайте или в Discord</li>
+                    <li>Оплата донатных услуг</li>
+                </ul>
+                <p class="text-gray-300 leading-relaxed mt-4">
+                    Моментом заключения договора считается выполнение любого из указанных действий.
+                </p>
+            </div>
+
+            <div class="glass-card spotlight-card p-8">
+                <h2 class="text-2xl font-bold text-white mb-4">4. Права и обязанности Пользователя</h2>
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="text-lg font-semibold text-white mb-2">Пользователь имеет право:</h3>
+                        <ul class="list-disc list-inside text-gray-400 space-y-1 ml-4">
+                            <li>Использовать игровые услуги в соответствии с правилами</li>
+                            <li>Получать техническую поддержку</li>
+                            <li>Обжаловать решения администрации</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-white mb-2">Пользователь обязан:</h3>
+                        <ul class="list-disc list-inside text-gray-400 space-y-1 ml-4">
+                            <li>Соблюдать правила сервера</li>
+                            <li>Не использовать читы и стороннее ПО</li>
+                            <li>Не оскорблять других игроков</li>
+                            <li>Не распространять спам и рекламу</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card spotlight-card p-8">
+                <h2 class="text-2xl font-bold text-white mb-4">5. Платные услуги</h2>
+                <p class="text-gray-300 leading-relaxed mb-4">
+                    Платные услуги предоставляются на безвозмездной основе в виде виртуальных предметов и привилегий.
+                </p>
+                <ul class="list-disc list-inside text-gray-400 space-y-2 ml-4">
+                    <li>Все платежи являются добровольными пожертвованиями</li>
+                    <li>Виртуальные предметы не имеют реальной денежной ценности</li>
+                    <li>Возврат средств возможен только в случаях, предусмотренных законодательством</li>
+                    <li>Администрация оставляет за собой право изменять стоимость и состав услуг</li>
+                </ul>
+            </div>
+
+            <div class="glass-card spotlight-card p-8">
+                <h2 class="text-2xl font-bold text-white mb-4">6. Ответственность сторон</h2>
+                <p class="text-gray-300 leading-relaxed mb-4">
+                    Администрация не несет ответственности за:
+                </p>
+                <ul class="list-disc list-inside text-gray-400 space-y-2 ml-4">
+                    <li>Временные сбои в работе сервера</li>
+                    <li>Потерю игровых предметов из-за технических проблем</li>
+                    <li>Действия других игроков</li>
+                    <li>Проблемы с подключением со стороны Пользователя</li>
+                </ul>
+                <p class="text-gray-300 leading-relaxed mt-4">
+                    Пользователь несет полную ответственность за нарушение правил сервера и законодательства РФ.
+                </p>
+            </div>
+
+            <div class="glass-card spotlight-card p-8">
+                <h2 class="text-2xl font-bold text-white mb-4">7. Порядок рассмотрения споров</h2>
+                <p class="text-gray-300 leading-relaxed">
+                    Все споры решаются путем переговоров. При недостижении согласия споры разрешаются 
+                    в порядке, установленном законодательством Российской Федерации.
+                </p>
+            </div>
+
+            <div class="glass-card spotlight-card p-8">
+                <h2 class="text-2xl font-bold text-white mb-4">8. Срок действия и изменения</h2>
+                <p class="text-gray-300 leading-relaxed mb-4">
+                    Оферта действует бессрочно. Администрация оставляет за собой право вносить изменения 
+                    в условия оферты с уведомлением Пользователей через сайт или Discord.
+                </p>
+                <p class="text-gray-300 leading-relaxed">
+                    Продолжение использования услуг после внесения изменений означает согласие с новыми условиями.
+                </p>
+            </div>
+
+            <div class="glass-card spotlight-card p-8 border-l-4 border-l-brand-red">
+                <h2 class="text-2xl font-bold text-white mb-4">9. Реквизиты и контакты</h2>
+                <div class="space-y-2 text-gray-300">
+                    <p><strong>Проект:</strong> Redoku Minecraft Server</p>
+                    <p><strong>IP сервера:</strong> redoku.bisquit.host</p>
+                    <p><strong>Версия:</strong> 1.21.11 (Fabric)</p>
+                    <p><strong>Email:</strong> support@redoku.ru</p>
+                    <p><strong>Discord:</strong> dsc.gg/redoku</p>
+                    <p><strong>Telegram:</strong> t.me/Redoku</p>
+                </div>
+            </div>
+
+            <div class="glass-card spotlight-card p-8 bg-brand-red/5 border border-brand-red/20">
+                <h2 class="text-2xl font-bold text-white mb-4">10. Заключительные положения</h2>
+                <p class="text-gray-300 leading-relaxed">
+                    Настоящая оферта является юридически обязывающим документом. 
+                    Приступая к использованию услуг, вы подтверждаете полное согласие со всеми условиями.
+                </p>
+                <div class="mt-4 text-center">
+                    <p class="text-brand-red font-bold">Дата публикации: 11 февраля 2025 года</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="relative pt-20 pb-10 overflow-hidden border-t border-white/5 bg-[#050508] mt-20">
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-green/5 to-transparent pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
+                <div>
+                     <div class="flex items-center justify-center md:justify-start gap-3 mb-4">
+                         <div class="w-8 h-8 bg-brand-green rounded flex items-center justify-center font-bold text-black text-lg">R</div>
+                         <span class="font-bold text-2xl text-white">Redoku</span>
+                    </div>
+                    <p class="text-gray-500 text-sm">Приятной игры на сервере!</p>
+                </div>
+                <div class="md:col-span-2 flex justify-center md:justify-end gap-6 items-center">
+                     <a href="https://dsc.gg/redoku" class="text-gray-400 hover:text-white transition-colors">Discord</a>
+                     <a href="https://t.me/Redoku" class="text-gray-400 hover:text-white transition-colors">Telegram</a>
+                     <a href="index.html" class="text-gray-400 hover:text-white transition-colors">Главная</a>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-white/5 text-center text-gray-700 text-xs">
+                &copy; 2025 Redoku Project.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.spotlight-card').forEach(card => {
+            card.onmousemove = e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            }
+        });
+    </script>
+
+</body>
+</html>
