@@ -1,440 +1,286 @@
 <!DOCTYPE html>
-<html lang="ru" class="scroll-smooth">
+<html lang="ru" class="scroll-smooth dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Лор сервера — Redoku</title>
+    <title>Лор мира — Redoku</title>
+    <meta name="description" content="История сервера Redoku: Эхо Медного Коллапса. Узнай тайну древней цивилизации Медных Големов и их Хроно-Орудия.">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Лор мира — Redoku">
+    <meta property="og:description" content="Эхо Медного Коллапса. Погрузись в историю мира Redoku.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1542281286-9e0a16bb7366?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+    <meta name="theme-color" content="#e67e22">
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
-                    colors: { brand: { red: '#ff2e43', green: '#10b981' } },
-                    fontFamily: { sans: ['Outfit', 'sans-serif'], mono: ['Space Grotesk', 'monospace'] },
+                    colors: { brand: { bg: '#0a0b0e', surface: '#0F1116', red: '#ff2e43', copper: '#e67e22', patina: '#1abc9c' } },
+                    fontFamily: { sans: ['Outfit', 'sans-serif'], display: ['Space Grotesk', 'sans-serif'] },
+                    animation: { 'spin-slow': 'spin 30s linear infinite', 'spin-reverse-slow': 'spin-reverse 40s linear infinite', 'pulse-glow': 'pulse-glow 4s ease-in-out infinite' },
+                    keyframes: {
+                        'spin-reverse': { '0%': { transform: 'rotate(0deg)' }, '100%': { transform: 'rotate(-360deg)' } },
+                        'pulse-glow': { '0%, 100%': { opacity: '0.5', transform: 'scale(1)' }, '50%': { opacity: '0.8', transform: 'scale(1.05)' } }
+                    }
                 }
             }
         }
     </script>
 
     <style>
-        body { 
-            background-color: #0F1116; 
-            color: #e2e8f0;
-            background-image: 
-                radial-gradient(circle at 20% 20%, rgba(255,46,67,0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(16,185,129,0.08) 0%, transparent 50%),
-                radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
-        }
-        
-        @keyframes enter {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
+        body { background-color: #050608; color: #e2e8f0; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050608; }
+        ::-webkit-scrollbar-thumb { background: #e67e22; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #1abc9c; }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(255,46,67,0.3); }
-            50% { box-shadow: 0 0 40px rgba(255,46,67,0.6); }
-        }
-
-        .animate-on-load { opacity: 0; animation: enter 1.2s ease-out forwards; }
-        
-        @media (scripting: none) { .animate-on-load { opacity: 1 !important; transform: none !important; } }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 2rem;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-        
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.8s;
-        }
-        
-        .glass-card:hover::before {
-            left: 100%;
-        }
-        
-        .spotlight-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.08), transparent 40%);
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
-            z-index: 1;
-        }
-        .spotlight-card:hover::before { opacity: 1; }
-        .spotlight-card:hover { 
-            transform: translateY(-8px) scale(1.02); 
-            border-color: rgba(255,255,255,0.25);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-        }
-
-        .lore-image {
-            background: 
-                linear-gradient(135deg, rgba(255,46,67,0.15) 0%, rgba(16,185,129,0.15) 100%),
-                radial-gradient(circle at 30% 70%, rgba(255,46,67,0.2) 0%, transparent 50%);
-            border: 1px solid rgba(255,255,255,0.15);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .lore-image::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .floating-icon {
-            animation: float 4s ease-in-out infinite;
-        }
-
-        .glow-effect {
-            animation: glow 3s ease-in-out infinite;
-        }
-
-        .mystical-text {
-            background: linear-gradient(135deg, #ff2e43, #f59e0b, #10b981);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            background-size: 200% 200%;
-            animation: gradient-shift 4s ease-in-out infinite;
-        }
-
-        @keyframes gradient-shift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: rgba(255,255,255,0.5);
-            border-radius: 50%;
-            pointer-events: none;
-        }
+        .lore-bg { position: fixed; inset: 0; z-index: -2; background-color: #050608; background-image: radial-gradient(circle at 20% 30%, rgba(230, 126, 34, 0.05) 0%, transparent 40%), radial-gradient(circle at 80% 70%, rgba(26, 188, 156, 0.05) 0%, transparent 40%); }
+        .gear { position: fixed; opacity: 0.03; pointer-events: none; z-index: -1; color: #e67e22; }
+        .glass { background: rgba(20, 15, 10, 0.4); backdrop-filter: blur(20px); border: 1px solid rgba(230, 126, 34, 0.1); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); }
+        .glass-nav { background: rgba(5, 6, 8, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(230, 126, 34, 0.1); }
+        .text-glow-copper { text-shadow: 0 0 30px rgba(230, 126, 34, 0.6); }
+        .gradient-copper { background: linear-gradient(135deg, #e67e22 0%, #f39c12 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .gradient-patina { background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1); will-change: opacity, transform; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .lore-line { position: absolute; left: 50%; transform: translateX(-50%); width: 2px; height: 100%; background: linear-gradient(to bottom, transparent, rgba(230, 126, 34, 0.5), rgba(26, 188, 156, 0.5), transparent); z-index: 0; }
+        @media (max-width: 768px) { .lore-line { left: 24px; } }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased selection:bg-brand-copper/30 selection:text-white">
 
-    <nav class="fixed top-0 w-full z-50 pt-6 px-4 animate-on-load">
-        <div class="max-w-6xl mx-auto bg-[#141418]/90 backdrop-blur-xl border border-white/10 rounded-full px-6 py-3 flex items-center justify-between shadow-lg">
-            <a href="index.html" class="flex items-center gap-3 font-mono font-bold text-xl text-white group">
-                <span class="text-brand-red group-hover:text-white transition-colors">R</span> REDOKU
+    <!-- Прелоадер (Медный стиль) -->
+    <div id="preloader" class="fixed inset-0 z-[999] bg-[#050608] flex items-center justify-center transition-opacity duration-500">
+        <div class="relative flex items-center justify-center">
+            <div class="absolute w-20 h-20 border-t-4 border-b-4 border-brand-copper border-solid rounded-full animate-spin opacity-50"></div>
+            <div class="w-12 h-12 bg-brand-copper rounded-xl flex items-center justify-center text-white font-display font-bold text-2xl rotate-3 shadow-[0_0_20px_rgba(230,126,34,0.5)]">R</div>
+        </div>
+    </div>
+
+    <!-- Фоновые элементы -->
+    <div class="lore-bg"></div>
+    <i class="fa-solid fa-gear gear text-[40rem] top-[-10%] left-[-10%] animate-spin-slow"></i>
+    <i class="fa-solid fa-gear gear text-[30rem] bottom-[-5%] right-[-5%] animate-spin-reverse-slow text-brand-patina"></i>
+
+    <!-- Навигация -->
+    <nav class="fixed top-0 w-full z-[100] glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 group relative z-20">
+                <div class="w-10 h-10 bg-brand-copper rounded-xl flex items-center justify-center text-white font-display font-bold text-xl rotate-3 group-hover:rotate-12 transition-all shadow-[0_0_15px_rgba(230,126,34,0.4)]">R</div>
+                <span class="font-display font-bold text-2xl tracking-tighter text-white">REDOKU</span>
             </a>
-            <div class="flex items-center gap-4">
-                <a href="index.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors bg-white/5 px-4 py-2 rounded-full border border-white/5 hover:border-white/20 hover:bg-white/10">
-                    <i class="fa-solid fa-house mr-2"></i> На главную
-                </a>
-                <a href="info.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors bg-white/5 px-4 py-2 rounded-full border border-white/5 hover:border-white/20 hover:bg-white/10">
-                    <i class="fa-solid fa-info-circle mr-2"></i> Инфо
-                </a>
-                <a href="news.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors bg-white/5 px-4 py-2 rounded-full border border-white/5 hover:border-white/20 hover:bg-white/10">
-                    <i class="fa-solid fa-newspaper mr-2"></i> Новости
-                </a>
+            <div class="hidden lg:flex items-center gap-8 bg-white/5 px-8 py-2.5 rounded-full border border-white/5 nav-links">
+                <a href="index.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Главная</a>
+                <a href="info.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Инфо</a>
+                <a href="lore.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Лор</a>
+                <a href="news.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Новости</a>
+                <a href="rules.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Правила</a>
+                <a href="team.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Команда</a>
+                <a href="https://map.redoku.ru" target="_blank" class="text-sm font-medium text-gray-400 hover:text-white transition-all flex items-center gap-1.5">Карта <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>
             </div>
+            <div class="hidden lg:flex items-center gap-4">
+                <a href="donate.html" class="text-sm font-medium text-yellow-500 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fa-solid fa-store"></i> Магазин</a>
+            </div>
+            <button class="lg:hidden text-white p-2 relative z-20" onclick="toggleMobileMenu()"><i class="fa-solid fa-bars text-2xl" id="mobile-menu-icon"></i></button>
         </div>
     </nav>
 
-    <div class="pt-40 pb-20 px-4 max-w-6xl mx-auto">
-        <div class="text-center mb-20 animate-on-load" style="animation-delay: 0.2s;">
-            <h1 class="text-4xl md:text-6xl font-black text-white mb-6">ЛОР <span class="mystical-text">СЕРВЕРА</span></h1>
-            <p class="text-gray-400 text-lg">История мира Redoku и его тайны</p>
-        </div>
-
-        <div class="space-y-16 animate-on-load" style="animation-delay: 0.3s;">
-            <!-- Пролог -->
-            <div class="glass-card spotlight-card p-8">
-                <div class="flex items-center gap-4 mb-6">
-                    <div class="w-12 h-12 bg-brand-red/20 rounded-xl flex items-center justify-center text-brand-red text-xl floating-icon glow-effect">
-                        <i class="fa-solid fa-book-open"></i>
-                    </div>
-                    <h2 class="text-3xl font-bold text-white">Пролог: Затерянный мир</h2>
-                </div>
-                <p class="text-gray-300 leading-relaxed text-lg mb-4">
-                    Давным-давно, когда миры были молоды и полны магии, существовала цивилизация, 
-                    превосходившая всё, что мы знаем сегодня. Они строили города, касающиеся облаков, 
-                    и создавали механизмы, способные изменять саму ткань реальности.
-                </p>
-                <p class="text-gray-300 leading-relaxed text-lg">
-                    Но великая сила ведёт к великому падению. В результате катастрофы, 
-                    известной как <span class="text-brand-red font-semibold">Великий Разлом</span>, 
-                    их цивилизация была уничтожена, а мир погрузился в хаос.
-                </p>
-            </div>
-
-            <!-- Эпоха выживания -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="glass-card spotlight-card p-8">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center text-green-400 text-xl floating-icon">
-                            <i class="fa-solid fa-seedling"></i>
-                        </div>
-                        <h2 class="text-2xl font-bold text-white">Эпоха Возрождения</h2>
-                    </div>
-                    <p class="text-gray-300 leading-relaxed mb-4">
-                        Тысячелетия мир лежал в руинах. Природа медленно восстанавливала то, 
-                        что было уничтожено. Новые формы жизни появились на обугленной земле, 
-                        а древние тайны остались разрушены под слоями времени.
-                    </p>
-                    <p class="text-gray-300 leading-relaxed">
-                        И вот, в нашу эпоху, новые исследователи пришли в этот мир. 
-                        Они не знают о прошлом, но чувствуют его присутствие в каждом камне, 
-                        в каждой пещере, в каждом загадочном артефакте.
-                    </p>
-                </div>
-                <div class="lore-image rounded-2xl p-8 flex items-center justify-center">
-                    <div class="text-center relative">
-                        <i class="fa-solid fa-mountain text-6xl text-brand-red/30 mb-4 floating-icon"></i>
-                        <p class="text-gray-400 italic">"Древние руины хранят секреты прошлого"</p>
-                        <div class="absolute -top-2 -left-2 w-4 h-4 bg-brand-red/20 rounded-full floating-icon"></div>
-                        <div class="absolute -bottom-2 -right-2 w-3 h-3 bg-brand-green/20 rounded-full floating-icon" style="animation-delay: 1s;"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Тайны мира -->
-            <div class="glass-card spotlight-card p-8 border-l-4 border-l-brand-red">
-                <div class="flex items-center gap-4 mb-6">
-                    <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center text-purple-400 text-xl floating-icon glow-effect">
-                        <i class="fa-solid fa-eye"></i>
-                    </div>
-                    <h2 class="text-2xl font-bold text-white">Тайны Redoku</h2>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="space-y-4">
-                        <div class="bg-white/5 rounded-lg p-4 border border-white/10 hover:border-orange-400/30 transition-all hover:bg-orange-400/5">
-                            <h3 class="text-lg font-semibold text-white mb-2">
-                                <i class="fa-solid fa-hourglass text-orange-400 mr-2 floating-icon"></i>Артефакты Времени
-                            </h3>
-                            <p class="text-gray-400 text-sm">
-                                В мире существует всего несколько артефактов оставшихся от прошлой цивилизации. 
-                                Найди их и узнай тайны предков.
-                            </p>
-                        </div>
-                        <div class="bg-white/5 rounded-lg p-4 border border-white/10 hover:border-amber-600/30 transition-all hover:bg-amber-600/5">
-                            <h3 class="text-lg font-semibold text-white mb-2">
-                                <i class="fa-solid fa-monument text-amber-600 mr-2 floating-icon"></i>Медные Гробницы
-                            </h3>
-                            <p class="text-gray-400 text-sm">
-                                В мире глубоко под землей существует единственная лаборатория, 
-                                оставшаяся цела после разлома. Это ваш единственный шанс узнать о прошлом и начать будущее.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="bg-white/5 rounded-lg p-4 border border-white/10 hover:border-blue-400/30 transition-all hover:bg-blue-400/5">
-                            <h3 class="text-lg font-semibold text-white mb-2">
-                                <i class="fa-solid fa-book text-blue-400 mr-2 floating-icon"></i>Записи Падших
-                            </h3>
-                            <p class="text-gray-400 text-sm">
-                                Древние манускрипты, содержащие знания погибшей цивилизации. 
-                                Многие ещё не расшифрованы.
-                            </p>
-                        </div>
-                        <div class="bg-white/5 rounded-lg p-4 border border-white/10 hover:border-red-400/30 transition-all hover:bg-red-400/5">
-                            <h3 class="text-lg font-semibold text-white mb-2">
-                                <i class="fa-solid fa-fire text-red-400 mr-2 floating-icon"></i>Проклятие Разлома
-                            </h3>
-                            <p class="text-gray-400 text-sm">
-                                Тёмная энергия, просачивающаяся из трещин в реальности. 
-                                Она изменяет живых существ и сам мир.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Фракции -->
-            <div class="glass-card spotlight-card p-8">
-                <div class="flex items-center gap-4 mb-6">
-                    <div class="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center text-yellow-400 text-xl floating-icon glow-effect">
-                        <i class="fa-solid fa-users"></i>
-                    </div>
-                    <h2 class="text-2xl font-bold text-white">Фракции Нового Мира</h2>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="text-center group">
-                        <div class="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center text-green-400 text-2xl mx-auto mb-3 floating-icon group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-leaf"></i>
-                        </div>
-                        <h3 class="text-lg font-semibold text-white mb-2">Хранители Природы</h3>
-                        <p class="text-gray-400 text-sm">
-                            Те, кто стремится восстановить баланс природы и живёт в гармонии с миром.
-                        </p>
-                    </div>
-                    <div class="text-center group">
-                        <div class="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center text-red-400 text-2xl mx-auto mb-3 floating-icon group-hover:scale-110 transition-transform" style="animation-delay: 0.5s;">
-                            <i class="fa-solid fa-hammer"></i>
-                        </div>
-                        <h3 class="text-lg font-semibold text-white mb-2">Строители Будущего</h3>
-                        <p class="text-gray-400 text-sm">
-                            Инженеры и архитекторы, строящие новый мир на руинах старого.
-                        </p>
-                    </div>
-                    <div class="text-center group">
-                        <div class="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center text-purple-400 text-2xl mx-auto mb-3 floating-icon group-hover:scale-110 transition-transform" style="animation-delay: 1s;">
-                            <i class="fa-solid fa-moon"></i>
-                        </div>
-                        <h3 class="text-lg font-semibold text-white mb-2">Искатели Тайн</h3>
-                        <p class="text-gray-400 text-sm">
-                            Исследователи, изучающие древние артефакты и раскрывающие секреты прошлого.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Пророчества -->
-            <div class="glass-card spotlight-card p-8 bg-gradient-to-br from-purple-900/10 to-red-900/10">
-                <div class="flex items-center gap-4 mb-6">
-                    <div class="w-12 h-12 bg-red-500/20 rounded-xl flex items-center justify-center text-red-400 text-xl">
-                        <i class="fa-solid fa-scroll"></i>
-                    </div>
-                    <h2 class="text-2xl font-bold text-white">Пророчества Будущего</h2>
-                </div>
-                <div class="space-y-4">
-                    <div class="border-l-4 border-brand-red pl-4">
-                        <p class="text-gray-300 italic mb-2">
-                            "Когда три солнца встанут в один ряд, и тени исчезнут, 
-                            древние пробудятся, и мир изменится навсегда..."
-                        </p>
-                        <p class="text-gray-500 text-sm">— Из древних манускриптов</p>
-                    </div>
-                    <div class="border-l-4 border-green-500 pl-4">
-                        <p class="text-gray-300 italic mb-2">
-                            "Те, кто объединит три кристалла времени, получат силу 
-                            изменить прошлое и создать новое будущее..."
-                        </p>
-                        <p class="text-gray-500 text-sm">— Пророчество Хранителей</p>
-                    </div>
-                    <div class="border-l-4 border-purple-500 pl-4">
-                        <p class="text-gray-300 italic mb-2">
-                            "В день Великого Сборища все фракции объединятся против 
-                            общей угрозы, или мир падёт во тьму навеки..."
-                        </p>
-                        <p class="text-gray-500 text-sm">— Предсказание Оракула</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Ваша роль -->
-            <div class="glass-card spotlight-card p-8 border border-brand-green/30 bg-gradient-to-br from-brand-green/5 to-purple-500/5">
-                <div class="flex items-center gap-4 mb-6">
-                    <div class="w-12 h-12 bg-brand-green/20 rounded-xl flex items-center justify-center text-brand-green text-xl floating-icon glow-effect">
-                        <i class="fa-solid fa-user-astronaut"></i>
-                    </div>
-                    <h2 class="text-2xl font-bold text-white">Ваша История Начинается Здесь</h2>
-                </div>
-                <p class="text-gray-300 leading-relaxed text-lg mb-4">
-                    Вы — один из новых исследователей, пришедших в мир Redoku. 
-                    Ваша история ещё не написана. Выбор за вами:
-                </p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                    <div class="bg-white/5 rounded-lg p-4 border border-white/10 hover:border-green-400/30 transition-all hover:bg-green-400/5 group">
-                        <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-green-400 transition-colors">
-                            <i class="fa-solid fa-leaf text-green-400 mr-2 floating-icon"></i>Станьте Хранителем
-                        </h3>
-                        <p class="text-gray-400 text-sm">
-                            Защищайте природу, изучайте древние знания, помогайте другим.
-                        </p>
-                    </div>
-                    <div class="bg-white/5 rounded-lg p-4 border border-white/10 hover:border-red-400/30 transition-all hover:bg-red-400/5 group">
-                        <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-red-400 transition-colors">
-                            <i class="fa-solid fa-hammer text-red-400 mr-2 floating-icon"></i>Станьте Строителем
-                        </h3>
-                        <p class="text-gray-400 text-sm">
-                            Создавайте города, возводите монументы, формируйте новый мир.
-                        </p>
-                    </div>
-                    <div class="bg-white/5 rounded-lg p-4 border border-white/10 hover:border-purple-400/30 transition-all hover:bg-purple-400/5 group">
-                        <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-purple-400 transition-colors">
-                            <i class="fa-solid fa-moon text-purple-400 mr-2 floating-icon"></i>Станьте Искателем
-                        </h3>
-                        <p class="text-gray-400 text-sm">
-                            Исследуйте руины, находите артефакты, раскрывайте тайны.
-                        </p>
-                    </div>
-                    <div class="bg-white/5 rounded-lg p-4 border border-white/10 hover:border-yellow-400/30 transition-all hover:bg-yellow-400/5 group">
-                        <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-yellow-400 transition-colors">
-                            <i class="fa-solid fa-star text-yellow-400 mr-2 floating-icon"></i>Создайте свой путь
-                        </h3>
-                        <p class="text-gray-400 text-sm">
-                            Не ограничивайте себя — создайте уникальную историю.
-                        </p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <p class="mystical-text font-bold text-xl floating-icon">
-                        Мир Redoku ждёт своих героев. Станьте одним из них.
-                    </p>
-                </div>
-            </div>
-        </div>
+    <!-- Мобильное меню -->
+    <div id="mobile-menu" class="fixed inset-0 bg-brand-bg/98 backdrop-blur-xl z-[90] flex flex-col items-center justify-center gap-6 opacity-0 pointer-events-none transition-all duration-300 mobile-nav-links">
+        <a href="index.html" class="text-2xl font-display font-bold text-white">Главная</a>
+        <a href="info.html" class="text-2xl font-display font-bold text-white">Как начать</a>
+        <a href="lore.html" class="text-2xl font-display font-bold text-white">Лор сервера</a>
+        <a href="news.html" class="text-2xl font-display font-bold text-white">Новости</a>
+        <a href="rules.html" class="text-2xl font-display font-bold text-white">Правила</a>
+        <a href="team.html" class="text-2xl font-display font-bold text-white">Команда</a>
+        <a href="donate.html" class="text-2xl font-display font-bold text-yellow-500 mt-4">Магазин</a>
     </div>
-    
-    <footer class="relative pt-20 pb-10 overflow-hidden border-t border-white/5 bg-[#050508] mt-20">
-        <div class="absolute inset-0 bg-gradient-to-t from-brand-green/5 to-transparent pointer-events-none"></div>
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
-                <div>
-                     <div class="flex items-center justify-center md:justify-start gap-3 mb-4">
-                         <div class="w-8 h-8 bg-brand-green rounded flex items-center justify-center font-bold text-black text-lg">R</div>
-                         <span class="font-bold text-2xl text-white">Redoku</span>
+
+    <!-- Page Header -->
+    <header class="pt-48 pb-24 px-4 relative z-10 text-center flex flex-col items-center">
+        <div class="reveal">
+            <div class="inline-flex items-center gap-2 mb-6">
+                <div class="h-[1px] w-8 bg-brand-copper"></div>
+                <span class="text-brand-copper text-sm font-bold tracking-[0.3em] uppercase">Хроники Redoku</span>
+                <div class="h-[1px] w-8 bg-brand-copper"></div>
+            </div>
+            <h1 class="text-6xl md:text-8xl font-display font-black text-white uppercase tracking-tighter mb-6 leading-none flex flex-col gap-2">
+                <span>Эхо Медного</span>
+                <span class="gradient-copper text-glow-copper">Коллапса</span>
+            </h1>
+            <p class="text-gray-400 text-lg md:text-xl font-light max-w-2xl mx-auto leading-relaxed mt-6">
+                Мир, сломанный гордыней древних творцов. Время здесь течет иначе, а измерения слились воедино, породив новые чудеса и ужасы.
+            </p>
+        </div>
+    </header>
+
+    <!-- История (Storyline) -->
+    <section class="py-20 px-4 relative z-10">
+        <div class="max-w-5xl mx-auto relative">
+            <div class="lore-line hidden md:block"></div>
+            <div class="lore-line md:hidden left-8"></div>
+
+            <div class="space-y-24">
+                <!-- Глава 1 -->
+                <div class="reveal relative flex flex-col md:flex-row justify-between items-center group">
+                    <div class="w-full md:w-[45%] md:text-right pr-0 md:pr-16 pl-16 md:pl-0 order-2 md:order-1 relative z-10 mt-8 md:mt-0">
+                        <h2 class="text-3xl md:text-4xl font-display font-black text-white mb-4"><span class="text-brand-copper">I.</span> Эра Создателей</h2>
+                        <p class="text-gray-300 text-lg leading-relaxed font-light">В глубокой древности этим миром правила высокоразвитая цивилизация Медных Големов. Они не были монстрами — это были инженеры и творцы, постигшие тайны красного камня и энергии пустоты. Их механизмы питали целые континенты, но им было мало власти над пространством. Они захотели подчинить себе Время.</p>
                     </div>
-                    <p class="text-gray-500 text-sm">Приятной игры на сервере!</p>
+                    <div class="absolute left-8 md:left-1/2 -translate-x-1/2 w-16 h-16 rounded-full glass border border-brand-copper/50 flex items-center justify-center z-20 shadow-[0_0_30px_rgba(230,126,34,0.3)] group-hover:bg-brand-copper/20 transition-all"><i class="fa-solid fa-landmark text-2xl text-brand-copper"></i></div>
+                    <div class="w-full md:w-[45%] order-3 hidden md:block"><img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Древние руины" class="rounded-3xl border border-white/5 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700 object-cover h-64 w-full"></div>
                 </div>
-                <div class="md:col-span-2 flex justify-center md:justify-end gap-6 items-center">
-                     <a href="https://dsc.gg/redoku" class="text-gray-400 hover:text-white transition-colors">Discord</a>
-                     <a href="https://t.me/Redoku" class="text-gray-400 hover:text-white transition-colors">Telegram</a>
-                     <a href="index.html" class="text-gray-400 hover:text-white transition-colors">Главная</a>
+
+                <!-- Глава 2 -->
+                <div class="reveal relative flex flex-col md:flex-row justify-between items-center group">
+                    <div class="w-full md:w-[45%] order-1 hidden md:block">
+                        <div class="w-full h-64 rounded-3xl border border-brand-copper/20 bg-gradient-to-br from-[#1a0f0a] to-[#0a0505] flex items-center justify-center relative overflow-hidden group-hover:border-brand-copper/50 transition-all duration-700">
+                            <i class="fa-solid fa-clock-rotate-left text-8xl text-brand-copper/10 absolute animate-spin-reverse-slow"></i>
+                            <div class="w-24 h-24 rounded-full bg-brand-copper/20 blur-xl animate-pulse-glow"></div>
+                        </div>
+                    </div>
+                    <div class="absolute left-8 md:left-1/2 -translate-x-1/2 w-16 h-16 rounded-full glass border border-brand-copper/50 flex items-center justify-center z-20 shadow-[0_0_30px_rgba(230,126,34,0.3)] group-hover:bg-brand-copper/20 transition-all"><i class="fa-solid fa-bolt text-2xl text-brand-copper"></i></div>
+                    <div class="w-full md:w-[45%] text-left pl-16 md:pl-16 pr-0 order-2 relative z-10 mt-8 md:mt-0">
+                        <h2 class="text-3xl md:text-4xl font-display font-black text-white mb-4"><span class="text-brand-copper">II.</span> Хроно-Орудие</h2>
+                        <p class="text-gray-300 text-lg leading-relaxed font-light">В центре своих земель они возвели «Медное Хроно-Орудие» — колоссальную машину, способную переписывать историю. Во время первого запуска произошел катастрофический сбой. Орудие разорвало ткань мироздания. За секунду великая империя была стерта, а реальность раскололась на фрагменты.</p>
+                    </div>
+                </div>
+
+                <!-- Глава 3 -->
+                <div class="reveal relative flex flex-col md:flex-row justify-between items-center group">
+                    <div class="w-full md:w-[45%] md:text-right pr-0 md:pr-16 pl-16 md:pl-0 order-2 md:order-1 relative z-10 mt-8 md:mt-0">
+                        <h2 class="text-3xl md:text-4xl font-display font-black text-white mb-4"><span class="text-brand-patina">III.</span> Эпоха Мутаций</h2>
+                        <p class="text-gray-300 text-lg leading-relaxed font-light">Измерения смешались. Нижний мир (Незер) и Энд начали просачиваться в Обычный мир, создавая невозможные кастомные горы и искаженные биомы. Энергия времени окислила самих создателей. Они превратились в безмозглых монстров, покрытых бирюзовой патиной, вечно бродящих по руинам своего величия.</p>
+                    </div>
+                    <div class="absolute left-8 md:left-1/2 -translate-x-1/2 w-16 h-16 rounded-full glass border border-brand-patina/50 flex items-center justify-center z-20 shadow-[0_0_30px_rgba(26,188,156,0.3)] group-hover:bg-brand-patina/20 transition-all"><i class="fa-solid fa-biohazard text-2xl text-brand-patina"></i></div>
+                    <div class="w-full md:w-[45%] order-3 hidden md:block">
+                        <div class="w-full h-64 rounded-3xl border border-brand-patina/20 bg-gradient-to-br from-[#0a1a15] to-[#050a08] flex items-center justify-center relative overflow-hidden group-hover:border-brand-patina/50 transition-all duration-700">
+                            <i class="fa-solid fa-mountain-sun text-8xl text-brand-patina/10 absolute drop-shadow-[0_0_30px_rgba(26,188,156,0.5)]"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Глава 4 -->
+                <div class="reveal relative flex flex-col md:flex-row justify-between items-center group">
+                    <div class="w-full md:w-[45%] order-1 hidden md:block">
+                        <img src="https://images.unsplash.com/photo-1542281286-9e0a16bb7366?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Лаборатория" class="rounded-3xl border border-white/5 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700 object-cover h-64 w-full" style="filter: sepia(1) hue-rotate(130deg) saturate(2);">
+                    </div>
+                    <div class="absolute left-8 md:left-1/2 -translate-x-1/2 w-20 h-20 rounded-full glass border-2 border-brand-patina flex items-center justify-center z-20 shadow-[0_0_50px_rgba(26,188,156,0.5)] bg-[#050608]"><i class="fa-solid fa-crosshairs text-3xl gradient-patina"></i></div>
+                    <div class="w-full md:w-[45%] text-left pl-16 md:pl-16 pr-0 order-2 relative z-10 mt-8 md:mt-0">
+                        <span class="inline-block px-3 py-1 bg-brand-patina/10 border border-brand-patina/30 text-brand-patina rounded uppercase tracking-widest text-xs font-bold mb-3">Ваша Миссия</span>
+                        <h2 class="text-3xl md:text-4xl font-display font-black text-white mb-4">Найти Лабораторию</h2>
+                        <p class="text-gray-300 text-lg leading-relaxed font-light">Легенды гласят, что глубоко под землей уцелела «Затерянная Лаборатория», где спрятаны чертежи для отмены Коллапса. Но путь туда преграждает обезумевший «Медный Страж». Задача выживших — объединиться, отыскать бункер и исправить ошибки времени.</p>
+                    </div>
                 </div>
             </div>
-            <div class="mt-12 pt-8 border-t border-white/5 text-center text-gray-700 text-xs">
-                &copy; 2025 Redoku Project.
+        </div>
+    </section>
+
+    <!-- Призыв к действию -->
+    <section class="py-24 px-4 relative z-10">
+        <div class="max-w-4xl mx-auto reveal">
+            <div class="glass border-2 border-brand-copper/30 p-12 md:p-16 rounded-[3rem] text-center relative overflow-hidden bg-gradient-to-b from-brand-copper/5 to-[#050608]">
+                <div class="absolute inset-0 bg-brand-copper/10 blur-[100px] rounded-full pointer-events-none -z-10"></div>
+                <i class="fa-solid fa-khanda text-5xl text-brand-copper mb-6 drop-shadow-[0_0_15px_rgba(230,126,34,0.5)]"></i>
+                <h2 class="text-4xl md:text-5xl font-display font-black text-white mb-6 uppercase tracking-tight">Впиши свое имя в историю</h2>
+                <p class="text-gray-400 mb-10 max-w-lg mx-auto text-lg">Мир ждет своих героев. Присоединяйся к серверу и начни свое выживание в мире, пережившем Коллапс.</p>
+                <a href="info.html" class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-brand-copper hover:bg-[#d68910] text-white font-display font-bold text-lg rounded-2xl shadow-[0_0_40px_rgba(230,126,34,0.4)] transition-all">
+                    Начать Игру <i class="fa-solid fa-arrow-right"></i>
+                </a>
             </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="pt-20 pb-10 px-6 border-t border-brand-copper/10 bg-black/60 backdrop-blur-md relative z-20">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            <div class="md:col-span-2">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-8 h-8 bg-brand-copper rounded-lg flex items-center justify-center text-white font-display font-bold text-sm shadow-[0_0_10px_rgba(230,126,34,0.3)]">R</div>
+                    <span class="font-display font-bold text-xl text-white tracking-widest uppercase">REDOKU</span>
+                </div>
+                <p class="text-gray-400 max-w-sm mb-8 text-sm leading-relaxed">Премиальный Vanilla+ проект, созданный игроками для игроков. Мы ценим атмосферу классического майнкрафта, честность и техническое совершенство.</p>
+                <div class="flex gap-3">
+                    <a href="https://dsc.gg/redoku" target="_blank" class="w-10 h-10 glass rounded-xl flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#5865F2] transition-all"><i class="fa-brands fa-discord text-lg"></i></a>
+                    <a href="https://t.me/Redoku" target="_blank" class="w-10 h-10 glass rounded-xl flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#229ED9] transition-all"><i class="fa-brands fa-telegram text-lg"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-display font-bold mb-6 text-sm tracking-widest uppercase">Навигация</h4>
+                <ul class="space-y-3 text-sm text-gray-400">
+                    <li><a href="index.html" class="hover:text-brand-copper transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Главная</a></li>
+                    <li><a href="info.html" class="hover:text-brand-copper transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Как начать</a></li>
+                    <li><a href="rules.html" class="hover:text-brand-copper transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Правила</a></li>
+                    <li><a href="team.html" class="hover:text-brand-copper transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Команда</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto pt-8 border-t border-white/10 text-center text-[11px] text-gray-500 font-bold tracking-widest uppercase">
+            &copy; 2025 Redoku. Все права защищены.
         </div>
     </footer>
 
+    <!-- Скрипты -->
     <script>
-        document.querySelectorAll('.spotlight-card').forEach(card => {
-            card.onmousemove = e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                card.style.setProperty('--mouse-x', `${x}px`);
-                card.style.setProperty('--mouse-y', `${y}px`);
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            preloader.classList.add('opacity-0');
+            setTimeout(() => preloader.style.display = 'none', 500);
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('text-brand-copper', 'drop-shadow-[0_0_8px_rgba(230,126,34,0.5)]');
+                    link.classList.remove('text-gray-400', 'hover:text-white');
+                }
+            });
+            document.querySelectorAll('.mobile-nav-links a').forEach(link => {
+                if (link.getAttribute('href') === currentPath && !link.classList.contains('text-yellow-500')) {
+                    link.classList.add('text-brand-copper', 'text-3xl');
+                    link.classList.remove('text-white', 'text-2xl');
+                }
+            });
+        });
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            if (menu.classList.contains('opacity-0')) {
+                menu.classList.remove('opacity-0', 'pointer-events-none');
+                menu.classList.add('opacity-100', 'pointer-events-auto');
+                icon.className = 'fa-solid fa-xmark text-2xl'; document.body.style.overflow = 'hidden';
+            } else {
+                menu.classList.add('opacity-0', 'pointer-events-none');
+                menu.classList.remove('opacity-100', 'pointer-events-auto');
+                icon.className = 'fa-solid fa-bars text-2xl'; document.body.style.overflow = '';
             }
+        }
+
+        const observerOptions = { threshold: 0.2, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, observerOptions);
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) nav.style.background = 'rgba(5, 6, 8, 0.9)';
+            else nav.style.background = 'rgba(5, 6, 8, 0.8)';
         });
     </script>
-
 </body>
 </html>

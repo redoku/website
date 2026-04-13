@@ -1,32 +1,53 @@
 <!DOCTYPE html>
-<html lang="ru" class="scroll-smooth">
+<html lang="ru" class="scroll-smooth dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redoku — Сервер Minecraft 1.21.11</title>
-    <meta name="description" content="Топовый сервер Minecraft Redoku. Версия 1.21.11.">
+    <title>Redoku — Создавай. Исследуй. Живи.</title>
+    <meta name="description" content="Уникальный Minecraft сервер 1.21.11. Погрузись в мир кастомной генерации, честной игры и активного комьюнити. Сезон III открыт!">
     
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- Tailwind Config -->
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
                         brand: {
+                            bg: '#0a0b0e', // Чуть темнее для контраста с glass
+                            surface: '#0F1116',
                             red: '#ff2e43',
-                            dark: '#0F1116',
+                            redHover: '#ff4c5e',
+                            copper: '#e67e22',
+                            patina: '#1abc9c',
                         }
                     },
                     fontFamily: {
                         sans: ['Outfit', 'sans-serif'],
-                        mono: ['Space Grotesk', 'monospace'],
+                        display: ['Space Grotesk', 'sans-serif'],
                     },
                     animation: {
+                        'blob': 'blob 7s infinite',
                         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
                     }
                 }
             }
@@ -34,551 +55,766 @@
     </script>
 
     <style>
+        /* Базовые стили и кастомный скроллбар */
         body {
-            background-color: #0F1116;
+            background-color: #0a0b0e;
             color: #e2e8f0;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(255, 46, 67, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 50% 10%, rgba(16, 185, 129, 0.03) 0%, transparent 30%);
-        }
-
-        /* ВАЖНО: Анимация прописана явно в CSS */
-        @keyframes enter {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .animate-on-load {
-            opacity: 0; /* Начальное состояние */
-            animation: enter 1s ease-out forwards; /* Запуск анимации */
-        }
-
-        .grid-bg {
-            position: absolute;
-            inset: 0;
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
-            z-index: -1;
-            pointer-events: none;
+            -webkit-font-smoothing: antialiased;
         }
 
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0a0a0f; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-track { background: #0a0b0e; }
+        ::-webkit-scrollbar-thumb { background: #1f222b; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #ff2e43; }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        /* Фоновые эффекты */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .ambient-light {
+            position: fixed;
+            top: -20%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(255,46,67,0.15) 0%, transparent 60%);
+            border-radius: 50%;
+            z-index: -1;
+            pointer-events: none;
+            filter: blur(60px);
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            border-radius: 1.5rem;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            overflow: hidden;
+        }
+
+        .glass-nav {
+            background: rgba(15, 17, 22, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Spotlight Hover Effect для карточек */
+        .spotlight-card {
             position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
-
-        .glass-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 46, 67, 0.5);
-            box-shadow: 0 20px 40px -10px rgba(255, 46, 67, 0.15);
-            background: rgba(255, 255, 255, 0.06);
-        }
-
-        .text-glow { text-shadow: 0 0 20px rgba(255, 46, 67, 0.5); }
         
-        /* Стили для появления при скролле */
-        .fade-up {
+        .spotlight-card::before {
+            content: "";
+            position: absolute;
+            top: var(--mouse-y, 0);
+            left: var(--mouse-x, 0);
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 46, 67, 0.15) 0%, transparent 70%);
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .fade-up.visible { opacity: 1; transform: translateY(0); }
-        
-        /* Если JS отключен, показываем все сразу */
-        @media (scripting: none) {
-            .fade-up, .animate-on-load { opacity: 1 !important; transform: none !important; animation: none !important; }
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        .timeline-line {
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(to bottom, transparent, #ff2e43, transparent);
-            transform: translateX(-50%);
-        }
-        @media (max-width: 768px) {
-            .timeline-line { left: 20px; }
-        }
-        
-        .btn-shine {
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
-            transform: skewX(-20deg);
-            transition: 0.5s;
-        }
-        
-        .btn-hover:hover .btn-shine {
-            animation: shine 1s;
+        .spotlight-card:hover::before {
+            opacity: 1;
         }
 
-        @keyframes shine {
-            100% { left: 150%; }
+        .spotlight-card:hover {
+            border-color: rgba(255, 46, 67, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .spotlight-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Текстовые эффекты */
+        .text-glow { text-shadow: 0 0 20px rgba(255, 46, 67, 0.6); }
+        .text-glow-copper { text-shadow: 0 0 20px rgba(230, 126, 34, 0.6); }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #ff2e43 0%, #ff8a00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Анимация появления контента (Scroll Reveal) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Стили для FAQ Аккордеона */
+        details { 
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+        }
+        details[open] {
+            background: rgba(255, 46, 67, 0.05);
+            border-color: rgba(255, 46, 67, 0.3);
+            box-shadow: 0 10px 30px -10px rgba(255, 46, 67, 0.15);
+        }
+        details[open] summary {
+            border-bottom: 1px solid rgba(255, 46, 67, 0.1);
+        }
+        summary { list-style: none; }
+        summary::-webkit-details-marker { display: none; }
+        details[open] summary ~ * { animation: sweep .4s ease-in-out; }
+        
+        @keyframes sweep {
+            0%    {opacity: 0; transform: translateY(-10px)}
+            100%  {opacity: 1; transform: translateY(0)}
+        }
+        
+        .faq-icon { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        details[open] .faq-icon { transform: rotate(45deg); color: #ff2e43; }
+
+        /* Кнопка IP */
+        .btn-ip-copy {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-ip-copy::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg) translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        .btn-ip-copy:hover::after {
+            transform: rotate(45deg) translateX(100%);
         }
     </style>
 </head>
-<body class="antialiased selection:bg-brand-red selection:text-white">
+<body class="antialiased selection:bg-brand-red/30 selection:text-white">
 
-    <nav class="fixed top-0 w-full z-50 pt-6 px-4 animate-on-load" style="animation-delay: 0.1s;">
-        <div class="max-w-7xl mx-auto glass-card !rounded-full !bg-black/60 px-6 py-4 flex items-center justify-between shadow-2xl shadow-brand-red/5">
-            <a href="index.html" class="flex items-center gap-3 group" onclick="window.scrollTo(0,0)">
-                <div class="relative w-10 h-10 flex items-center justify-center">
-                    <div class="absolute inset-0 bg-brand-red rounded-lg rotate-3 group-hover:rotate-12 transition-transform opacity-80 blur-md"></div>
-                    <div class="relative bg-[#1a1a20] border border-white/20 w-full h-full rounded-lg flex items-center justify-center text-brand-red font-black text-xl z-10">R</div>
-                </div>
-                <span class="font-mono font-bold text-xl tracking-wider text-white group-hover:text-glow transition-all">REDOKU</span>
+    <!-- Фоновые элементы -->
+    <div class="bg-grid"></div>
+    <div class="ambient-light animate-blob"></div>
+    <div class="ambient-light animate-blob" style="top: auto; bottom: -20%; left: auto; right: -10%; background: radial-gradient(circle, rgba(230,126,34,0.1) 0%, transparent 60%); animation-delay: 2s;"></div>
+
+    <!-- Навигация -->
+    <nav class="fixed top-0 w-full z-[100] glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Логотип -->
+            <a href="index.html" class="flex items-center gap-3 group relative z-20">
+                <div class="w-10 h-10 bg-brand-red rounded-xl flex items-center justify-center text-white font-display font-bold text-xl rotate-3 group-hover:rotate-12 transition-all shadow-[0_0_15px_rgba(255,46,67,0.4)]">R</div>
+                <span class="font-display font-bold text-2xl tracking-tighter text-white">REDOKU</span>
             </a>
 
-            <div class="hidden lg:flex items-center gap-8">
-                <a href="index.html" class="text-sm font-medium text-white hover:text-brand-red transition-colors">Главная</a>
-                <a href="info.html" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Инфо</a>
-                <a href="lore.html" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Лор</a>
-                <a href="news.html" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Новости</a>
-                <a href="http://ВАША_ССЫЛКА_НА_КАРТУ" target="_blank" class="text-sm font-medium text-gray-400 hover:text-white transition-colors flex items-center gap-2">
-                    <i class="fa-solid fa-map"></i> Карта
+            <!-- Десктопное меню -->
+            <div class="hidden lg:flex items-center gap-8 bg-white/5 px-8 py-2.5 rounded-full border border-white/5">
+                <a href="index.html" class="text-sm font-medium text-brand-red drop-shadow-[0_0_8px_rgba(255,46,67,0.5)] transition-all">Главная</a>
+                <a href="info.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Инфо</a>
+                <a href="lore.html" class="text-sm font-medium text-gray-400 hover:text-brand-copper transition-all">Лор</a>
+                <a href="news.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Новости</a>
+                <a href="rules.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Правила</a>
+                <a href="https://map.redoku.ru" target="_blank" class="text-sm font-medium text-gray-400 hover:text-white transition-all flex items-center gap-1.5">
+                    Карта <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                 </a>
-                <a href="donate.html" class="text-sm font-medium text-yellow-400 hover:text-yellow-300 transition-colors flex items-center gap-2">
-                    <i class="fa-solid fa-crown text-xs"></i> Магазин
-                </a>
-                <a href="rules.html" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Правила</a>
             </div>
 
-            <div class="flex items-center gap-4">
-                <button onclick="copyIp()" class="hidden md:flex relative overflow-hidden btn-hover items-center gap-2 bg-gradient-to-r from-brand-red to-rose-600 text-white px-7 py-2.5 rounded-full font-bold text-sm transition-all shadow-[0_0_20px_rgba(255,46,67,0.4)] hover:shadow-[0_0_35px_rgba(255,46,67,0.6)] hover:scale-105 active:scale-95">
-                    <div class="btn-shine"></div>
-                    <i class="fa-solid fa-play text-xs"></i>
-                    <span>ИГРАТЬ</span>
+            <!-- Правый блок -->
+            <div class="hidden lg:flex items-center gap-4">
+                <a href="donate.html" class="text-sm font-medium text-yellow-500 hover:text-yellow-400 transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-store"></i> Магазин
+                </a>
+                <button onclick="copyIp()" class="btn-ip-copy bg-white/10 hover:bg-white/15 border border-white/10 text-white px-5 py-2.5 rounded-xl text-sm font-bold tracking-wide flex items-center gap-2 transition-all">
+                    <span id="ip-text-nav" class="font-display">redoku.bisquit.host</span>
+                    <i class="fa-regular fa-copy opacity-50 text-xs" id="ip-icon-nav"></i>
                 </button>
             </div>
+
+            <!-- Гамбургер (Мобильный) -->
+            <button class="lg:hidden text-white p-2 relative z-20" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-bars text-2xl" id="mobile-menu-icon"></i>
+            </button>
         </div>
     </nav>
 
-    <section id="hero" class="relative min-h-screen flex items-center justify-center pt-44 pb-20 overflow-hidden">
-        <div class="grid-bg"></div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-red/10 blur-[150px] rounded-full pointer-events-none"></div>
+    <!-- Мобильное меню (Overlay) -->
+    <div id="mobile-menu" class="fixed inset-0 bg-brand-bg/98 backdrop-blur-xl z-[90] flex flex-col items-center justify-center gap-6 opacity-0 pointer-events-none transition-all duration-300">
+        <a href="index.html" class="text-3xl font-display font-bold text-brand-red">Главная</a>
+        <a href="info.html" class="text-2xl font-display font-bold text-white">Как начать</a>
+        <a href="lore.html" class="text-2xl font-display font-bold text-white">Лор сервера</a>
+        <a href="news.html" class="text-2xl font-display font-bold text-white">Новости</a>
+        <a href="rules.html" class="text-2xl font-display font-bold text-white">Правила</a>
+        <a href="donate.html" class="text-2xl font-display font-bold text-yellow-500 mt-4">Магазин</a>
+        
+        <button onclick="copyIp()" class="mt-8 bg-brand-red/20 border border-brand-red text-white px-8 py-4 rounded-2xl text-lg font-bold flex items-center gap-3">
+            <span id="ip-text-mobile">redoku.bisquit.host</span>
+            <i class="fa-regular fa-copy"></i>
+        </button>
+    </div>
 
-        <div class="max-w-7xl mx-auto px-4 relative z-10 w-full text-center">
-            <div class="animate-on-load" style="animation-delay: 0.2s;">
-                <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-brand-red/40 bg-brand-red/10 text-brand-red text-xs font-bold tracking-widest uppercase mb-10 backdrop-blur-md shadow-[0_0_15px_rgba(255,46,67,0.2)] hover:bg-brand-red/20 transition-colors cursor-default">
-                    <span class="w-2 h-2 rounded-full bg-brand-red animate-pulse"></span>
-                    СЕЗОН III УЖЕ ОТКРЫТ
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-20 px-4 overflow-hidden">
+        <div class="max-w-6xl mx-auto w-full text-center relative z-10 flex flex-col items-center">
+            
+            <!-- Badge (Сезон + Онлайн) -->
+            <div class="reveal glass inline-flex items-center gap-4 px-6 py-2.5 rounded-full border-brand-red/30 mb-8 sm:mb-12 relative overflow-hidden group">
+                <div class="absolute inset-0 bg-brand-red/5 group-hover:bg-brand-red/10 transition-colors"></div>
+                <div class="flex items-center gap-3 relative z-10">
+                    <span class="text-xs sm:text-sm font-bold tracking-[0.2em] text-white uppercase font-display border-r border-white/20 pr-4">Сезон III Открыт</span>
+                    <span class="flex h-2.5 w-2.5 relative">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                    </span>
+                    <span class="text-xs sm:text-sm font-bold tracking-widest text-green-400 uppercase font-display">
+                        <span id="online-count" class="text-white">...</span> Онлайн
+                    </span>
                 </div>
-                
-                <h1 class="text-5xl md:text-8xl lg:text-9xl font-black tracking-tighter text-white mb-8 leading-[0.95] drop-shadow-2xl">
-                    СОЗДАВАЙ.<br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-red via-orange-400 to-yellow-400 animate-pulse-slow">ИССЛЕДУЙ.</span><br>
-                    ЖИВИ.
-                </h1>
-                
-                <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-14 font-light leading-relaxed">
-                    Redoku — это экосистема версии <b>1.21.11</b> с уникальной атмосферой и экономикой. Присоединяйся к элите майнкрафта.
-                </p>
+            </div>
+            
+            <!-- Массивный заголовок (исправлены отступы) -->
+            <h1 class="reveal font-display font-black uppercase tracking-tighter mb-10 flex flex-col items-center w-full gap-2 md:gap-4">
+                <span class="text-[12vw] sm:text-[9vw] lg:text-[8rem] text-white block hover:scale-105 transition-transform duration-500 cursor-default drop-shadow-lg leading-none">СОЗДАВАЙ.</span>
+                <span class="text-[12vw] sm:text-[9vw] lg:text-[8rem] gradient-text text-glow block hover:scale-105 transition-transform duration-500 cursor-default leading-none">ИССЛЕДУЙ.</span>
+                <span class="text-[12vw] sm:text-[9vw] lg:text-[8rem] text-white block hover:scale-105 transition-transform duration-500 cursor-default drop-shadow-lg leading-none">ЖИВИ.</span>
+            </h1>
+            
+            <p class="reveal text-gray-400 text-lg sm:text-xl md:text-2xl max-w-2xl mx-auto mb-12 font-light leading-relaxed">
+                Экосистема <span class="text-white font-medium border-b border-white/20 pb-0.5">1.21.11</span> без лицензии. 
+                Ванилла, какой она должна быть: честная, красивая и живая.
+            </p>
 
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
-                    <div class="relative group cursor-pointer w-full sm:w-auto" onclick="copyIp()">
-                        <div class="absolute -inset-0.5 bg-gradient-to-r from-brand-red to-orange-600 rounded-2xl blur opacity-30 group-hover:opacity-80 transition duration-500 animate-pulse"></div>
-                        <div class="relative bg-[#15151a] border border-white/10 hover:border-brand-red/50 text-white px-8 py-5 rounded-xl flex items-center justify-center gap-4 transition-all h-full group-hover:scale-[1.02]">
-                            <i class="fa-regular fa-copy text-gray-400 group-hover:text-white transition-colors text-xl"></i>
-                            <div class="text-left">
-                                <div class="text-[10px] text-gray-500 font-mono uppercase tracking-wider mb-1">IP Сервера (Нажми)</div>
-                                <div class="text-2xl font-bold font-mono tracking-wide group-hover:text-brand-red transition-colors" id="ip-display">redoku.bisquit.host</div>
+            <!-- CTA Кнопки -->
+            <div class="reveal flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full sm:w-auto">
+                <button onclick="copyIp()" class="w-full sm:w-auto px-8 py-4 sm:py-5 bg-brand-red text-white font-display font-bold text-lg rounded-2xl shadow-[0_0_30px_rgba(255,46,67,0.3)] hover:shadow-[0_0_50px_rgba(255,46,67,0.6)] hover:bg-brand-redHover transition-all flex items-center justify-center gap-3 group relative overflow-hidden">
+                    <span class="relative z-10">СКОПИРОВАТЬ IP</span>
+                    <i class="fa-solid fa-clone relative z-10 group-hover:scale-110 transition-transform"></i>
+                </button>
+                <a href="info.html" class="w-full sm:w-auto px-8 py-4 sm:py-5 glass text-white font-display font-bold text-lg rounded-2xl hover:bg-white/10 transition-all flex items-center justify-center gap-3">
+                    Как начать играть
+                    <i class="fa-solid fa-arrow-right text-brand-red -rotate-45"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Статистика -->
+    <section class="py-12 px-4 relative z-20 border-y border-white/5 bg-white/[0.01] backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-white/10">
+            <div class="reveal text-center py-4 md:py-0 border-b md:border-none border-white/5 pb-8 md:pb-0">
+                <div class="text-4xl md:text-5xl font-display font-black text-white mb-2">99.9%</div>
+                <div class="text-xs md:text-sm font-bold text-brand-red tracking-widest uppercase">Uptime сервера</div>
+            </div>
+            <div class="reveal text-center py-4 md:py-0 border-b md:border-none border-white/5 pb-8 md:pb-0" style="transition-delay: 100ms;">
+                <div class="text-4xl md:text-5xl font-display font-black text-white mb-2">16+</div>
+                <div class="text-xs md:text-sm font-bold text-brand-red tracking-widest uppercase">Взрослое комьюнити</div>
+            </div>
+            <div class="reveal text-center py-4 md:py-0" style="transition-delay: 200ms;">
+                <div class="text-4xl md:text-5xl font-display font-black text-white mb-2">Fabric</div>
+                <div class="text-xs md:text-sm font-bold text-brand-red tracking-widest uppercase">Оптимизация 1.21.11</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Преимущества (Bento Grid) -->
+    <section class="py-24 px-4 relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <div class="reveal mb-16 text-center lg:text-left">
+                <h2 class="text-4xl md:text-5xl font-display font-black text-white mb-4 uppercase tracking-tight">
+                    Почему <span class="gradient-text">Redoku</span>?
+                </h2>
+                <p class="text-gray-400 text-lg max-w-2xl">Место, где правила работают для всех, а игровой процесс доведён до идеала.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[1fr]">
+                
+                <!-- Card 1: Надзор -->
+                <div class="reveal spotlight-card bg-gradient-to-br from-[#161214] to-[#0a0b0e] border border-white/5 hover:border-brand-red/30 p-8 rounded-[2rem] flex flex-col justify-between group md:col-span-1 shadow-lg">
+                    <div class="spotlight-content">
+                        <div class="w-14 h-14 bg-[#1a0f12] rounded-2xl flex items-center justify-center text-brand-red text-2xl mb-8 border border-brand-red/10 shadow-[0_0_15px_rgba(255,46,67,0.1)] group-hover:scale-110 group-hover:bg-brand-red group-hover:text-white transition-all duration-300">
+                            <i class="fa-solid fa-eye"></i>
+                        </div>
+                        <h3 class="text-2xl font-display font-bold text-white mb-3 leading-tight">Жесткий надзор за админами</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Никаких "админок" в личных целях. Полный запрет на креатив для личной выгоды. Логи прозрачны, экономика честна.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 2: Кастомный мир (Широкая карточка) -->
+                <div class="reveal spotlight-card bg-gradient-to-br from-[#161214] to-[#0a0b0e] border border-white/5 hover:border-brand-red/30 p-8 rounded-[2rem] flex flex-col justify-between group md:col-span-2 relative overflow-hidden shadow-lg" style="transition-delay: 100ms;">
+                    <!-- Фоновая текстура для карточки -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-brand-red/5 to-transparent z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="spotlight-content h-full flex flex-col justify-center">
+                        <div class="w-14 h-14 bg-[#1a0f12] rounded-2xl flex items-center justify-center text-brand-red text-2xl mb-8 border border-brand-red/10 shadow-[0_0_15px_rgba(255,46,67,0.1)] group-hover:scale-110 group-hover:bg-brand-red group-hover:text-white transition-all duration-300">
+                            <i class="fa-solid fa-mountain-sun"></i>
+                        </div>
+                        <h3 class="text-3xl font-display font-bold text-white mb-4 leading-tight">Грандиозный кастомный мир</h3>
+                        <p class="text-gray-400 text-base leading-relaxed max-w-xl">
+                            Забудь про скучную ваниллу. Новые потрясающие биомы, реалистичная генерация гор, глубокие пещеры и структуры, которые хочется исследовать бесконечно.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 3: Vanilla+ -->
+                <div class="reveal spotlight-card bg-gradient-to-br from-[#161214] to-[#0a0b0e] border border-white/5 hover:border-brand-red/30 p-8 rounded-[2rem] flex flex-col justify-between group md:col-span-2 shadow-lg" style="transition-delay: 200ms;">
+                    <div class="spotlight-content flex flex-col sm:flex-row gap-8 items-center h-full">
+                        <div class="flex-1">
+                            <div class="w-14 h-14 bg-[#1a0f12] rounded-2xl flex items-center justify-center text-brand-red text-2xl mb-6 border border-brand-red/10 shadow-[0_0_15px_rgba(255,46,67,0.1)] group-hover:scale-110 group-hover:bg-brand-red group-hover:text-white transition-all duration-300">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            </div>
+                            <h3 class="text-3xl font-display font-bold text-white mb-4 leading-tight">Vanilla+ Опыт</h3>
+                            <p class="text-gray-400 text-base leading-relaxed">
+                                Атмосфера дополнена без вреда для баланса. Голосовой чат (Simple Voice Chat), система эмоций (Emotecraft), возможность сидеть на ступеньках и улучшенная рыбалка.
+                            </p>
+                        </div>
+                        <!-- Иконки фич -->
+                        <div class="grid grid-cols-2 gap-4 shrink-0 mt-4 sm:mt-0">
+                            <div class="bg-black/30 p-4 rounded-xl flex flex-col items-center text-center gap-2 border border-white/5 hover:border-brand-red/20 transition-colors">
+                                <i class="fa-solid fa-microphone text-gray-300"></i>
+                                <span class="text-xs text-gray-400">Voice Chat</span>
+                            </div>
+                            <div class="bg-black/30 p-4 rounded-xl flex flex-col items-center text-center gap-2 border border-white/5 hover:border-brand-red/20 transition-colors">
+                                <i class="fa-solid fa-face-smile text-gray-300"></i>
+                                <span class="text-xs text-gray-400">Эмоции</span>
                             </div>
                         </div>
-                        <div id="copy-toast" class="absolute -top-14 left-1/2 -translate-x-1/2 bg-green-500 text-black text-xs font-bold px-4 py-2 rounded-lg opacity-0 transition-all transform translate-y-2 pointer-events-none shadow-lg whitespace-nowrap">
-                            IP Скопирован в буфер!
+                    </div>
+                </div>
+
+                <!-- Card 4: Защита -->
+                <div class="reveal spotlight-card bg-gradient-to-br from-[#161214] to-[#0a0b0e] border border-white/5 hover:border-brand-red/30 p-8 rounded-[2rem] flex flex-col justify-between group md:col-span-1 shadow-lg" style="transition-delay: 300ms;">
+                    <div class="spotlight-content">
+                        <div class="w-14 h-14 bg-[#1a0f12] rounded-2xl flex items-center justify-center text-brand-red text-2xl mb-8 border border-brand-red/10 shadow-[0_0_15px_rgba(255,46,67,0.1)] group-hover:scale-110 group-hover:bg-brand-red group-hover:text-white transition-all duration-300">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h3 class="text-2xl font-display font-bold text-white mb-3 leading-tight">Полная защита (CoreProtect)</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Гриферство бессмысленно. Любое разрушение откатывается в один клик. Мы вернем ваши постройки и ресурсы до последнего блока, а нарушитель получит бан.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Сезона -->
+    <section class="py-32 px-4 relative overflow-hidden">
+        <!-- Декоративное свечение на фоне -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-red/5 rounded-full blur-[120px] pointer-events-none z-0"></div>
+
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="reveal text-center mb-24">
+                <div class="inline-flex items-center justify-center px-5 py-2 rounded-full border border-brand-red/30 bg-brand-red/10 text-brand-red text-xs font-bold tracking-[0.2em] uppercase mb-6 shadow-[0_0_20px_rgba(255,46,67,0.15)] backdrop-blur-md">
+                    <i class="fa-solid fa-map-location-dot mr-2"></i> Дорожная карта
+                </div>
+                <h2 class="text-5xl md:text-6xl lg:text-7xl font-display font-black text-white uppercase tracking-tighter mb-6">
+                    События <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-red via-brand-copper to-brand-red bg-[length:200%_auto] animate-pulse drop-shadow-[0_0_15px_rgba(255,46,67,0.3)]">Сезона III</span>
+                </h2>
+                <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto font-light">История пишется нашими игроками. Присоединяйся к глобальным событиям сервера.</p>
+            </div>
+
+            <!-- Контейнер таймлайна с центральной линией -->
+            <div class="relative before:absolute before:inset-0 before:ml-6 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-1 before:bg-gradient-to-b before:from-brand-red before:via-brand-copper before:to-purple-900 before:opacity-30 before:rounded-full">
+
+                <!-- Этап 1: Уже доступно (Активный) -->
+                <div class="reveal relative flex flex-col md:flex-row justify-between items-center mb-12 md:mb-20 group">
+                    <!-- Карточка (Левая сторона для десктопа) -->
+                    <div class="w-full md:w-[45%] pl-16 md:pl-0 md:pr-16 md:text-right order-2 md:order-1">
+                        <div class="glass relative p-8 md:p-10 rounded-[2.5rem] border border-brand-red/40 bg-gradient-to-br from-brand-red/10 to-[#0a0b0e] shadow-[0_0_40px_rgba(255,46,67,0.15)] hover:shadow-[0_0_60px_rgba(255,46,67,0.3)] hover:-translate-y-2 transition-all duration-500 overflow-hidden text-left md:text-right">
+                            <div class="absolute -top-24 -right-24 w-48 h-48 bg-brand-red/30 blur-[60px] rounded-full pointer-events-none group-hover:bg-brand-red/40 transition-colors"></div>
+                            
+                            <div class="relative z-10">
+                                <div class="flex flex-col md:flex-row md:justify-end items-start md:items-center gap-4 mb-6">
+                                    <span class="md:hidden inline-block px-4 py-2 rounded-xl bg-brand-red text-white text-[10px] font-bold uppercase tracking-widest shadow-[0_0_20px_rgba(255,46,67,0.5)]">Уже доступно</span>
+                                    <h3 class="text-3xl md:text-4xl font-display font-black text-white drop-shadow-md">Открытие Сезона</h3>
+                                    <span class="hidden md:inline-block px-4 py-2 rounded-xl bg-brand-red text-white text-[10px] font-bold uppercase tracking-widest shadow-[0_0_20px_rgba(255,46,67,0.5)]">Уже доступно</span>
+                                </div>
+                                <p class="text-gray-300 text-base md:text-lg leading-relaxed font-light">Формирование спавна, первые города, захват лучших территорий и зарождение экономики.</p>
+                            </div>
                         </div>
                     </div>
+                    <!-- Маркер -->
+                    <div class="absolute left-0 md:left-1/2 top-10 md:top-1/2 -translate-y-1/2 md:-translate-x-1/2 w-14 h-14 rounded-full border-4 border-[#0a0b0e] bg-brand-red shadow-[0_0_40px_rgba(255,46,67,1)] z-10 flex items-center justify-center order-1 md:order-2">
+                        <div class="w-4 h-4 bg-white rounded-full animate-ping absolute opacity-75"></div>
+                        <div class="w-3 h-3 bg-white rounded-full relative"></div>
+                    </div>
+                    <div class="hidden md:block w-[45%] order-3"></div>
+                </div>
 
-                    <a href="info.html" class="w-full sm:w-auto px-10 py-6 rounded-xl glass-card text-white font-bold transition-all flex items-center justify-center gap-3 hover:bg-white/10 border border-white/10 hover:border-white/30 text-lg group">
-                        <i class="fa-solid fa-book-open text-blue-400 group-hover:text-blue-300 transition-colors"></i> Как начать
+                <!-- Этап 2: Скоро (АД) -->
+                <div class="reveal relative flex flex-col md:flex-row justify-between items-center mb-12 md:mb-20 group" style="transition-delay: 100ms;">
+                    <div class="hidden md:block w-[45%] order-1"></div>
+                    <!-- Маркер -->
+                    <div class="absolute left-0 md:left-1/2 top-10 md:top-1/2 -translate-y-1/2 md:-translate-x-1/2 w-14 h-14 rounded-full border-4 border-[#0a0b0e] bg-[#161214] border-brand-copper/40 group-hover:border-brand-copper group-hover:bg-brand-copper/20 shadow-[0_0_20px_rgba(230,126,34,0)] group-hover:shadow-[0_0_40px_rgba(230,126,34,0.6)] transition-all duration-500 z-10 flex items-center justify-center order-1 md:order-2">
+                        <div class="w-3 h-3 bg-brand-copper/50 rounded-full group-hover:bg-brand-copper transition-colors"></div>
+                    </div>
+                    <!-- Карточка -->
+                    <div class="w-full md:w-[45%] pl-16 md:pl-16 md:pr-0 order-2 md:order-3">
+                        <div class="glass relative p-8 md:p-10 rounded-[2.5rem] border border-white/5 hover:border-brand-copper/40 bg-gradient-to-br from-[#161214] to-[#0a0b0e] hover:bg-gradient-to-br hover:from-brand-copper/10 hover:to-[#0a0b0e] shadow-lg hover:shadow-[0_0_50px_rgba(230,126,34,0.15)] hover:-translate-y-2 transition-all duration-500 overflow-hidden text-left">
+                            <div class="flex flex-col items-start gap-4 mb-6">
+                                <span class="inline-block px-4 py-2 rounded-xl bg-orange-500/10 text-brand-copper text-[10px] font-bold uppercase tracking-widest border border-orange-500/20 group-hover:bg-brand-copper group-hover:text-white transition-colors">Скоро</span>
+                                <h3 class="text-3xl md:text-4xl font-display font-black text-white group-hover:text-brand-copper transition-colors">Открытие Ада</h3>
+                            </div>
+                            <p class="text-gray-400 group-hover:text-gray-300 text-base md:text-lg leading-relaxed font-light transition-colors">Снятие барьера в Нижний мир. Первая кровопролитная битва за незерит и ресурсы.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Этап 3: Медные раскопки -->
+                <div class="reveal relative flex flex-col md:flex-row justify-between items-center mb-12 md:mb-20 group" style="transition-delay: 200ms;">
+                    <!-- Карточка -->
+                    <div class="w-full md:w-[45%] pl-16 md:pl-0 md:pr-16 md:text-right order-2 md:order-1">
+                        <div class="glass relative p-8 md:p-10 rounded-[2.5rem] border border-white/5 hover:border-brand-patina/40 bg-gradient-to-br from-[#161214] to-[#0a0b0e] hover:bg-gradient-to-br hover:from-brand-patina/10 hover:to-[#0a0b0e] shadow-lg hover:shadow-[0_0_50px_rgba(26,188,156,0.15)] hover:-translate-y-2 transition-all duration-500 overflow-hidden text-left md:text-right">
+                            <div class="flex flex-col md:flex-row md:justify-end items-start md:items-center gap-4 mb-6">
+                                <span class="md:hidden inline-block px-4 py-2 rounded-xl bg-brand-patina/10 text-brand-patina text-[10px] font-bold uppercase tracking-widest border border-brand-patina/20 group-hover:bg-brand-patina group-hover:text-white transition-colors">Скоро</span>
+                                <h3 class="text-3xl md:text-4xl font-display font-black text-white group-hover:text-brand-patina transition-colors">Медные Раскопки</h3>
+                                <span class="hidden md:inline-block px-4 py-2 rounded-xl bg-brand-patina/10 text-brand-patina text-[10px] font-bold uppercase tracking-widest border border-brand-patina/20 group-hover:bg-brand-patina group-hover:text-white transition-colors">Скоро</span>
+                            </div>
+                            <p class="text-gray-400 group-hover:text-gray-300 text-base md:text-lg leading-relaxed font-light transition-colors">Глобальный ивент. Поиск Затерянной Лаборатории Медных Големов. Эхо Коллапса начинает звучать.</p>
+                        </div>
+                    </div>
+                    <!-- Маркер -->
+                    <div class="absolute left-0 md:left-1/2 top-10 md:top-1/2 -translate-y-1/2 md:-translate-x-1/2 w-14 h-14 rounded-full border-4 border-[#0a0b0e] bg-[#161214] border-brand-patina/40 group-hover:border-brand-patina group-hover:bg-brand-patina/20 shadow-[0_0_20px_rgba(26,188,156,0)] group-hover:shadow-[0_0_40px_rgba(26,188,156,0.6)] transition-all duration-500 z-10 flex items-center justify-center order-1 md:order-2">
+                        <div class="w-3 h-3 bg-brand-patina/50 rounded-full group-hover:bg-brand-patina transition-colors"></div>
+                    </div>
+                    <div class="hidden md:block w-[45%] order-3"></div>
+                </div>
+
+                <!-- Этап 4: Битва с Драконом -->
+                <div class="reveal relative flex flex-col md:flex-row justify-between items-center group" style="transition-delay: 300ms;">
+                    <div class="hidden md:block w-[45%] order-1"></div>
+                    <!-- Маркер -->
+                    <div class="absolute left-0 md:left-1/2 top-10 md:top-1/2 -translate-y-1/2 md:-translate-x-1/2 w-14 h-14 rounded-full border-4 border-[#0a0b0e] bg-[#161214] border-purple-500/40 group-hover:border-purple-500 group-hover:bg-purple-500/20 shadow-[0_0_20px_rgba(168,85,247,0)] group-hover:shadow-[0_0_40px_rgba(168,85,247,0.6)] transition-all duration-500 z-10 flex items-center justify-center order-1 md:order-2">
+                        <div class="w-3 h-3 bg-purple-500/50 rounded-full group-hover:bg-purple-500 transition-colors"></div>
+                    </div>
+                    <!-- Карточка -->
+                    <div class="w-full md:w-[45%] pl-16 md:pl-16 md:pr-0 order-2 md:order-3">
+                        <div class="glass relative p-8 md:p-10 rounded-[2.5rem] border border-white/5 hover:border-purple-500/40 bg-gradient-to-br from-[#161214] to-[#0a0b0e] hover:bg-gradient-to-br hover:from-purple-500/10 hover:to-[#0a0b0e] shadow-lg hover:shadow-[0_0_50px_rgba(168,85,247,0.15)] hover:-translate-y-2 transition-all duration-500 overflow-hidden text-left">
+                            <div class="flex flex-col items-start gap-4 mb-6">
+                                <span class="inline-block px-4 py-2 rounded-xl bg-purple-500/10 text-purple-400 text-[10px] font-bold uppercase tracking-widest border border-purple-500/20 group-hover:bg-purple-500 group-hover:text-white transition-colors">В планах</span>
+                                <h3 class="text-3xl md:text-4xl font-display font-black text-white group-hover:text-purple-400 transition-colors">Битва с Драконом</h3>
+                            </div>
+                            <p class="text-gray-400 group-hover:text-gray-300 text-base md:text-lg leading-relaxed font-light transition-colors">Открытие Энда. Совместный поход комьюнити, распределение элитр и старт воздушных путей.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-32 text-center reveal">
+                <a href="lore.html" class="inline-flex flex-col items-center justify-center gap-4 group">
+                    <div class="w-16 h-16 rounded-full glass border border-brand-copper/30 group-hover:border-brand-copper group-hover:bg-brand-copper/20 flex items-center justify-center shadow-[0_0_20px_rgba(230,126,34,0.15)] group-hover:shadow-[0_0_40px_rgba(230,126,34,0.4)] transition-all duration-500">
+                        <i class="fa-solid fa-book-open text-2xl text-brand-copper group-hover:scale-110 transition-transform"></i>
+                    </div>
+                    <span class="text-gray-400 group-hover:text-white font-display font-bold text-sm tracking-widest uppercase transition-colors">Прочитать лор сервера</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-24 px-4 bg-white/[0.01] border-t border-white/5">
+        <div class="max-w-3xl mx-auto">
+            <div class="reveal text-center mb-16">
+                <h2 class="text-4xl font-display font-black text-white uppercase tracking-tight mb-4">Ответы на вопросы</h2>
+                <p class="text-gray-400">Всё, что нужно знать перед стартом.</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Вопрос 1 -->
+                <details class="reveal rounded-2xl group relative" open>
+                    <summary class="flex justify-between items-center font-display font-bold text-lg text-white p-6 cursor-pointer select-none hover:text-brand-red transition-colors relative z-10">
+                        <span class="flex items-center gap-3">
+                            <span class="text-brand-red opacity-0 group-open:opacity-100 transition-opacity">●</span>
+                            Какая версия и IP адрес?
+                        </span>
+                        <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-brand-red/10 transition-colors">
+                            <i class="fa-solid fa-plus faq-icon text-gray-500 text-sm group-hover:text-brand-red"></i>
+                        </div>
+                    </summary>
+                    <div class="px-6 pb-6 pt-4 text-gray-400 text-sm leading-relaxed relative z-10">
+                        Версия сервера: <strong class="text-white">1.21.11 (Fabric)</strong>. <br>
+                        IP адрес для подключения: <code class="bg-black/50 text-brand-red px-2 py-1 rounded mx-1 select-all border border-brand-red/20">redoku.bisquit.host</code>
+                    </div>
+                </details>
+
+                <!-- Вопрос 2 -->
+                <details class="reveal rounded-2xl group relative">
+                    <summary class="flex justify-between items-center font-display font-bold text-lg text-white p-6 cursor-pointer select-none hover:text-brand-red transition-colors relative z-10">
+                        <span class="flex items-center gap-3">
+                            <span class="text-brand-red opacity-0 group-open:opacity-100 transition-opacity">●</span>
+                            Нужна ли лицензия для игры?
+                        </span>
+                        <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-brand-red/10 transition-colors">
+                            <i class="fa-solid fa-plus faq-icon text-gray-500 text-sm group-hover:text-brand-red"></i>
+                        </div>
+                    </summary>
+                    <div class="px-6 pb-6 pt-4 text-gray-400 text-sm leading-relaxed relative z-10">
+                        Нет, сервер доступен как для лицензионных аккаунтов, так и для пиратов. Мы рекомендуем использовать <strong>Legacy Launcher</strong> для комфортной игры без ошибок аутентификации. Подробнее в разделе <a href="info.html" class="text-brand-red hover:underline">Как начать</a>.
+                    </div>
+                </details>
+
+                <!-- Вопрос 3 -->
+                <details class="reveal rounded-2xl group relative">
+                    <summary class="flex justify-between items-center font-display font-bold text-lg text-white p-6 cursor-pointer select-none hover:text-brand-red transition-colors relative z-10">
+                        <span class="flex items-center gap-3">
+                            <span class="text-brand-red opacity-0 group-open:opacity-100 transition-opacity">●</span>
+                            Можно ли купить админку или креатив?
+                        </span>
+                        <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-brand-red/10 transition-colors">
+                            <i class="fa-solid fa-plus faq-icon text-gray-500 text-sm group-hover:text-brand-red"></i>
+                        </div>
+                    </summary>
+                    <div class="px-6 pb-6 pt-4 text-gray-400 text-sm leading-relaxed relative z-10">
+                        <strong>Категорически нет.</strong> Мы не продаем привилегии, дающие нечестное преимущество, админки, OP или креатив. Команда проекта набирается строго через заявки и собеседования в нашем Discord.
+                    </div>
+                </details>
+
+                <!-- Вопрос 4 -->
+                <details class="reveal rounded-2xl group relative">
+                    <summary class="flex justify-between items-center font-display font-bold text-lg text-white p-6 cursor-pointer select-none hover:text-brand-red transition-colors relative z-10">
+                        <span class="flex items-center gap-3">
+                            <span class="text-brand-red opacity-0 group-open:opacity-100 transition-opacity">●</span>
+                            Что делают с гриферами и ворами?
+                        </span>
+                        <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-brand-red/10 transition-colors">
+                            <i class="fa-solid fa-plus faq-icon text-gray-500 text-sm group-hover:text-brand-red"></i>
+                        </div>
+                    </summary>
+                    <div class="px-6 pb-6 pt-4 text-gray-400 text-sm leading-relaxed relative z-10">
+                        Мы используем плагин CoreProtect. Все действия игроков логируются. Если вас загриферили или обокрали сундуки — создайте тикет в Discord. Мы вычислим нарушителя, выдадим ему бан, а ваши постройки и ресурсы <strong>откатим (восстановим)</strong> за пару секунд.
+                    </div>
+                </details>
+
+                <!-- Вопрос 5 -->
+                <details class="reveal rounded-2xl group relative">
+                    <summary class="flex justify-between items-center font-display font-bold text-lg text-white p-6 cursor-pointer select-none hover:text-brand-red transition-colors relative z-10">
+                        <span class="flex items-center gap-3">
+                            <span class="text-brand-red opacity-0 group-open:opacity-100 transition-opacity">●</span>
+                            Я получил бан. Как получить разбан?
+                        </span>
+                        <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-brand-red/10 transition-colors">
+                            <i class="fa-solid fa-plus faq-icon text-gray-500 text-sm group-hover:text-brand-red"></i>
+                        </div>
+                    </summary>
+                    <div class="px-6 pb-6 pt-4 text-gray-400 text-sm leading-relaxed relative z-10">
+                        Разбан (Индульгенцию) можно приобрести в нашем <a href="donate.html" class="text-brand-red hover:underline">Магазине</a> за 89₽. <br>
+                        <em>Важно:</em> Индульгенция не работает, если вы занесены в ЧС проекта (использование читов, дюпов, целенаправленный вред серверу). В таком случае средства не возвращаются.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="pt-20 pb-10 px-6 border-t border-white/10 bg-black/60 backdrop-blur-md relative z-20">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            
+            <!-- Описание -->
+            <div class="md:col-span-2">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-8 h-8 bg-brand-red rounded-lg flex items-center justify-center text-white font-display font-bold text-sm shadow-[0_0_10px_rgba(255,46,67,0.3)]">R</div>
+                    <span class="font-display font-bold text-xl text-white tracking-widest uppercase">REDOKU</span>
+                </div>
+                <p class="text-gray-400 max-w-sm mb-8 text-sm leading-relaxed">
+                    Премиальный Vanilla+ проект, созданный игроками для игроков. Мы ценим атмосферу классического майнкрафта, честность и техническое совершенство.
+                </p>
+                <div class="flex gap-3">
+                    <a href="https://dsc.gg/redoku" target="_blank" class="w-10 h-10 glass rounded-xl flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#5865F2] hover:border-[#5865F2] transition-all" aria-label="Discord">
+                        <i class="fa-brands fa-discord text-lg"></i>
+                    </a>
+                    <a href="https://t.me/Redoku" target="_blank" class="w-10 h-10 glass rounded-xl flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#229ED9] hover:border-[#229ED9] transition-all" aria-label="Telegram">
+                        <i class="fa-brands fa-telegram text-lg"></i>
+                    </a>
+                    <a href="mailto:support@redoku.ru" class="w-10 h-10 glass rounded-xl flex items-center justify-center text-gray-300 hover:text-white hover:bg-brand-red hover:border-brand-red transition-all" aria-label="Email">
+                        <i class="fa-solid fa-envelope text-lg"></i>
                     </a>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <div class="border-y border-white/5 bg-white/[0.02] backdrop-blur-sm relative z-20 mb-20 animate-on-load" style="animation-delay: 0.4s;">
-        <div class="max-w-7xl mx-auto px-4 py-14 flex flex-wrap justify-center md:justify-between gap-12 text-center md:text-left">
-            <div class="group hover:-translate-y-1 transition-transform duration-300">
-                <div class="text-4xl md:text-5xl font-black text-white mb-2 group-hover:text-brand-red transition-colors">1.21.11</div>
-                <div class="text-xs text-gray-400 font-mono uppercase tracking-widest font-bold opacity-80">Версия</div>
-            </div>
-            <div class="group hover:-translate-y-1 transition-transform duration-300">
-                <div class="text-4xl md:text-5xl font-black text-white mb-2 group-hover:text-brand-red transition-colors">99%</div>
-                <div class="text-xs text-gray-400 font-mono uppercase tracking-widest font-bold opacity-80">Uptime</div>
-            </div>
-            <div class="group hover:-translate-y-1 transition-transform duration-300">
-                <div class="text-4xl md:text-5xl font-black text-white mb-2 group-hover:text-brand-red transition-colors">ДОЛГИЕ</div>
-                <div class="text-xs text-gray-400 font-mono uppercase tracking-widest font-bold opacity-80"></div>
-            </div>
-            <div class="group hover:-translate-y-1 transition-transform duration-300">
-                <div class="text-4xl md:text-5xl font-black text-white mb-2 group-hover:text-brand-red transition-colors">16+</div>
-                <div class="text-xs text-gray-400 font-mono uppercase tracking-widest font-bold opacity-80">Комьюнити</div>
-            </div>
-        </div>
-    </div>
-
-    <section id="features" class="py-24 relative">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="mb-20 text-center fade-up">
-                <h2 class="text-4xl md:text-6xl font-black text-white mb-6">Почему <span class="text-brand-red text-glow">Redoku</span>?</h2>
-                <p class="text-gray-400 text-lg max-w-2xl mx-auto">Уникальный опыт игры, которого нет у других.</p>
+            <!-- Ссылки -->
+            <div>
+                <h4 class="text-white font-display font-bold mb-6 text-sm tracking-widest uppercase">Навигация</h4>
+                <ul class="space-y-3 text-sm text-gray-400">
+                    <li><a href="info.html" class="hover:text-brand-red transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Как начать</a></li>
+                    <li><a href="lore.html" class="hover:text-brand-red transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Лор мира</a></li>
+                    <li><a href="rules.html" class="hover:text-brand-red transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Правила</a></li>
+                    <li><a href="donate.html" class="hover:text-brand-red transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Поддержать</a></li>
+                </ul>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                
-                <div class="glass-card p-8 fade-up group">
-                    <div class="w-14 h-14 bg-purple-500/20 rounded-xl flex items-center justify-center mb-6 border border-purple-500/20 text-purple-400 text-2xl group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(168,85,247,0.2)]">
-                        <i class="fa-solid fa-user-secret"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Надзор за Админами</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Мы внимательно следим за действиями администрации. Никакого ГМ-а в личных целях, никакой выдачи ресурсов. Полная прозрачность.
-                    </p>
-                </div>
-
-                <div class="glass-card p-8 fade-up group">
-                    <div class="w-14 h-14 bg-green-500/20 rounded-xl flex items-center justify-center mb-6 border border-green-500/20 text-green-400 text-2xl group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(34,197,94,0.2)]">
-                        <i class="fa-solid fa-mountain-sun"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Кастомный Мир</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Забудьте про скучную генерацию. Вас ждут невероятные пейзажи, новые биомы и структуры, созданные специально для нашего сервера.
-                    </p>
-                </div>
-
-                <div class="glass-card p-8 fade-up group">
-                    <div class="w-14 h-14 bg-yellow-500/20 rounded-xl flex items-center justify-center mb-6 border border-yellow-500/20 text-yellow-400 text-2xl group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(234,179,8,0.2)]">
-                        <i class="fa-solid fa-gear"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Vanilla+ Механики</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Небольшие, но приятные дополнения: сидение на ступеньках, эмоции, войс-чат и улучшенная рыбалка. Не ломает ванилу, но делает игру живой.
-                    </p>
-                </div>
-
-                <div class="glass-card p-8 fade-up group">
-                    <div class="w-14 h-14 bg-blue-500/20 rounded-xl flex items-center justify-center mb-6 border border-blue-500/20 text-blue-400 text-2xl group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(59,130,246,0.2)]">
-                        <i class="fa-solid fa-users"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Активное Комьюнити</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Игроки, которые всегда помогут. Совместные проекты, строительство городов и экономические союзы. Здесь вы найдете друзей.
-                    </p>
-                </div>
-
-                <div class="glass-card p-8 fade-up group md:col-span-2 relative overflow-hidden">
-                    <div class="absolute right-0 top-0 w-64 h-64 bg-brand-red/10 blur-[80px] rounded-full pointer-events-none"></div>
-                    <div class="relative z-10 flex flex-col md:flex-row items-start gap-6">
-                        <div class="w-16 h-16 shrink-0 bg-red-500/20 rounded-xl flex items-center justify-center border border-red-500/20 text-brand-red text-3xl group-hover:rotate-12 transition-transform shadow-[0_0_20px_rgba(255,46,67,0.3)]">
-                            <i class="fa-solid fa-shield-halved"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-2xl font-bold text-white mb-4">Полная защита и Поддержка</h3>
-                            <p class="text-gray-300 text-sm leading-relaxed mb-4">
-                                Нас не пугают гриферы и читеры. У нас стоят мощные системы логирования (CoreProtect).
-                                <br><br>
-                                <span class="text-white font-medium">Вас загриферили?</span> Не беда. Просто напишите нам. Мы откатим разрушения одной командой, вернем вещи и забаним нарушителя. Мы всегда на стороне честных игроков.
-                            </p>
-                            <a href="https://dsc.gg/redoku" class="inline-flex items-center gap-2 text-brand-red hover:text-white font-bold transition-colors text-sm uppercase tracking-wider group-hover:translate-x-2 transition-transform duration-300">
-                                Открыть тикет в Discord <i class="fa-solid fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section id="schedule" class="py-20 relative">
-        <div class="max-w-5xl mx-auto px-4">
-            <div class="text-center mb-16 fade-up">
-                <h2 class="text-4xl font-black text-white mb-4">РАСПИСАНИЕ <span class="text-brand-red">СЕЗОНА</span></h2>
-                <p class="text-gray-400">Ключевые события мира. Приготовьтесь к приключениям.</p>
-            </div>
-
-            <div class="relative fade-up">
-                <div class="timeline-line shadow-[0_0_15px_#ff2e43]"></div>
-                
-                <div class="space-y-24">
-                    <div class="flex flex-col md:flex-row items-center gap-8 relative group">
-                        <div class="md:w-1/2 text-center md:text-right group-hover:-translate-x-2 transition-transform">
-                            <div class="inline-block px-4 py-1 bg-green-500/10 text-green-400 rounded-full text-xs font-bold border border-green-500/20 mb-2 shadow-[0_0_10px_rgba(34,197,94,0.3)]">УЖЕ ДОСТУПНО</div>
-                            <h3 class="text-2xl font-bold text-white">Открытие Сезона</h3>
-                            <p class="text-gray-400 text-sm mt-2">Старт выживания, выбор территорий, начало строительства спавна.</p>
-                        </div>
-                        <div class="w-6 h-6 bg-brand-red rounded-full shadow-[0_0_20px_#ff2e43] z-10 shrink-0 border-4 border-[#0F1116] animate-pulse"></div>
-                        <div class="md:w-1/2">
-                            <div class="text-4xl font-black text-white/10 font-mono group-hover:text-white/20 transition-colors">Start</div>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col md:flex-row-reverse items-center gap-8 relative group">
-                        <div class="md:w-1/2 text-center md:text-left group-hover:translate-x-2 transition-transform">
-                            <div class="inline-block px-4 py-1 bg-orange-600/10 text-orange-500 rounded-full text-xs font-bold border border-orange-600/20 mb-2 shadow-[0_0_10px_rgba(234,88,12,0.3)]">СКОРО</div>
-                            <h3 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500 drop-shadow-[0_0_10px_rgba(220,38,38,0.5)]">Открытие Ада</h3>
-                            <p class="text-gray-400 text-sm mt-2">Доступ в Нижний мир. Снятие барьера. Опасность на каждом шагу.</p>
-                        </div>
-                        <div class="w-6 h-6 bg-[#1a1a20] border-2 border-orange-600 rounded-full z-10 shrink-0 shadow-[0_0_20px_rgba(234,88,12,0.5)] relative">
-                             <div class="absolute inset-0 bg-orange-500 rounded-full animate-ping opacity-20"></div>
-                        </div>
-                        <div class="md:w-1/2 text-right">
-                            <div class="text-4xl font-black text-white/10 font-mono group-hover:text-orange-500/20 transition-colors">Nether</div>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col md:flex-row items-center gap-8 relative group">
-                        <div class="md:w-1/2 text-center md:text-right group-hover:-translate-x-2 transition-transform">
-                            <div class="inline-block px-4 py-1 bg-orange-700/10 text-orange-600 rounded-full text-xs font-bold border border-orange-700/20 mb-2 shadow-[0_0_10px_rgba(184,115,51,0.3)]">СКОРО</div>
-                            <h3 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-yellow-600 drop-shadow-[0_0_10px_rgba(184,115,51,0.5)]">Медные Раскопки</h3>
-                            <p class="text-gray-400 text-sm mt-2">Массовые раскопки медных рудников. Уникальные ресурсы и награды для всех участников.</p>
-                        </div>
-                        <div class="w-6 h-6 bg-[#1a1a20] border-2 border-orange-600 rounded-full z-10 shrink-0 shadow-[0_0_20px_rgba(184,115,51,0.5)] relative">
-                             <div class="absolute inset-0 bg-orange-600 rounded-full animate-ping opacity-20"></div>
-                        </div>
-                        <div class="md:w-1/2">
-                            <div class="text-4xl font-black text-white/10 font-mono group-hover:text-orange-600/20 transition-colors">Copper</div>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col md:flex-row items-center gap-8 relative group">
-                        <div class="md:w-1/2 text-center md:text-right group-hover:-translate-x-2 transition-transform">
-                            <div class="inline-block px-4 py-1 bg-purple-600/10 text-purple-400 rounded-full text-xs font-bold border border-purple-600/20 mb-2 shadow-[0_0_10px_rgba(147,51,234,0.3)]">СКОРО</div>
-                            <h3 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]">Битва с Драконом</h3>
-                            <p class="text-gray-400 text-sm mt-2">Масштабный ивент. Открытие Энда и элитр. Финальная битва.</p>
-                        </div>
-                        <div class="w-6 h-6 bg-[#1a1a20] border-2 border-purple-500 rounded-full z-10 shrink-0 shadow-[0_0_20px_rgba(168,85,247,0.5)] relative">
-                            <div class="absolute inset-0 bg-purple-500 rounded-full animate-ping opacity-20"></div>
-                        </div>
-                        <div class="md:w-1/2">
-                            <div class="text-4xl font-black text-white/10 font-mono group-hover:text-purple-500/20 transition-colors">The End</div>
-                        </div>
-                    </div>
+            <!-- Доки -->
+            <div>
+                <h4 class="text-white font-display font-bold mb-6 text-sm tracking-widest uppercase">Документы</h4>
+                <ul class="space-y-3 text-sm text-gray-400">
+                    <li><a href="offer.html" class="hover:text-white transition-colors">Публичная оферта</a></li>
+                    <li><a href="privacy.html" class="hover:text-white transition-colors">Политика конф-ти</a></li>
+                </ul>
+                <div class="mt-8 p-4 glass rounded-xl inline-block border-white/5">
+                    <div class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">IP Сервера</div>
+                    <code class="text-xs text-white font-mono font-bold select-all">redoku.bisquit.host</code>
                 </div>
             </div>
         </div>
-    </section>
 
-    <section id="faq" class="py-32 relative overflow-hidden bg-white/[0.01]">
-        <div class="max-w-3xl mx-auto px-4 relative z-10">
-            <h2 class="text-4xl font-bold text-white mb-16 text-center fade-up">Частые вопросы (FAQ)</h2>
-            <div class="space-y-5 fade-up">
-                <div class="glass-card group cursor-pointer hover:bg-white/5" onclick="toggleAccordion(this)">
-                    <div class="p-6 flex justify-between items-center">
-                        <span class="font-medium text-white group-hover:text-brand-red transition-colors text-lg">Какая версия и IP?</span>
-                        <i class="fa-solid fa-plus text-gray-500 transition-transform duration-300 transform group-hover:rotate-90"></i>
-                    </div>
-                    <div class="px-6 pb-0 max-h-0 overflow-hidden transition-all duration-300 opacity-50 content border-t border-white/0">
-                        <p class="pb-6 pt-4 text-gray-300 text-sm leading-relaxed">
-                            Версия сервера: <b>1.21.11</b> (Fabric).<br>
-                            IP Адрес: <code class="bg-black/50 px-2 py-1 rounded text-green-400">redoku.bisquit.host</code>
-                        </p>
-                    </div>
-                </div>
-                <div class="glass-card group cursor-pointer hover:bg-white/5" onclick="toggleAccordion(this)">
-                    <div class="p-6 flex justify-between items-center">
-                        <span class="font-medium text-white group-hover:text-brand-red transition-colors text-lg">Нужна ли лицензия?</span>
-                        <i class="fa-solid fa-plus text-gray-500 transition-transform duration-300 transform group-hover:rotate-90"></i>
-                    </div>
-                    <div class="px-6 pb-0 max-h-0 overflow-hidden transition-all duration-300 opacity-50 content border-t border-white/0">
-                        <p class="pb-6 pt-4 text-gray-300 text-sm leading-relaxed">
-                            Нет, лицензия не обязательна. Вы можете играть с любого лаунчера (рекомендуем Legacy Launcher), но использование скинов доступно через систему Ely.by или официальную лицензию.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="glass-card group cursor-pointer hover:bg-white/5" onclick="toggleAccordion(this)">
-                    <div class="p-6 flex justify-between items-center">
-                        <span class="font-medium text-white group-hover:text-brand-red transition-colors text-lg">Как стать администратором?</span>
-                        <i class="fa-solid fa-plus text-gray-500 transition-transform duration-300 transform group-hover:rotate-90"></i>
-                    </div>
-                    <div class="px-6 pb-0 max-h-0 overflow-hidden transition-all duration-300 opacity-50 content border-t border-white/0">
-                        <p class="pb-6 pt-4 text-gray-300 text-sm leading-relaxed">
-                            Набор в администрацию проходит через заявки в нашем Discord сервере. Мы не продаем админки — мы ищем ответственных людей.
-                        </p>
-                    </div>
-                </div>
-                <div class="glass-card group cursor-pointer hover:bg-white/5" onclick="toggleAccordion(this)">
-                    <div class="p-6 flex justify-between items-center">
-                        <span class="font-medium text-white group-hover:text-brand-red transition-colors text-lg">Что делать, если меня загриферили?</span>
-                        <i class="fa-solid fa-plus text-gray-500 transition-transform duration-300 transform group-hover:rotate-90"></i>
-                    </div>
-                    <div class="px-6 pb-0 max-h-0 overflow-hidden transition-all duration-300 opacity-50 content border-t border-white/0">
-                        <p class="pb-6 pt-4 text-gray-300 text-sm leading-relaxed">
-                            Не паникуйте. Напишите админу. Мы увидим, кто это сделал, откатим разрушения одной командой и накажем нарушителя.
-                        </p>
-                    </div>
-                </div>
-                <div class="glass-card group cursor-pointer hover:bg-white/5" onclick="toggleAccordion(this)">
-                    <div class="p-6 flex justify-between items-center">
-                        <span class="font-medium text-white group-hover:text-brand-red transition-colors text-lg">Можно ли купить разбан?</span>
-                        <i class="fa-solid fa-plus text-gray-500 transition-transform duration-300 transform group-hover:rotate-90"></i>
-                    </div>
-                    <div class="px-6 pb-0 max-h-0 overflow-hidden transition-all duration-300 opacity-50 content border-t border-white/0">
-                        <p class="pb-6 pt-4 text-gray-300 text-sm leading-relaxed">
-                            Да, в нашем магазине есть услуга разбана за 89₽. Однако, при повторных грубых нарушениях разбан может быть недоступен.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="relative pt-20 pb-10 overflow-hidden border-t border-white/5 bg-[#050508]">
-        <div class="absolute inset-0 bg-gradient-to-t from-brand-red/5 to-transparent pointer-events-none"></div>
-        
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
-                <div class="md:col-span-5">
-                    <div class="flex items-center gap-3 mb-6">
-                         <div class="w-10 h-10 bg-brand-red rounded-lg flex items-center justify-center font-bold text-white text-xl shadow-[0_0_15px_rgba(255,46,67,0.4)]">R</div>
-                         <span class="font-bold text-3xl text-white tracking-wide">Redoku</span>
-                    </div>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-6 max-w-sm">
-                        Redoku — это не просто сервер, это сообщество. Мы создаем идеальные условия для ванильного выживания с друзьями. Стабильность, защита и атмосфера.
-                    </p>
-                    <div class="flex gap-4">
-                        <a href="https://dsc.gg/redoku" target="_blank" class="w-10 h-10 rounded-lg bg-[#5865F2]/10 text-[#5865F2] hover:bg-[#5865F2] hover:text-white flex items-center justify-center transition-all hover:-translate-y-1">
-                            <i class="fa-brands fa-discord"></i>
-                        </a>
-                        <a href="https://t.me/Redoku" target="_blank" class="w-10 h-10 rounded-lg bg-[#229ED9]/10 text-[#229ED9] hover:bg-[#229ED9] hover:text-white flex items-center justify-center transition-all hover:-translate-y-1">
-                            <i class="fa-brands fa-telegram"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-lg bg-red-600/10 text-red-600 hover:bg-red-600 hover:text-white flex items-center justify-center transition-all hover:-translate-y-1">
-                            <i class="fa-brands fa-youtube"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="md:col-span-3 md:col-start-7">
-                    <h4 class="text-white font-bold mb-6 text-lg">Навигация</h4>
-                    <ul class="space-y-3">
-                        <li><a href="index.html" class="text-gray-400 hover:text-brand-red transition-colors text-sm">Главная</a></li>
-                        <li><a href="info.html" class="text-gray-400 hover:text-brand-red transition-colors text-sm">Как начать</a></li>
-                        <li><a href="rules.html" class="text-gray-400 hover:text-brand-red transition-colors text-sm">Правила</a></li>
-                        <li><a href="donate.html" class="text-gray-400 hover:text-yellow-400 transition-colors text-sm">Магазин</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-brand-red transition-colors text-sm">Банлист</a></li>
-                    </ul>
-                </div>
-
-                <div class="md:col-span-3">
-                    <h4 class="text-white font-bold mb-6 text-lg">Поддержка</h4>
-                    <ul class="space-y-3">
-                        <li class="flex items-center gap-3 text-sm text-gray-400">
-                            <i class="fa-regular fa-envelope text-brand-red"></i>
-                            <span>support@redoku.ru</span>
-                        </li>
-                         <li class="flex items-center gap-3 text-sm text-gray-400">
-                            <i class="fa-brands fa-discord text-brand-red"></i>
-                            <a href="https://dsc.gg/redoku" target="_blank" class="hover:text-white transition-colors">Тикет в Discord</a>
-                        </li>
-                        <li class="flex items-center gap-3 text-sm text-gray-400">
-                            <i class="fa-brands fa-telegram text-brand-red"></i>
-                            <a href="https://t.me/Redoku" target="_blank" class="hover:text-white transition-colors">Связаться в Telegram</a>
-                        </li>
-                    </ul>
-                    <button onclick="copyIp()" class="mt-6 w-full py-2 rounded-lg border border-white/10 hover:border-brand-red/50 hover:bg-brand-red/5 text-gray-300 text-sm transition-all">
-                        Копировать IP
-                    </button>
-                </div>
-            </div>
-
-            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="text-gray-600 text-xs">
-                    &copy; 2025 Redoku Project. All rights reserved.
-                </div>
-                <div class="flex gap-6 text-gray-600 text-xs">
-                    <a href="privacy.html" class="hover:text-gray-400">Политика конфиденциальности</a>
-                    <a href="offer.html" class="hover:text-gray-400">Публичная оферта</a>
-                </div>
-            </div>
+        <div class="max-w-7xl mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] text-gray-500 font-bold tracking-widest uppercase">
+            <div>&copy; 2025 Redoku. Все права защищены.</div>
+            <div class="text-center md:text-right opacity-50">Not an official Minecraft product.<br>Not approved by or associated with Mojang.</div>
         </div>
     </footer>
 
+    <!-- Toast Notification (Уведомление о копировании) -->
+    <div id="toast" class="fixed bottom-8 right-8 bg-[#1f222b] border border-green-500/30 text-white px-6 py-4 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.5)] flex items-center gap-4 transform translate-y-24 opacity-0 transition-all duration-500 cubic-bezier(0.68, -0.55, 0.265, 1.55) z-[200]">
+        <div class="w-10 h-10 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-check text-lg"></i>
+        </div>
+        <div>
+            <div class="font-display font-bold text-sm text-white">УСПЕШНО!</div>
+            <div class="text-xs text-gray-400">IP скопирован в буфер обмена</div>
+        </div>
+    </div>
+
+    <!-- Интерактивные Скрипты -->
     <script>
+        // Копирование IP с красивой анимацией
         function copyIp() {
             const ip = "redoku.bisquit.host";
+            const toast = document.getElementById('toast');
+            
+            // Кнопки для визуала
+            const textNav = document.getElementById('ip-text-nav');
+            const iconNav = document.getElementById('ip-icon-nav');
+
             navigator.clipboard.writeText(ip).then(() => {
-                const toast = document.getElementById('copy-toast');
-                const display = document.getElementById('ip-display');
+                // Изменяем текст в навбаре
+                if(textNav) {
+                    textNav.innerText = "СКОПИРОВАНО!";
+                    textNav.classList.add('text-green-400');
+                    iconNav.className = "fa-solid fa-check text-green-400";
+                }
+
+                // Показываем Toast
+                toast.classList.remove('translate-y-24', 'opacity-0');
                 
-                toast.classList.remove('opacity-0', 'translate-y-2');
-                display.classList.add('text-green-400');
-                
+                // Возвращаем как было через 3 секунды
                 setTimeout(() => {
-                    toast.classList.add('opacity-0', 'translate-y-2');
-                    display.classList.remove('text-green-400');
-                }, 2000);
+                    if(textNav) {
+                        textNav.innerText = "redoku.bisquit.host";
+                        textNav.classList.remove('text-green-400');
+                        iconNav.className = "fa-regular fa-copy opacity-50 text-xs";
+                    }
+                    toast.classList.add('translate-y-24', 'opacity-0');
+                }, 3000);
             });
         }
 
-        function toggleAccordion(el) {
-            const content = el.querySelector('.content');
-            const icon = el.querySelector('.fa-plus');
-            if (content.style.maxHeight) {
-                content.style.maxHeight = null;
-                content.style.opacity = '0.5';
-                content.classList.remove('border-white/10');
-                content.classList.add('border-white/0');
-                icon.style.transform = 'rotate(0deg)';
+        // Логика мобильного меню
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            
+            if (menu.classList.contains('opacity-0')) {
+                menu.classList.remove('opacity-0', 'pointer-events-none');
+                menu.classList.add('opacity-100', 'pointer-events-auto');
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+                document.body.style.overflow = 'hidden'; // Блокируем скролл
             } else {
-                content.style.maxHeight = content.scrollHeight + "px";
-                content.style.opacity = '1';
-                content.classList.add('border-white/10');
-                content.classList.remove('border-white/0');
-                icon.style.transform = 'rotate(45deg)';
+                menu.classList.add('opacity-0', 'pointer-events-none');
+                menu.classList.remove('opacity-100', 'pointer-events-auto');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+                document.body.style.overflow = '';
             }
         }
 
-        // Обновленный скрипт анимации
-        document.addEventListener('DOMContentLoaded', () => {
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-
-            // Находим все элементы fade-up
-            const elements = document.querySelectorAll('.fade-up');
-            elements.forEach(el => observer.observe(el));
+        // Spotlight эффект для карточек преимуществ
+        document.querySelectorAll('.spotlight-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
         });
+
+        // Анимация при скролле (Intersection Observer)
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    // Опционально: отписываемся после появления
+                    // observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Эффект блюра навбара при скролле
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('shadow-lg');
+                nav.style.background = 'rgba(15, 17, 22, 0.85)';
+            } else {
+                nav.classList.remove('shadow-lg');
+                nav.style.background = 'rgba(15, 17, 22, 0.7)';
+            }
+        });
+
+        // Получение онлайна с сервера
+        async function fetchOnline() {
+            try {
+                // Используем публичное API для получения статуса майнкрафт сервера
+                const res = await fetch('https://api.mcsrvstat.us/2/redoku.bisquit.host');
+                const data = await res.json();
+                
+                const onlineCountElement = document.getElementById('online-count');
+                if (onlineCountElement) {
+                    if (data.online) {
+                        onlineCountElement.innerText = data.players.online;
+                    } else {
+                        onlineCountElement.innerText = "0";
+                    }
+                }
+            } catch (error) {
+                console.error("Не удалось получить статус сервера:", error);
+            }
+        }
+        
+        // Запускаем при загрузке и обновляем каждую минуту
+        fetchOnline();
+        setInterval(fetchOnline, 60000);
     </script>
 </body>
 </html>

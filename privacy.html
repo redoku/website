@@ -1,218 +1,95 @@
 <!DOCTYPE html>
-<html lang="ru" class="scroll-smooth">
+<html lang="ru" class="scroll-smooth dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Политика конфиденциальности — Redoku</title>
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Политика конфиденциальности — Redoku">
+    <meta name="theme-color" content="#ff2e43">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script>
         tailwind.config = {
-            theme: {
-                extend: {
-                    colors: { brand: { red: '#ff2e43', green: '#10b981' } },
-                    fontFamily: { sans: ['Outfit', 'sans-serif'], mono: ['Space Grotesk', 'monospace'] },
-                }
-            }
+            darkMode: 'class',
+            theme: { extend: { colors: { brand: { bg: '#0a0b0e', red: '#ff2e43' } }, fontFamily: { sans: ['Outfit', 'sans-serif'], display: ['Space Grotesk', 'sans-serif'] } } }
         }
     </script>
-
     <style>
-        body { 
-            background-color: #0F1116; 
-            color: #e2e8f0;
-            background-image: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
-        }
-        
-        @keyframes enter {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-on-load { opacity: 0; animation: enter 1s ease-out forwards; }
-        
-        @media (scripting: none) { .animate-on-load { opacity: 1 !important; transform: none !important; } }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 1.5rem;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s;
-        }
-        
-        .spotlight-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.06), transparent 40%);
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
-            z-index: 1;
-        }
-        .spotlight-card:hover::before { opacity: 1; }
-        .spotlight-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
+        body { background-color: #0a0b0e; color: #e2e8f0; }
+        .glass-nav { background: rgba(15, 17, 22, 0.7); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .prose h2 { color: white; font-family: 'Space Grotesk', sans-serif; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; font-size: 1.5rem; }
+        .prose p { color: #9ca3af; margin-bottom: 1rem; line-height: 1.6; }
+        .prose ul { list-style-type: disc; padding-left: 1.5rem; color: #9ca3af; margin-bottom: 1rem; }
+        .prose li { margin-bottom: 0.5rem; }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased selection:bg-brand-red/30 selection:text-white">
 
-    <nav class="fixed top-0 w-full z-50 pt-6 px-4 animate-on-load">
-        <div class="max-w-6xl mx-auto bg-[#141418]/90 backdrop-blur-xl border border-white/10 rounded-full px-6 py-3 flex items-center justify-between shadow-lg">
-            <a href="index.html" class="flex items-center gap-3 font-mono font-bold text-xl text-white group">
-                <span class="text-brand-red group-hover:text-white transition-colors">R</span> REDOKU
-            </a>
-            <div class="flex items-center gap-4">
-                <a href="index.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors bg-white/5 px-4 py-2 rounded-full border border-white/5 hover:border-white/20 hover:bg-white/10">
-                    <i class="fa-solid fa-house mr-2"></i> На главную
-                </a>
-                <a href="info.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors bg-white/5 px-4 py-2 rounded-full border border-white/5 hover:border-white/20 hover:bg-white/10">
-                    <i class="fa-solid fa-info-circle mr-2"></i> Инфо
-                </a>
-                <a href="lore.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors bg-white/5 px-4 py-2 rounded-full border border-white/5 hover:border-white/20 hover:bg-white/10">
-                    <i class="fa-solid fa-book mr-2"></i> Лор
-                </a>
-                <a href="news.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors bg-white/5 px-4 py-2 rounded-full border border-white/5 hover:border-white/20 hover:bg-white/10">
-                    <i class="fa-solid fa-newspaper mr-2"></i> Новости
-                </a>
-            </div>
+    <div id="preloader" class="fixed inset-0 z-[999] bg-[#0a0b0e] flex items-center justify-center transition-opacity duration-500">
+        <div class="relative flex items-center justify-center">
+            <div class="absolute w-20 h-20 border-t-4 border-b-4 border-brand-red border-solid rounded-full animate-spin opacity-50"></div>
+            <div class="w-12 h-12 bg-brand-red rounded-xl flex items-center justify-center text-white font-display font-bold text-2xl rotate-3 shadow-[0_0_20px_rgba(255,46,67,0.5)]">R</div>
+        </div>
+    </div>
+
+    <nav class="fixed top-0 w-full z-[100] glass-nav">
+        <div class="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 text-white hover:text-brand-red transition-colors text-sm font-bold"><i class="fa-solid fa-arrow-left"></i> Вернуться на сайт</a>
+            <span class="font-display font-bold text-lg tracking-tighter text-white">REDOKU</span>
         </div>
     </nav>
 
-    <div class="pt-40 pb-20 px-4 max-w-4xl mx-auto">
-        <div class="text-center mb-20 animate-on-load" style="animation-delay: 0.2s;">
-            <h1 class="text-4xl md:text-6xl font-black text-white mb-6">ПОЛИТИКА <span class="text-brand-red">КОНФИДЕНЦИАЛЬНОСТИ</span></h1>
-            <p class="text-gray-400 text-lg">Защита ваших данных — наш приоритет</p>
-        </div>
+    <main class="pt-32 pb-20 px-4">
+        <div class="max-w-3xl mx-auto">
+            <div class="mb-10 border-b border-white/10 pb-8">
+                <h1 class="text-4xl font-display font-black text-white mb-4">Политика конфиденциальности</h1>
+                <div class="inline-block px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs font-mono text-gray-400">Последнее обновление: 4 марта 2025 г.</div>
+            </div>
 
-        <div class="space-y-8 animate-on-load" style="animation-delay: 0.3s;">
-            <div class="glass-card spotlight-card p-8">
-                <h2 class="text-2xl font-bold text-white mb-4">1. Сбор информации</h2>
-                <p class="text-gray-300 leading-relaxed mb-4">
-                    Мы собираем минимальный объем информации, необходимый для обеспечения работы сервера:
-                </p>
-                <ul class="list-disc list-inside text-gray-400 space-y-2 ml-4">
-                    <li>Никнейм Minecraft и UUID игрока</li>
-                    <li>IP-адрес для подключения к серверу</li>
-                    <li>Время последнего входа</li>
-                    <li>Статистика игры (время онлайн, достижения)</li>
+            <div class="prose">
+                <p>Администрация проекта Redoku серьезно относится к конфиденциальности Пользователей. Настоящая Политика объясняет, какие данные мы собираем и как их используем.</p>
+
+                <h2>1. Какие данные мы собираем</h2>
+                <ul>
+                    <li>Уникальный идентификатор игрока (UUID) и игровой никнейм.</li>
+                    <li>IP-адрес, данные о подсетях и аппаратные идентификаторы (включая HWID и Client ID), с которых осуществляется подключение к серверу.</li>
+                    <li>Логи внутриигрового чата, команд и детализированная история взаимодействий с миром (через CoreProtect).</li>
+                    <li>Данные о платежах (Email), предоставляемые шлюзом. Мы <strong>не получаем</strong> данные ваших банковских карт.</li>
                 </ul>
-            </div>
 
-            <div class="glass-card spotlight-card p-8">
-                <h2 class="text-2xl font-bold text-white mb-4">2. Использование данных</h2>
-                <p class="text-gray-300 leading-relaxed mb-4">
-                    Собранная информация используется исключительно для:
-                </p>
-                <ul class="list-disc list-inside text-gray-400 space-y-2 ml-4">
-                    <li>Обеспечения доступа к игровому серверу</li>
-                    <li>Модерации и предотвращения нарушений</li>
-                    <li>Аналитики и улучшения игрового опыта</li>
-                    <li>Связи с игроками по техническим вопросам</li>
+                <h2>2. Цели сбора данных</h2>
+                <ul>
+                    <li>Обеспечения стабильной работы сервера и сохранения прогресса.</li>
+                    <li>Глубокой модерации, вычисления "твинков" и расследования инцидентов грифа.</li>
+                    <li>Надежной защиты инфраструктуры от обхода блокировок и создания базы опасных игроков.</li>
                 </ul>
-            </div>
 
-            <div class="glass-card spotlight-card p-8">
-                <h2 class="text-2xl font-bold text-white mb-4">3. Хранение данных</h2>
-                <p class="text-gray-300 leading-relaxed">
-                    Ваши данные хранятся на защищенных серверах в течение всего времени существования проекта. 
-                    Мы не передаем вашу информацию третьим лицам, за исключением случаев, предусмотренных законодательством РФ.
-                </p>
-            </div>
+                <h2>3. Хранение и передача данных</h2>
+                <p>3.1. Мы не передаем данные пользователей третьим лицам, за исключением случаев, предусмотренных законодательством.</p>
+                <p>3.2. <strong>Исключение для Черного Списка:</strong> В случае, если игрок наносит умышленный вред проекту, его расширенные данные (IP, UUID, логи) заносятся во внутреннюю базу нарушителей. Эта информация <strong>хранится бессрочно</strong> и используется для автоматической блокировки попыток повторного проникновения.</p>
 
-            <div class="glass-card spotlight-card p-8">
-                <h2 class="text-2xl font-bold text-white mb-4">4. Cookies и файлы журналов</h2>
-                <p class="text-gray-300 leading-relaxed">
-                    Наш веб-сайт может использовать cookies для улучшения пользовательского опыта. 
-                    Файлы журналов сервера содержат стандартную информацию о запросах, которая помогает нам диагностировать проблемы.
-                </p>
-            </div>
+                <h2>4. Удаление данных</h2>
+                <p>Пользователь (не нарушавший правила) имеет право запросить удаление своих данных, обратившись в поддержку. <br><br>
+                <strong class="text-brand-red">Важное примечание:</strong> Запросы на удаление данных от лиц, находящихся в Черном Списке за нанесение вреда проекту, автоматически отклоняются. Данные вредителей удерживаются на основании легитимного интереса Администрации в защите серверов.</p>
 
-            <div class="glass-card spotlight-card p-8">
-                <h2 class="text-2xl font-bold text-white mb-4">5. Права пользователей</h2>
-                <p class="text-gray-300 leading-relaxed mb-4">
-                    Вы имеете право:
-                </p>
-                <ul class="list-disc list-inside text-gray-400 space-y-2 ml-4">
-                    <li>Запросить информацию о собранных данных</li>
-                    <li>Потребовать удаления персональных данных</li>
-                    <li>Оспорить обработку ваших данных</li>
-                    <li>Отозвать согласие на обработку данных</li>
-                </ul>
-            </div>
-
-            <div class="glass-card spotlight-card p-8">
-                <h2 class="text-2xl font-bold text-white mb-4">6. Защита несовершеннолетних</h2>
-                <p class="text-gray-300 leading-relaxed">
-                    Мы не собираем персональную информацию от лиц младше 16 лет без согласия родителей. 
-                    Если мы обнаружим, что собрали информацию о ребенке без такого согласия, мы удалим ее немедленно.
-                </p>
-            </div>
-
-            <div class="glass-card spotlight-card p-8">
-                <h2 class="text-2xl font-bold text-white mb-4">7. Изменения в политике</h2>
-                <p class="text-gray-300 leading-relaxed">
-                    Мы оставляем за собой право изменять эту политику конфиденциальности. 
-                    Все изменения вступают в силу с момента публикации на сайте.
-                </p>
-            </div>
-
-            <div class="glass-card spotlight-card p-8 border-l-4 border-l-brand-red">
-                <h2 class="text-2xl font-bold text-white mb-4">8. Контакты</h2>
-                <p class="text-gray-300 leading-relaxed">
-                    По вопросам, связанным с политикой конфиденциальности, пожалуйста, свяжитесь с нами:
-                </p>
-                <div class="mt-4 space-y-2">
-                    <p class="text-gray-400"><i class="fa-regular fa-envelope text-brand-red mr-2"></i> support@redoku.ru</p>
-                    <p class="text-gray-400"><i class="fa-brands fa-discord text-brand-red mr-2"></i> Discord: dsc.gg/redoku</p>
-                </div>
-            </div>
-
-            <div class="text-center mt-12 text-gray-500 text-sm">
-                <p>Последнее обновление: 11 февраля 2025 года</p>
+                <h2>5. Обратная связь</h2>
+                <p>Для связи: <a href="mailto:support@redoku.ru" class="text-brand-red hover:underline">support@redoku.ru</a></p>
             </div>
         </div>
-    </div>
-    
-    <footer class="relative pt-20 pb-10 overflow-hidden border-t border-white/5 bg-[#050508] mt-20">
-        <div class="absolute inset-0 bg-gradient-to-t from-brand-green/5 to-transparent pointer-events-none"></div>
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
-                <div>
-                     <div class="flex items-center justify-center md:justify-start gap-3 mb-4">
-                         <div class="w-8 h-8 bg-brand-green rounded flex items-center justify-center font-bold text-black text-lg">R</div>
-                         <span class="font-bold text-2xl text-white">Redoku</span>
-                    </div>
-                    <p class="text-gray-500 text-sm">Приятной игры на сервере!</p>
-                </div>
-                <div class="md:col-span-2 flex justify-center md:justify-end gap-6 items-center">
-                     <a href="https://dsc.gg/redoku" class="text-gray-400 hover:text-white transition-colors">Discord</a>
-                     <a href="https://t.me/Redoku" class="text-gray-400 hover:text-white transition-colors">Telegram</a>
-                     <a href="index.html" class="text-gray-400 hover:text-white transition-colors">Главная</a>
-                </div>
-            </div>
-            <div class="mt-12 pt-8 border-t border-white/5 text-center text-gray-700 text-xs">
-                &copy; 2025 Redoku Project.
-            </div>
-        </div>
-    </footer>
-
+    </main>
     <script>
-        document.querySelectorAll('.spotlight-card').forEach(card => {
-            card.onmousemove = e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                card.style.setProperty('--mouse-x', `${x}px`);
-                card.style.setProperty('--mouse-y', `${y}px`);
-            }
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            preloader.classList.add('opacity-0');
+            setTimeout(() => preloader.style.display = 'none', 500);
         });
     </script>
-
 </body>
 </html>

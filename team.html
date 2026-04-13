@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Команда — Redoku</title>
+    
+    <!-- Open Graph (SEO) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Команда Redoku">
+    <meta property="og:description" content="Познакомьтесь с теми, кто создает и развивает сервер Redoku.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1606167668511-22c669147575?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+    <meta name="theme-color" content="#ff2e43">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { 
+                        brand: { 
+                            bg: '#0a0b0e', 
+                            surface: '#0F1116', 
+                            red: '#ff2e43', 
+                            patina: '#1abc9c',
+                            blue: '#3b82f6',
+                            purple: '#a855f7'
+                        } 
+                    },
+                    fontFamily: { sans: ['Outfit', 'sans-serif'], display: ['Space Grotesk', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #0a0b0e; color: #e2e8f0; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0b0e; }
+        ::-webkit-scrollbar-thumb { background: #1f222b; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff2e43; }
+
+        .bg-grid { position: fixed; inset: 0; background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 40px 40px; mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%); z-index: -2; pointer-events: none; }
+        .glass-nav { background: rgba(15, 17, 22, 0.7); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .glass-card { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.4s ease; }
+        .glass-card:hover { border-color: rgba(255, 46, 67, 0.3); transform: translateY(-5px); }
+        
+        .text-glow { text-shadow: 0 0 20px rgba(255, 46, 67, 0.6); }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* AI Chat Button Pulse */
+        @keyframes chat-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 46, 67, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 46, 67, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 46, 67, 0); }
+        }
+        .ai-btn-pulse { animation: chat-pulse 2s infinite; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Прелоадер -->
+    <div id="preloader" class="fixed inset-0 z-[999] bg-[#0a0b0e] flex items-center justify-center transition-opacity duration-500">
+        <div class="relative flex items-center justify-center">
+            <div class="absolute w-20 h-20 border-t-2 border-brand-red border-solid rounded-full animate-spin"></div>
+            <div class="w-12 h-12 bg-brand-red rounded-xl flex items-center justify-center text-white font-display font-bold text-2xl rotate-3">R</div>
+        </div>
+    </div>
+
+    <div class="bg-grid"></div>
+
+    <!-- Навигация -->
+    <nav class="fixed top-0 w-full z-[100] glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 group relative z-20">
+                <div class="w-10 h-10 bg-brand-red rounded-xl flex items-center justify-center text-white font-display font-bold text-xl rotate-3 group-hover:rotate-12 transition-all">R</div>
+                <span class="font-display font-bold text-2xl tracking-tighter text-white uppercase">REDOKU</span>
+            </a>
+
+            <div class="hidden lg:flex items-center gap-8 bg-white/5 px-8 py-2.5 rounded-full border border-white/5 nav-links">
+                <a href="index.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Главная</a>
+                <a href="info.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Инфо</a>
+                <a href="lore.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Лор</a>
+                <a href="news.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Новости</a>
+                <a href="rules.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Правила</a>
+                <a href="team.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Команда</a>
+            </div>
+
+            <div class="hidden lg:block">
+                <a href="donate.html" class="text-sm font-medium text-yellow-500 hover:text-yellow-400 flex items-center gap-2">
+                    <i class="fa-solid fa-store"></i> Магазин
+                </a>
+            </div>
+
+            <button class="lg:hidden text-white p-2 relative z-20" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-bars text-2xl" id="mobile-menu-icon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Мобильное меню -->
+    <div id="mobile-menu" class="fixed inset-0 bg-brand-bg/98 backdrop-blur-xl z-[90] flex flex-col items-center justify-center gap-6 opacity-0 pointer-events-none transition-all duration-300 mobile-nav-links">
+        <a href="index.html" class="text-2xl font-display font-bold text-white">Главная</a>
+        <a href="info.html" class="text-2xl font-display font-bold text-white">Как начать</a>
+        <a href="lore.html" class="text-2xl font-display font-bold text-white">Лор</a>
+        <a href="news.html" class="text-2xl font-display font-bold text-white">Новости</a>
+        <a href="rules.html" class="text-2xl font-display font-bold text-white">Правила</a>
+        <a href="team.html" class="text-2xl font-display font-bold text-white">Команда</a>
+        <a href="donate.html" class="text-2xl font-display font-bold text-yellow-500">Магазин</a>
+    </div>
+
+    <!-- Header -->
+    <header class="pt-40 pb-16 px-4 text-center">
+        <div class="max-w-4xl mx-auto reveal">
+            <h1 class="text-5xl md:text-7xl font-display font-black text-white uppercase tracking-tighter mb-4">Наша <span class="text-brand-red text-glow">Команда</span></h1>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto font-light">Те, кто вдыхает жизнь в Redoku. От технической части до игрового порядка.</p>
+        </div>
+    </header>
+
+    <!-- Сетка команды -->
+    <section class="py-12 px-6 mb-24">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-center gap-6">
+            
+            <!-- Hexdecillion -->
+            <div class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33%-1rem)] reveal glass-card rounded-[2.5rem] p-8 text-center bg-gradient-to-b from-[#161214] to-[#0a0b0e]">
+                <div class="w-28 h-28 mx-auto rounded-full bg-[#1a0f12] mb-6 p-1.5 border-2 border-brand-red/40 shadow-[0_0_20px_rgba(255,46,67,0.2)]">
+                    <img src="https://api.mineatar.io/face/Hexdecillion" alt="Skin" class="w-full h-full rounded-full object-cover">
+                </div>
+                <h3 class="text-2xl font-display font-bold text-white mb-1">Hexdecillion</h3>
+                <p class="text-brand-red text-xs font-bold uppercase tracking-[0.2em] mb-4">Основатель</p>
+                <p class="text-gray-400 text-sm mb-6 h-12">Создатель и идейный вдохновитель. Определяет вектор развития сервера.</p>
+                <a href="https://t.me/Hexdecillion" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-[#229ED9] text-gray-400 hover:text-white transition-all text-sm">
+                    <i class="fa-brands fa-telegram"></i> @Hexdecillion
+                </a>
+            </div>
+
+            <!-- LuMon1x -->
+            <div class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33%-1rem)] reveal glass-card rounded-[2.5rem] p-8 text-center bg-gradient-to-b from-[#18121e] to-[#0a0b0e] border-purple-500/30 lg:scale-105 z-10" style="transition-delay: 100ms;">
+                <div class="w-28 h-28 mx-auto rounded-full bg-[#140a1a] mb-6 p-1.5 border-2 border-purple-500/50 shadow-[0_0_25px_rgba(168,85,247,0.3)]">
+                    <img src="https://api.mineatar.io/face/LuMon1x" alt="Skin" class="w-full h-full rounded-full object-cover">
+                </div>
+                <h3 class="text-2xl font-display font-bold text-white mb-1">LuMon1x</h3>
+                <p class="text-purple-400 text-xs font-bold uppercase tracking-[0.2em] mb-4">Owner / All-in-One</p>
+                <p class="text-gray-400 text-sm mb-6 h-12">Универсальный специалист. Помощь с заходом, фикс багов и технический прогресс.</p>
+                <div class="flex flex-col gap-2 items-center">
+                    <a href="https://t.me/kiri11krypko" target="_blank" class="w-full flex justify-center items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-[#229ED9] text-gray-400 hover:text-white transition-all text-sm">
+                        <i class="fa-brands fa-telegram"></i> @kiri11krypko
+                    </a>
+                    <button onclick="copyDiscord('prosto_lumon1x')" class="w-full flex justify-center items-center gap-2 px-4 py-2 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 text-[#5865F2] hover:bg-[#5865F2] hover:text-white transition-all text-sm">
+                        <i class="fa-brands fa-discord"></i> prosto_lumon1x
+                    </button>
+                </div>
+            </div>
+
+            <!-- VelVel01 -->
+            <div class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33%-1rem)] reveal glass-card rounded-[2.5rem] p-8 text-center bg-gradient-to-b from-[#0f1a18] to-[#0a0b0e] border-brand-patina/30" style="transition-delay: 200ms;">
+                <div class="w-28 h-28 mx-auto rounded-full bg-[#0a1412] mb-6 p-1.5 border-2 border-brand-patina/50 shadow-[0_0_20px_rgba(26,188,156,0.2)]">
+                    <img src="https://api.mineatar.io/face/VelVel01" alt="Skin" class="w-full h-full rounded-full object-cover">
+                </div>
+                <h3 class="text-2xl font-display font-bold text-white mb-1">VelVel01</h3>
+                <p class="text-brand-patina text-xs font-bold uppercase tracking-[0.2em] mb-4">Администратор</p>
+                <p class="text-gray-400 text-sm mb-6 h-12">Справедливый судья. Отвечает за порядок, решение споров и комфорт игроков.</p>
+                <a href="https://t.me/enotatat" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-[#229ED9] text-gray-400 hover:text-white transition-all text-sm">
+                    <i class="fa-brands fa-telegram"></i> @enotatat
+                </a>
+            </div>
+
+            <!-- Другие члены команды -->
+            <div class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)] reveal glass-card rounded-[2rem] p-6 text-center">
+                <div class="w-24 h-24 mx-auto rounded-full bg-white/5 mb-5 p-1 border-2 border-brand-blue/30">
+                    <img src="https://api.mineatar.io/face/brajnito" alt="Skin" class="w-full h-full rounded-full object-cover">
+                </div>
+                <h3 class="text-xl font-display font-bold text-white">brajnito</h3>
+                <p class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4">Тех Админ</p>
+                <a href="https://t.me/qweqeeer" target="_blank" class="text-gray-500 hover:text-white transition-colors text-sm underline underline-offset-4">@qweqeeer</a>
+            </div>
+
+            <div class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)] reveal glass-card rounded-[2rem] p-6 text-center" style="transition-delay: 100ms;">
+                <div class="w-24 h-24 mx-auto rounded-full bg-white/5 mb-5 p-1 border-2 border-brand-patina/30">
+                    <img src="https://api.mineatar.io/face/AttractiveModee" alt="Skin" class="w-full h-full rounded-full object-cover">
+                </div>
+                <h3 class="text-xl font-display font-bold text-white">AttractiveModee</h3>
+                <p class="text-brand-patina text-[10px] font-bold uppercase tracking-widest mb-4">Модератор</p>
+                <a href="https://t.me/dimaVerenich" target="_blank" class="text-gray-500 hover:text-white transition-colors text-sm underline underline-offset-4">@dimaVerenich</a>
+            </div>
+
+            <div class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)] reveal glass-card rounded-[2rem] p-6 text-center" style="transition-delay: 200ms;">
+                <div class="w-24 h-24 mx-auto rounded-full bg-white/5 mb-5 p-1 border-2 border-pink-500/30">
+                    <img src="https://api.mineatar.io/face/regander" alt="Skin" class="w-full h-full rounded-full object-cover">
+                </div>
+                <h3 class="text-xl font-display font-bold text-white">regander</h3>
+                <p class="text-pink-500 text-[10px] font-bold uppercase tracking-widest mb-4">Дизайнер / Helper</p>
+                <a href="https://t.me/Nuiviscas" target="_blank" class="text-gray-500 hover:text-white transition-colors text-sm underline underline-offset-4">@Nuiviscas</a>
+            </div>
+
+            <div class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)] reveal glass-card rounded-[2rem] p-6 text-center" style="transition-delay: 300ms;">
+                <div class="w-24 h-24 mx-auto rounded-full bg-white/5 mb-5 p-1 border-2 border-brand-red/30">
+                    <img src="https://api.mineatar.io/face/GrandDang" alt="Skin" class="w-full h-full rounded-full object-cover">
+                </div>
+                <h3 class="text-xl font-display font-bold text-white">GrandDang</h3>
+                <p class="text-brand-red text-[10px] font-bold uppercase tracking-widest mb-4">Модератор чата</p>
+                <a href="https://t.me/GrandDang" target="_blank" class="text-gray-500 hover:text-white transition-colors text-sm underline underline-offset-4">@GrandDang</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- AI Chat Toggle Button -->
+    <button onclick="toggleAIChat()" class="fixed bottom-8 left-8 w-16 h-16 bg-brand-red text-white rounded-full shadow-2xl flex items-center justify-center z-[100] ai-btn-pulse hover:scale-110 transition-transform">
+        <i class="fa-solid fa-robot text-2xl"></i>
+    </button>
+
+    <!-- AI Chat Modal -->
+    <div id="ai-chat-modal" class="fixed inset-0 bg-black/60 backdrop-blur-md z-[110] flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 px-4">
+        <div class="bg-brand-surface w-full max-w-lg rounded-[2rem] border border-white/10 shadow-2xl overflow-hidden flex flex-col h-[600px]">
+            <!-- Header -->
+            <div class="p-6 bg-brand-red/10 border-b border-white/5 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-brand-red rounded-xl flex items-center justify-center text-white"><i class="fa-solid fa-brain"></i></div>
+                    <div>
+                        <div class="font-display font-bold text-white leading-none mb-1">ИИ-Ассистент</div>
+                        <div class="text-[10px] text-brand-red uppercase font-bold tracking-widest">Онлайн | Redoku AI</div>
+                    </div>
+                </div>
+                <button onclick="toggleAIChat()" class="text-gray-500 hover:text-white transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            
+            <!-- Messages Area -->
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-6 space-y-4">
+                <div class="bg-white/5 rounded-2xl rounded-tl-none p-4 max-w-[85%] text-sm text-gray-300">
+                    Привет! Я умный помощник Redoku. Могу рассказать о правилах, лоре, нашей команде или о том, как начать играть. Что тебя интересует?
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="p-4 bg-black/40 border-t border-white/5">
+                <form id="ai-form" class="flex gap-2">
+                    <input type="text" id="ai-input" placeholder="Задай вопрос..." class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-red/50 transition-colors">
+                    <button type="submit" id="ai-send" class="w-12 h-12 bg-brand-red text-white rounded-xl flex items-center justify-center hover:bg-brand-redHover transition-colors">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="pt-20 pb-10 px-6 border-t border-white/10 bg-black/60 backdrop-blur-md relative z-20 text-center md:text-left">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            <div class="md:col-span-2">
+                <div class="flex items-center justify-center md:justify-start gap-3 mb-6">
+                    <div class="w-8 h-8 bg-brand-red rounded-lg flex items-center justify-center text-white font-display font-bold text-sm">R</div>
+                    <span class="font-display font-bold text-xl text-white tracking-widest">REDOKU</span>
+                </div>
+                <p class="text-gray-500 max-w-sm mx-auto md:mx-0 text-sm leading-relaxed">Премиальный Vanilla+ проект, созданный игроками для игроков. Мы ценим атмосферу классического майнкрафта, честность и техническое совершенство.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-display font-bold mb-6 text-sm uppercase tracking-widest">Навигация</h4>
+                <ul class="space-y-3 text-sm text-gray-500">
+                    <li><a href="index.html" class="hover:text-brand-red transition-all">Главная</a></li>
+                    <li><a href="info.html" class="hover:text-brand-red transition-all">Как начать</a></li>
+                    <li><a href="team.html" class="hover:text-brand-red transition-all">Команда</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-display font-bold mb-6 text-sm uppercase tracking-widest">Поддержка</h4>
+                <ul class="space-y-3 text-sm text-gray-500">
+                    <li><a href="donate.html" class="hover:text-brand-red transition-all">Магазин</a></li>
+                    <li><a href="rules.html" class="hover:text-brand-red transition-all">Правила</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto pt-8 border-t border-white/10 text-center text-[10px] text-gray-600 font-bold tracking-widest uppercase">&copy; 2025 Redoku. Все права защищены.</div>
+    </footer>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-8 right-8 bg-[#1f222b] border border-[#5865F2]/40 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 transform translate-y-24 opacity-0 transition-all duration-500 z-[200] pointer-events-none">
+        <i class="fa-brands fa-discord text-xl text-[#5865F2]"></i>
+        <div><div class="font-bold text-sm text-white">СКОПИРОВАНО!</div><div class="text-xs text-gray-400">Discord tag сохранен</div></div>
+    </div>
+
+    <script>
+        // --- ПРЕЛОАДЕР И АКТИВНОЕ МЕНЮ ---
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            preloader.classList.add('opacity-0');
+            setTimeout(() => preloader.style.display = 'none', 500);
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+            document.querySelectorAll('.nav-links a, .mobile-nav-links a').forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('text-brand-red');
+                    link.classList.remove('text-gray-400', 'text-white');
+                }
+            });
+        });
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            if (menu.classList.contains('opacity-0')) {
+                menu.classList.remove('opacity-0', 'pointer-events-none');
+                menu.classList.add('opacity-100', 'pointer-events-auto');
+                icon.className = 'fa-solid fa-xmark text-2xl'; document.body.style.overflow = 'hidden';
+            } else {
+                menu.classList.add('opacity-0', 'pointer-events-none');
+                menu.classList.remove('opacity-100', 'pointer-events-auto');
+                icon.className = 'fa-solid fa-bars text-2xl'; document.body.style.overflow = '';
+            }
+        }
+
+        function copyDiscord(tag) {
+            navigator.clipboard.writeText(tag).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.remove('translate-y-24', 'opacity-0');
+                setTimeout(() => toast.classList.add('translate-y-24', 'opacity-0'), 3000);
+            });
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // --- GEMINI AI CHAT LOGIC ---
+        const apiKey = ""; // API Key подставляется автоматически в окружении
+        const aiModal = document.getElementById('ai-chat-modal');
+        const chatMessages = document.getElementById('chat-messages');
+        const aiForm = document.getElementById('ai-form');
+        const aiInput = document.getElementById('ai-input');
+
+        function toggleAIChat() {
+            if (aiModal.classList.contains('opacity-0')) {
+                aiModal.classList.remove('opacity-0', 'pointer-events-none');
+                document.body.style.overflow = 'hidden';
+            } else {
+                aiModal.classList.add('opacity-0', 'pointer-events-none');
+                document.body.style.overflow = '';
+            }
+        }
+
+        async function askGemini(query) {
+            const systemPrompt = "Ты - официальный ИИ-ассистент Minecraft сервера Redoku. " +
+                "Твоя задача: помогать игрокам. На сервере версия 1.21.11, Fabric. " +
+                "Основатель: Hexdecillion (@Hexdecillion). Руководитель: LuMon1x (@kiri11krypko). " +
+                "Тех админ: brajnito (@qweqeeer). Модератор: AttractiveModee. " +
+                "Админ по спорам: VelVel01. Дизайнер/Хелпер: regander. Модератор чата: GrandDang. " +
+                "Лор: Эхо Медного Коллапса (древние Големы, Хроно-Орудие). " +
+                "Правила: за гриф бан, за читы бан. Есть плагин CoreProtect. " +
+                "Отвечай кратко, вежливо и в стиле технологичного майнкрафт сервера.";
+
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            
+            const payload = {
+                contents: [{ parts: [{ text: query }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
+            const fetchWithRetry = async (url, options, retries = 5, backoff = 1000) => {
+                try {
+                    const res = await fetch(url, options);
+                    if (!res.ok) throw new Error(res.status);
+                    return await res.json();
+                } catch (err) {
+                    if (retries > 0) {
+                        await new Promise(r => setTimeout(r, backoff));
+                        return fetchWithRetry(url, options, retries - 1, backoff * 2);
+                    }
+                    throw err;
+                }
+            };
+
+            try {
+                const data = await fetchWithRetry(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                return data.candidates?.[0]?.content?.parts?.[0]?.text || "Извини, не смог обработать запрос.";
+            } catch (error) {
+                return "Ошибка связи с ядром ИИ. Попробуй позже.";
+            }
+        }
+
+        aiForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const text = aiInput.value.trim();
+            if (!text) return;
+
+            // Add User message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'bg-brand-red/20 border border-brand-red/20 rounded-2xl rounded-tr-none p-4 ml-auto max-w-[85%] text-sm text-white';
+            userMsg.innerText = text;
+            chatMessages.appendChild(userMsg);
+            aiInput.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Loading state
+            const loadingMsg = document.createElement('div');
+            loadingMsg.className = 'bg-white/5 rounded-2xl rounded-tl-none p-4 max-w-[85%] text-sm text-gray-400 italic';
+            loadingMsg.innerText = 'Ассистент думает...';
+            chatMessages.appendChild(loadingMsg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            const response = await askGemini(text);
+            
+            loadingMsg.remove();
+            const botMsg = document.createElement('div');
+            botMsg.className = 'bg-white/5 rounded-2xl rounded-tl-none p-4 max-w-[85%] text-sm text-gray-300';
+            botMsg.innerText = response;
+            chatMessages.appendChild(botMsg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        };
+    </script>
+</body>
+</html>
