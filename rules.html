@@ -214,35 +214,133 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="bg-green-500/5 border border-green-500/10 rounded-2xl p-6">
-                            <div class="flex items-center gap-3 mb-6 text-green-400">
-                                <i class="fa-solid fa-check-circle text-xl"></i>
-                                <h3 class="font-display font-bold text-xl uppercase tracking-wider">Разрешено</h3>
+                    <!-- Аккордеон с запрещенными модами -->
+                    <div class="mt-8">
+                        <button onclick="toggleBannedMods()" class="w-full flex items-center justify-between gap-4 bg-brand-red/10 border border-brand-red/30 hover:border-brand-red/50 rounded-2xl p-6 transition-all group">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-brand-red/20 rounded-xl flex items-center justify-center text-brand-red group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-triangle-exclamation text-xl"></i>
+                                </div>
+                                <div class="text-left">
+                                    <h3 class="font-display font-bold text-white text-lg uppercase tracking-wider">Полный список запрещённых модов</h3>
+                                    <p class="text-gray-400 text-sm">Нажмите, чтобы раскрыть весь список</p>
+                                </div>
                             </div>
-                            <ul class="space-y-3">
-                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-2.5 rounded-xl"><i class="fa-solid fa-check text-green-500/50"></i> Litematica (Строго без принтера!)</li>
-                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-2.5 rounded-xl"><i class="fa-solid fa-check text-green-500/50"></i> MiniHUD (Отображение инфы, хитбоксы)</li>
-                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-2.5 rounded-xl"><i class="fa-solid fa-check text-green-500/50"></i> ReplayMod (Для съемки таймлапсов)</li>
-                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-2.5 rounded-xl"><i class="fa-solid fa-check text-green-500/50"></i> Xaero's Minimap / WorldMap</li>
-                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-2.5 rounded-xl"><i class="fa-solid fa-check text-green-500/50"></i> Оптимизирующие моды (Sodium, Lithium)</li>
-                            </ul>
-                        </div>
-
-                        <div class="bg-brand-red/5 border border-brand-red/10 rounded-2xl p-6">
-                            <div class="flex items-center gap-3 mb-6 text-brand-red">
-                                <i class="fa-solid fa-circle-xmark text-xl"></i>
-                                <h3 class="font-display font-bold text-xl uppercase tracking-wider">Запрещено</h3>
+                            <i id="banned-mods-icon" class="fa-solid fa-chevron-down text-brand-red text-xl transition-transform duration-300"></i>
+                        </button>
+                        
+                        <div id="banned-mods-content" class="hidden mt-4 bg-brand-red/5 border border-brand-red/20 rounded-2xl p-6 overflow-hidden">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">Wurst Client</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">Aristois Client</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">Impact Client</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">Meteor Client</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">Future Client</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">RusherHack</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">KillAura (любая версия)</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">ESP / Wallhack</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">Tracers / BoxESP</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">X-Ray ресурспаки и моды</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">Baritone (авто-копка, боты)</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">FreeCam (поиск игроков/ресурсов)</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">Reach / HitBox расширители</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">Velocity / AntiKnockback</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">Fly / Jetpack читы</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">NoFall (анти-урон от падения)</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">AutoTotem / AutoArmor</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">FastPlace / FastBreak</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">Авто-кликеры (в PvP и не только)</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">Дюпы (баги для размножения предметов)</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">Макросы на авто-действия</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">Litematica Printer (авто-стройка)</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-3 rounded-xl">
+                                    <i class="fa-solid fa-xmark text-brand-red"></i>
+                                    <span class="text-sm">Любые другие чит-клиенты</span>
+                                </div>
                             </div>
-                            <ul class="space-y-3">
-                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-2.5 rounded-xl"><i class="fa-solid fa-xmark text-brand-red/50"></i> X-Ray (Любые ресурспаки и моды)</li>
-                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-2.5 rounded-xl"><i class="fa-solid fa-xmark text-brand-red/50"></i> Baritone (Авто-копка, боты)</li>
-                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-2.5 rounded-xl"><i class="fa-solid fa-xmark text-brand-red/50"></i> FreeCam (Поиск ресурсов/игроков)</li>
-                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-2.5 rounded-xl"><i class="fa-solid fa-xmark text-brand-red/50"></i> Авто-кликеры (В АФК-зонах или PvP)</li>
-                            </ul>
-                            <p class="mt-6 text-xs text-gray-500 italic">Администрация оставляет за собой право блокировать за любые модификации, дающие явное преимущество.</p>
+                            <p class="mt-6 text-xs text-gray-500 italic text-center">Администрация оставляет за собой право блокировать за любые модификации, дающие явное преимущество.</p>
                         </div>
                     </div>
+
+                    <script>
+                        function toggleBannedMods() {
+                            const content = document.getElementById('banned-mods-content');
+                            const icon = document.getElementById('banned-mods-icon');
+                            if (content.classList.contains('hidden')) {
+                                content.classList.remove('hidden');
+                                icon.style.transform = 'rotate(180deg)';
+                            } else {
+                                content.classList.add('hidden');
+                                icon.style.transform = 'rotate(0deg)';
+                            }
+                        }
+                    </script>
                 </div>
             </div>
 
@@ -357,6 +455,46 @@
             if (window.scrollY > 20) { nav.classList.add('shadow-lg'); nav.style.background = 'rgba(15, 17, 22, 0.85)'; } 
             else { nav.classList.remove('shadow-lg'); nav.style.background = 'rgba(15, 17, 22, 0.7)'; }
         });
+    </script>
+</body>
+
+    <!-- AI Chat Toggle Button -->
+    <button onclick="toggleAIChat()" class="fixed bottom-8 left-8 w-16 h-16 bg-brand-red text-white rounded-full shadow-2xl flex items-center justify-center z-[100] ai-btn-pulse hover:scale-110 transition-transform">
+        <i class="fa-solid fa-robot text-2xl"></i>
+    </button>
+
+    <!-- AI Chat Modal -->
+    <div id="ai-chat-modal" class="fixed bottom-28 left-8 w-96 max-w-[calc(100vw-4rem)] glass border border-white/10 rounded-2xl shadow-2xl z-[99] opacity-0 pointer-events-none transition-all duration-300 transform translate-y-4">
+        <div class="p-4 border-b border-white/10 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-brand-red/20 rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-robot text-brand-red text-xl"></i>
+                </div>
+                <div>
+                    <div class="font-display font-bold text-white leading-none mb-1">ИИ-Ассистент</div>
+                    <div class="text-xs text-gray-500">Redoku Helper</div>
+                </div>
+            </div>
+            <button onclick="toggleAIChat()" class="text-gray-500 hover:text-white transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
+        </div>
+        <div class="p-6">
+            <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4">
+                <p class="text-yellow-200 text-sm leading-relaxed">
+                    ⚠️ ИИ-ассистент сейчас не работает. Как только он будет запущен, мы сообщим об этом в нашем Telegram канале и Discord сервере.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAIChat() {
+            const modal = document.getElementById('ai-chat-modal');
+            if (modal.classList.contains('opacity-0')) {
+                modal.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+            } else {
+                modal.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+            }
+        }
     </script>
 </body>
 </html>

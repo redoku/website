@@ -139,10 +139,9 @@
                     <p class="text-gray-400 text-lg leading-relaxed mb-10 max-w-4xl">Мы проделали огромную работу, чтобы этот сезон стал самым незабываемым и технически совершенным. Полностью переработаны многие механики, добавлен уникальный контент и выстроена мощная система безопасности. Вот полный список нововведений:</p>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-dungeon text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Кастомные данжи</h4><p class="text-gray-400 text-sm">Глубокая переделка старых структур и добавление кучи новых опасных подземелий.</p></div></div>
+                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-dungeon text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Данжи</h4><p class="text-gray-400 text-sm">Глубокая переделка старых структур и добавление кучи новых опасных подземелий.</p></div></div>
                         <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-tree text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Генерация биомов</h4><p class="text-gray-400 text-sm">Биомов стало в разы больше, а их генерация теперь еще красивее и масштабнее.</p></div></div>
                         <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-book-skull text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Лорные механики</h4><p class="text-gray-400 text-sm">Добавлены особые предметы и механики, тесно связанные с историей Коллапса.</p></div></div>
-                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-fish-fins text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Кастомная рыбалка</h4><p class="text-gray-400 text-sm">Новые виды рыб, размеры, турниры и уникальная мини-игра при ловле.</p></div></div>
                         <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-house-chimney-user text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Точки дома</h4><p class="text-gray-400 text-sm">Удобная система персональных точек (sethome) для быстрого возвращения на базу.</p></div></div>
                         <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-gem text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Спонсорство</h4><p class="text-gray-400 text-sm">Новые косметические статусы для тех, кто хочет честно поддержать проект.</p></div></div>
                         <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-users-viewfinder text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Система кланов</h4><p class="text-gray-400 text-sm">Объединяйтесь в альянсы, создавайте города и защищайте свои земли вместе.</p></div></div>
@@ -303,6 +302,46 @@
                 if (placeholder) placeholder.style.display = hasVisibleCards ? 'none' : 'flex';
             });
         });
+    </script>
+</body>
+
+    <!-- AI Chat Toggle Button -->
+    <button onclick="toggleAIChat()" class="fixed bottom-8 left-8 w-16 h-16 bg-brand-red text-white rounded-full shadow-2xl flex items-center justify-center z-[100] ai-btn-pulse hover:scale-110 transition-transform">
+        <i class="fa-solid fa-robot text-2xl"></i>
+    </button>
+
+    <!-- AI Chat Modal -->
+    <div id="ai-chat-modal" class="fixed bottom-28 left-8 w-96 max-w-[calc(100vw-4rem)] glass border border-white/10 rounded-2xl shadow-2xl z-[99] opacity-0 pointer-events-none transition-all duration-300 transform translate-y-4">
+        <div class="p-4 border-b border-white/10 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-brand-red/20 rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-robot text-brand-red text-xl"></i>
+                </div>
+                <div>
+                    <div class="font-display font-bold text-white leading-none mb-1">ИИ-Ассистент</div>
+                    <div class="text-xs text-gray-500">Redoku Helper</div>
+                </div>
+            </div>
+            <button onclick="toggleAIChat()" class="text-gray-500 hover:text-white transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
+        </div>
+        <div class="p-6">
+            <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4">
+                <p class="text-yellow-200 text-sm leading-relaxed">
+                    ⚠️ ИИ-ассистент сейчас не работает. Как только он будет запущен, мы сообщим об этом в нашем Telegram канале и Discord сервере.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAIChat() {
+            const modal = document.getElementById('ai-chat-modal');
+            if (modal.classList.contains('opacity-0')) {
+                modal.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+            } else {
+                modal.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+            }
+        }
     </script>
 </body>
 </html>
