@@ -92,4 +92,44 @@
         });
     </script>
 </body>
+
+    <!-- AI Chat Toggle Button -->
+    <button onclick="toggleAIChat()" class="fixed bottom-8 left-8 w-16 h-16 bg-brand-red text-white rounded-full shadow-2xl flex items-center justify-center z-[100] ai-btn-pulse hover:scale-110 transition-transform">
+        <i class="fa-solid fa-robot text-2xl"></i>
+    </button>
+
+    <!-- AI Chat Modal -->
+    <div id="ai-chat-modal" class="fixed bottom-28 left-8 w-96 max-w-[calc(100vw-4rem)] glass border border-white/10 rounded-2xl shadow-2xl z-[99] opacity-0 pointer-events-none transition-all duration-300 transform translate-y-4">
+        <div class="p-4 border-b border-white/10 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-brand-red/20 rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-robot text-brand-red text-xl"></i>
+                </div>
+                <div>
+                    <div class="font-display font-bold text-white leading-none mb-1">ИИ-Ассистент</div>
+                    <div class="text-xs text-gray-500">Redoku Helper</div>
+                </div>
+            </div>
+            <button onclick="toggleAIChat()" class="text-gray-500 hover:text-white transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
+        </div>
+        <div class="p-6">
+            <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4">
+                <p class="text-yellow-200 text-sm leading-relaxed">
+                    ⚠️ ИИ-ассистент сейчас не работает. Как только он будет запущен, мы сообщим об этом в нашем Telegram канале и Discord сервере.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAIChat() {
+            const modal = document.getElementById('ai-chat-modal');
+            if (modal.classList.contains('opacity-0')) {
+                modal.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+            } else {
+                modal.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+            }
+        }
+    </script>
+</body>
 </html>
