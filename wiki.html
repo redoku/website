@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redoku — Вики</title>
+    <meta name="description" content="База знаний сервера Redoku. Рецепты, механики, правила и лор Сезона III.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#0a0b0e',
+                            surface: '#0F1116',
+                            red: '#ff2e43',
+                            redHover: '#ff4c5e',
+                            copper: '#e67e22',
+                            patina: '#1abc9c',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Базовые стили и кастомный скроллбар */
+        body {
+            background-color: #0a0b0e;
+            color: #e2e8f0;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0b0e; }
+        ::-webkit-scrollbar-thumb { background: #1f222b; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff2e43; }
+
+        /* Фоновые эффекты */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .ambient-light {
+            position: fixed;
+            top: -20%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(255,46,67,0.15) 0%, transparent 60%);
+            border-radius: 50%;
+            z-index: -1;
+            pointer-events: none;
+            filter: blur(60px);
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-nav {
+            background: rgba(15, 17, 22, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Spotlight Hover Effect для карточек */
+        .spotlight-card {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .spotlight-card::before {
+            content: "";
+            position: absolute;
+            top: var(--mouse-y, 0);
+            left: var(--mouse-x, 0);
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 46, 67, 0.15) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .spotlight-card:hover::before {
+            opacity: 1;
+        }
+
+        .spotlight-card:hover {
+            border-color: rgba(255, 46, 67, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .spotlight-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Сайдбар скроллбар */
+        .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+        .sidebar-scroll::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: #ff2e43; border-radius: 2px; }
+
+        /* Анимация появления контента (Scroll Reveal) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Кастомные маркеры списков */
+        .custom-list li::marker {
+            color: #ff2e43;
+        }
+
+        /* Кнопка IP */
+        .btn-ip-copy {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-ip-copy::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg) translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        .btn-ip-copy:hover::after {
+            transform: rotate(45deg) translateX(100%);
+        }
+
+        /* Активный пункт сайдбара */
+        .sidebar-link.active {
+            color: #ff2e43;
+            background: rgba(255, 46, 67, 0.1);
+            border-left-color: #ff2e43;
+        }
+
+        /* Анимация появления секций */
+        .wiki-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        }
+        .wiki-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .wiki-section.hidden {
+            display: none;
+        }
+
+        /* Плавные аккордеоны */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, opacity 0.3s ease-out;
+            opacity: 0;
+        }
+        .accordion-content.open {
+            max-height: 1000px;
+            opacity: 1;
+        }
+        .accordion-icon {
+            transition: transform 0.3s ease-out;
+        }
+        .accordion-icon.rotate {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-red/30 selection:text-white">
+
+    <!-- Фоновые элементы -->
+    <div class="bg-grid"></div>
+    <div class="ambient-light animate-blob"></div>
+    <div class="ambient-light animate-blob" style="top: auto; bottom: -20%; left: auto; right: -10%; background: radial-gradient(circle, rgba(230,126,34,0.1) 0%, transparent 60%); animation-delay: 2s;"></div>
+
+    <!-- Навигация -->
+    <nav class="fixed top-0 w-full z-[100] glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Логотип -->
+            <a href="index.html" class="flex items-center gap-3 group relative z-20">
+                <div class="w-10 h-10 bg-brand-red rounded-xl flex items-center justify-center text-white font-display font-bold text-xl rotate-3 group-hover:rotate-12 transition-all shadow-[0_0_15px_rgba(255,46,67,0.4)]">R</div>
+                <span class="font-display font-bold text-2xl tracking-tighter text-white">REDOKU</span>
+            </a>
+
+            <!-- Десктопное меню -->
+            <div class="hidden lg:flex items-center gap-8 bg-white/5 px-8 py-2.5 rounded-full border border-white/5">
+                <a href="index.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Главная</a>
+                <a href="info.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Инфо</a>
+                <a href="lore.html" class="text-sm font-medium text-gray-400 hover:text-brand-copper transition-all">Лор</a>
+                <a href="news.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Новости</a>
+                <a href="wiki.html" class="text-sm font-medium text-brand-red drop-shadow-[0_0_8px_rgba(255,46,67,0.5)] transition-all">Вики</a>
+                <a href="rules.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Правила</a>
+                <a href="https://map.redoku.ru" target="_blank" class="text-sm font-medium text-gray-400 hover:text-white transition-all flex items-center gap-1.5">
+                    Карта <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                </a>
+            </div>
+
+            <!-- Правый блок -->
+            <div class="hidden lg:flex items-center gap-4">
+                <a href="donate.html" class="text-sm font-medium text-yellow-500 hover:text-yellow-400 transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-store"></i> Магазин
+                </a>
+                <button onclick="copyIp()" class="btn-ip-copy bg-white/10 hover:bg-white/15 border border-white/10 text-white px-5 py-2.5 rounded-xl text-sm font-bold tracking-wide flex items-center gap-2 transition-all">
+                    <span id="ip-text-nav" class="font-display">redoku.bisquit.host</span>
+                    <i class="fa-regular fa-copy opacity-50 text-xs" id="ip-icon-nav"></i>
+                </button>
+            </div>
+
+            <!-- Гамбургер (Мобильный) -->
+            <button class="lg:hidden text-white p-2 relative z-20" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-bars text-2xl" id="mobile-menu-icon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Мобильное меню (Overlay) -->
+    <div id="mobile-menu" class="fixed inset-0 bg-brand-bg/98 backdrop-blur-xl z-[90] flex flex-col items-center justify-center gap-6 opacity-0 pointer-events-none transition-all duration-300">
+        <a href="index.html" class="text-3xl font-display font-bold text-white">Главная</a>
+        <a href="info.html" class="text-2xl font-display font-bold text-white">Как начать</a>
+        <a href="lore.html" class="text-2xl font-display font-bold text-white">Лор сервера</a>
+        <a href="news.html" class="text-2xl font-display font-bold text-white">Новости</a>
+        <a href="wiki.html" class="text-2xl font-display font-bold text-brand-red">Вики</a>
+        <a href="rules.html" class="text-2xl font-display font-bold text-white">Правила</a>
+        <a href="donate.html" class="text-2xl font-display font-bold text-yellow-500 mt-4">Магазин</a>
+        
+        <button onclick="copyIp()" class="mt-8 bg-brand-red/20 border border-brand-red text-white px-8 py-4 rounded-2xl text-lg font-bold flex items-center gap-3">
+            <span id="ip-text-mobile">redoku.bisquit.host</span>
+            <i class="fa-regular fa-copy"></i>
+        </button>
+    </div>
+
+    <!-- Основной контент -->
+    <main class="pt-28 pb-20 px-4 min-h-screen">
+        <div class="max-w-7xl mx-auto">
+            
+            <!-- Заголовок страницы -->
+            <div class="reveal mb-12">
+                <h1 class="font-display font-black text-4xl md:text-5xl text-white mb-4">
+                    <span class="gradient-text">Википедия</span> Redoku
+                </h1>
+                <p class="text-gray-400 text-lg max-w-2xl">
+                    Полная база знаний сервера. Рецепты, механики, правила и лор Сезона III.
+                </p>
+            </div>
+
+            <!-- Layout: Сайдбар + Контент -->
+            <div class="flex flex-col lg:flex-row gap-8">
+                
+                <!-- Сайдбар (Desktop: Sticky, Mobile: Horizontal Scroll) -->
+                <aside class="lg:w-72 flex-shrink-0 lg:sticky lg:top-28 lg:self-start">
+                    <!-- Mobile: Horizontal Menu -->
+                    <div class="lg:hidden mb-6 overflow-x-auto pb-2">
+                        <div class="flex gap-2 whitespace-nowrap">
+                            <button onclick="showSection('full-rules'); return false;" class="sidebar-link active px-4 py-2 rounded-lg bg-white/5 text-sm font-medium text-gray-300 hover:bg-white/10 transition-all border-l-2 border-transparent" data-section="full-rules">Полные правила</button>
+                            <button onclick="showSection('basic-info'); return false;" class="sidebar-link px-4 py-2 rounded-lg bg-white/5 text-sm font-medium text-gray-300 hover:bg-white/10 transition-all border-l-2 border-transparent" data-section="basic-info">Основная информация</button>
+                            <button onclick="showSection('technical-info'); return false;" class="sidebar-link px-4 py-2 rounded-lg bg-white/5 text-sm font-medium text-gray-300 hover:bg-white/10 transition-all border-l-2 border-transparent" data-section="technical-info">Техническая информация</button>
+                            <button onclick="showSection('recipes'); return false;" class="sidebar-link px-4 py-2 rounded-lg bg-white/5 text-sm font-medium text-gray-300 hover:bg-white/10 transition-all border-l-2 border-transparent" data-section="recipes">Рецепты BreweryX</button>
+                            <button onclick="showSection('tobacco'); return false;" class="sidebar-link px-4 py-2 rounded-lg bg-white/5 text-sm font-medium text-gray-300 hover:bg-white/10 transition-all border-l-2 border-transparent" data-section="tobacco">Сигареты и табак</button>
+                            <button onclick="showSection('reports'); return false;" class="sidebar-link px-4 py-2 rounded-lg bg-white/5 text-sm font-medium text-gray-300 hover:bg-white/10 transition-all border-l-2 border-transparent" data-section="reports">Система репортов</button>
+                            <button onclick="showSection('copper-golems'); return false;" class="sidebar-link px-4 py-2 rounded-lg bg-white/5 text-sm font-medium text-gray-300 hover:bg-white/10 transition-all border-l-2 border-transparent" data-section="copper-golems">Медные Големы</button>
+                            <button onclick="showSection('collapse-echo'); return false;" class="sidebar-link px-4 py-2 rounded-lg bg-white/5 text-sm font-medium text-gray-300 hover:bg-white/10 transition-all border-l-2 border-transparent" data-section="collapse-echo">Эхо Коллапса</button>
+                        </div>
+                    </div>
+
+                    <!-- Desktop: Sticky Sidebar -->
+                    <div class="hidden lg:block glass rounded-2xl p-6 sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto sidebar-scroll">
+                        <h3 class="font-display font-bold text-white mb-4 text-lg">Содержание</h3>
+                        
+                        <!-- Категория: Навигация -->
+                        <div class="mb-6">
+                            <span class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 block">Навигация</span>
+                            <ul class="space-y-1">
+                                <li><button onclick="showSection('full-rules'); return false;" class="sidebar-link active w-full text-left block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-all border-l-2 border-transparent" data-section="full-rules">Полные правила</button></li>
+                                <li><button onclick="showSection('basic-info'); return false;" class="sidebar-link w-full text-left block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-all border-l-2 border-transparent" data-section="basic-info">Основная информация</button></li>
+                                <li><button onclick="showSection('technical-info'); return false;" class="sidebar-link w-full text-left block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-all border-l-2 border-transparent" data-section="technical-info">Техническая информация</button></li>
+                            </ul>
+                        </div>
+
+                        <!-- Категория: Механики -->
+                        <div class="mb-6">
+                            <span class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 block">Механики</span>
+                            <ul class="space-y-1">
+                                <li><button onclick="showSection('recipes'); return false;" class="sidebar-link w-full text-left block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-all border-l-2 border-transparent" data-section="recipes">Рецепты BreweryX</button></li>
+                                <li><button onclick="showSection('tobacco'); return false;" class="sidebar-link w-full text-left block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-all border-l-2 border-transparent" data-section="tobacco">Сигареты и табак</button></li>
+                                <li><button onclick="showSection('reports'); return false;" class="sidebar-link w-full text-left block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-all border-l-2 border-transparent" data-section="reports">Система репортов</button></li>
+                            </ul>
+                        </div>
+
+                        <!-- Категория: Лор Сезона III -->
+                        <div>
+                            <span class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 block">Лор Сезона III</span>
+                            <ul class="space-y-1">
+                                <li><button onclick="showSection('copper-golems'); return false;" class="sidebar-link w-full text-left block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-all border-l-2 border-transparent" data-section="copper-golems">Медные Големы</button></li>
+                                <li><button onclick="showSection('collapse-echo'); return false;" class="sidebar-link w-full text-left block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-all border-l-2 border-transparent" data-section="collapse-echo">Эхо Коллапса</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Область контента -->
+                <div class="flex-1 min-w-0">
+                    
+                    <!-- Секция: Полные правила -->
+                    <section id="full-rules" class="wiki-section visible mb-16 pt-4">
+                        <h2 class="font-display font-bold text-3xl text-white mb-8 flex items-center gap-3">
+                            <i class="fa-solid fa-book text-brand-copper"></i>
+                            Полные правила сервера
+                        </h2>
+
+                        <!-- Аккордеоны -->
+                        <div class="space-y-4">
+                            <!-- Вступление -->
+                            <div class="accordion-item glass rounded-2xl overflow-hidden border border-brand-red/20">
+                                <button onclick="toggleAccordion(this)" class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left hover:bg-brand-red/5 transition-all group">
+                                    <span class="font-display font-bold text-white flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-brand-red/20 flex items-center justify-center group-hover:bg-brand-red/30 transition-colors">
+                                            <i class="fa-solid fa-exclamation-triangle text-brand-red"></i>
+                                        </div>
+                                        Вступление
+                                    </span>
+                                    <i class="fa-solid fa-chevron-down text-gray-400 accordion-icon group-hover:text-white transition-colors"></i>
+                                </button>
+                                <div class="accordion-content px-6 pb-5 pt-2">
+                                    <div class="bg-brand-red/5 border-l-4 border-brand-red rounded-r-lg p-4">
+                                        <p class="text-gray-300">
+                                            <span class="text-brand-red font-bold">Важно:</span> Незнание правил не освобождает от ответственности. Начиная игру на сервере Redoku, вы автоматически соглашаетесь с данным сводом правил. Правила распространяются на игровой сервер, Discord-сервер и Telegram-сообщество.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 1. Общие положения -->
+                            <div class="accordion-item glass rounded-2xl overflow-hidden border border-white/10 hover:border-brand-copper/30 transition-colors">
+                                <button onclick="toggleAccordion(this)" class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/5 transition-all group">
+                                    <span class="font-display font-bold text-white flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-brand-copper/20 flex items-center justify-center group-hover:bg-brand-copper/30 transition-colors">
+                                            <i class="fa-solid fa-gavel text-brand-copper"></i>
+                                        </div>
+                                        1. Общие положения
+                                    </span>
+                                    <i class="fa-solid fa-chevron-down text-gray-400 accordion-icon group-hover:text-white transition-colors"></i>
+                                </button>
+                                <div class="accordion-content px-6 pb-5 pt-2">
+                                    <ul class="space-y-4">
+                                        <li class="flex gap-3 p-3 bg-white/5 rounded-lg border-l-2 border-brand-copper/50">
+                                            <span class="text-brand-copper font-bold text-lg">1.1</span>
+                                            <div>
+                                                <span class="text-white font-medium">Власть модерации.</span>
+                                                <p class="text-gray-400 text-sm mt-1">Модерация имеет право самостоятельно устанавливать тяжесть наказания, исходя из здравого смысла и истории нарушений игрока.</p>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3 p-3 bg-white/5 rounded-lg border-l-2 border-brand-copper/50">
+                                            <span class="text-brand-copper font-bold text-lg">1.2</span>
+                                            <div>
+                                                <span class="text-white font-medium">Ресурсы.</span>
+                                                <p class="text-gray-400 text-sm mt-1">Администрация не обязана возвращать ресурсы, утраченные в результате PvP, очистки или игровых багов (кроме исключительных случаев).</p>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3 p-3 bg-brand-red/5 rounded-lg border-l-2 border-brand-red">
+                                            <span class="text-brand-red font-bold text-lg">1.3</span>
+                                            <div>
+                                                <span class="text-white font-medium">Политика и религия.</span>
+                                                <p class="text-gray-400 text-sm mt-1">Запрещены любые формы пропаганды, обсуждения острых политических тем или религиозная дискриминация.</p>
+                                                <span class="text-brand-red text-xs font-bold block mt-2">⚠️ Наказание: Бан от 5 дней до перманентного</span>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3 p-3 bg-white/5 rounded-lg border-l-2 border-brand-copper/50">
+                                            <span class="text-brand-copper font-bold text-lg">1.4</span>
+                                            <div>
+                                                <span class="text-white font-medium">Обход наказаний.</span>
+                                                <p class="text-gray-400 text-sm mt-1">Попытка зайти с твинка во время бана или поиск лазеек в правилах карается блокировкой по IP.</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- 2. Коммуникация -->
+                            <div class="accordion-item glass rounded-2xl overflow-hidden border border-white/10 hover:border-blue-400/30 transition-colors">
+                                <button onclick="toggleAccordion(this)" class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/5 transition-all group">
+                                    <span class="font-display font-bold text-white flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
+                                            <i class="fa-solid fa-comments text-blue-400"></i>
+                                        </div>
+                                        2. Коммуникация (Игровой чат и голос)
+                                    </span>
+                                    <i class="fa-solid fa-chevron-down text-gray-400 accordion-icon group-hover:text-white transition-colors"></i>
+                                </button>
+                                <div class="accordion-content px-6 pb-5 pt-2">
+                                    <ul class="space-y-4">
+                                        <li class="flex gap-3 p-3 bg-white/5 rounded-lg border-l-2 border-blue-400/50">
+                                            <span class="text-blue-400 font-bold text-lg">2.1</span>
+                                            <div>
+                                                <span class="text-white font-medium">Культура речи.</span>
+                                                <p class="text-gray-400 text-sm mt-1">Запрещен спам, флуд и чрезмерный мат в глобальном чате.</p>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3 p-3 bg-brand-red/5 rounded-lg border-l-2 border-brand-red">
+                                            <span class="text-brand-red font-bold text-lg">2.2</span>
+                                            <div>
+                                                <span class="text-white font-medium">Оскорбления.</span>
+                                                <p class="text-gray-400 text-sm mt-1">Запрещено унижение чести и достоинства игроков. Упоминание родственников в негативном ключе.</p>
+                                                <span class="text-brand-red text-xs font-bold block mt-2">⚠️ Наказание: Бан от 2 дней</span>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3 p-3 bg-white/5 rounded-lg border-l-2 border-blue-400/50">
+                                            <span class="text-blue-400 font-bold text-lg">2.3</span>
+                                            <div>
+                                                <span class="text-white font-medium">Языки.</span>
+                                                <p class="text-gray-400 text-sm mt-1">Основной язык сервера — русский. Допускается использование белорусского, украинского, английского и казахского языков.</p>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3 p-3 bg-white/5 rounded-lg border-l-2 border-blue-400/50">
+                                            <span class="text-blue-400 font-bold text-lg">2.4</span>
+                                            <div>
+                                                <span class="text-white font-medium">Голосовой чат (Simple Voice Chat).</span>
+                                                <p class="text-gray-400 text-sm mt-1">Запрещен звуковой спам, проигрывание громкой музыки и использование преобразователей голоса (пищалки и т.д.).</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- 3. Игровой процесс -->
+                            <div class="accordion-item glass rounded-2xl overflow-hidden border border-white/10 hover:border-green-400/30 transition-colors">
+                                <button onclick="toggleAccordion(this)" class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/5 transition-all group">
+                                    <span class="font-display font-bold text-white flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center group-hover:bg-green-500/30 transition-colors">
+                                            <i class="fa-solid fa-gamepad text-green-400"></i>
+                                        </div>
+                                        3. Игровой процесс и выживание
+                                    </span>
+                                    <i class="fa-solid fa-chevron-down text-gray-400 accordion-icon group-hover:text-white transition-colors"></i>
+                                </button>
+                                <div class="accordion-content px-6 pb-5 pt-2">
+                                    <ul class="space-y-4">
+                                        <li class="flex gap-3 p-3 bg-brand-red/5 rounded-lg border-l-2 border-brand-red">
+                                            <span class="text-brand-red font-bold text-lg">3.1</span>
+                                            <div>
+                                                <span class="text-white font-medium">Гриферство.</span>
+                                                <p class="text-gray-400 text-sm mt-1">Строго запрещено уничтожение чужих построек, воровство предметов (даже если они не в привате) и убийство чужих питомцев.</p>
+                                                <span class="text-brand-red text-xs font-bold block mt-2">⚠️ Наказание: Варн или Бан по IP</span>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3 p-3 bg-white/5 rounded-lg border-l-2 border-green-400/50">
+                                            <span class="text-green-400 font-bold text-lg">3.2</span>
+                                            <div>
+                                                <span class="text-white font-medium">PvP.</span>
+                                                <p class="text-gray-400 text-sm mt-1">Сражения разрешены только при обоюдном согласии или на специально отведенных аренах. Убийство без причины вне арен считается нарушением.</p>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3 p-3 bg-brand-red/5 rounded-lg border-l-2 border-brand-red">
+                                            <span class="text-brand-red font-bold text-lg">3.3</span>
+                                            <div>
+                                                <span class="text-white font-medium">Модификации.</span>
+                                                <p class="text-gray-400 text-sm mt-1">Запрещено использование X-Ray, FreeCam, авто-кликеров и любых чит-клиентов (Wurst, Impact и др.).</p>
+                                                <span class="text-brand-copper text-xs block mt-1">ℹ️ Полный список запрещенных модов доступен во вкладке «Техническая информация»</span>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3 p-3 bg-white/5 rounded-lg border-l-2 border-green-400/50">
+                                            <span class="text-green-400 font-bold text-lg">3.4</span>
+                                            <div>
+                                                <span class="text-white font-medium">Эмоции (EmoteCraft).</span>
+                                                <p class="text-gray-400 text-sm mt-1">Запрещено использование невидимых или оскорбительных анимаций.</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- 4. Территории -->
+                            <div class="accordion-item glass rounded-2xl overflow-hidden border border-white/10 hover:border-yellow-400/30 transition-colors">
+                                <button onclick="toggleAccordion(this)" class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/5 transition-all group">
+                                    <span class="font-display font-bold text-white flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-yellow-500/20 flex items-center justify-center group-hover:bg-yellow-500/30 transition-colors">
+                                            <i class="fa-solid fa-map text-yellow-400"></i>
+                                        </div>
+                                        4. Территории и застройка
+                                    </span>
+                                    <i class="fa-solid fa-chevron-down text-gray-400 accordion-icon group-hover:text-white transition-colors"></i>
+                                </button>
+                                <div class="accordion-content px-6 pb-5 pt-2">
+                                    <ul class="space-y-4">
+                                        <li class="flex gap-3 p-3 bg-brand-red/5 rounded-lg border-l-2 border-brand-red">
+                                            <span class="text-brand-red font-bold text-lg">4.1</span>
+                                            <div>
+                                                <span class="text-white font-medium">Спавн.</span>
+                                                <p class="text-gray-400 text-sm mt-1">Радиус 700 блоков от спавна должен быть красиво обустроен. Радиус может расширяться — следите за новостями в Telegram и Discord.</p>
+                                                <span class="text-brand-red text-xs font-bold block mt-2">⚠️ За порчу спавна — наказание</span>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3 p-3 bg-white/5 rounded-lg border-l-2 border-yellow-400/50">
+                                            <span class="text-yellow-400 font-bold text-lg">4.2</span>
+                                            <div>
+                                                <span class="text-white font-medium">Соседство.</span>
+                                                <p class="text-gray-400 text-sm mt-1">Игроки должны строиться на приличном расстоянии друг от друга. Строиться рядом можно только при обоюдном согласии обоих игроков.</p>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3 p-3 bg-brand-red/5 rounded-lg border-l-2 border-brand-red">
+                                            <span class="text-brand-red font-bold text-lg">4.3</span>
+                                            <div>
+                                                <span class="text-white font-medium">Сложные механизмы.</span>
+                                                <p class="text-gray-400 text-sm mt-1">Строить большие и сложные механизмы, загружающие сервер — запрещено. Если есть вопросы, спросите у администрации прежде чем строить.</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- 5. Экономика -->
+                            <div class="accordion-item glass rounded-2xl overflow-hidden border border-white/10 hover:border-amber-400/30 transition-colors">
+                                <button onclick="toggleAccordion(this)" class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/5 transition-all group">
+                                    <span class="font-display font-bold text-white flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center group-hover:bg-amber-500/30 transition-colors">
+                                            <i class="fa-solid fa-coins text-amber-400"></i>
+                                        </div>
+                                        5. Экономика и торговля
+                                    </span>
+                                    <i class="fa-solid fa-chevron-down text-gray-400 accordion-icon group-hover:text-white transition-colors"></i>
+                                </button>
+                                <div class="accordion-content px-6 pb-5 pt-2">
+                                    <ul class="space-y-4">
+                                        <li class="flex gap-3 p-3 bg-white/5 rounded-lg border-l-2 border-amber-400/50">
+                                            <span class="text-amber-400 font-bold text-lg">5.1</span>
+                                            <div>
+                                                <span class="text-white font-medium">Валюта.</span>
+                                                <p class="text-gray-400 text-sm mt-1">Основная валюта — алмазная руда.</p>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3 p-3 bg-brand-red/5 rounded-lg border-l-2 border-brand-red">
+                                            <span class="text-brand-red font-bold text-lg">5.2</span>
+                                            <div>
+                                                <span class="text-white font-medium">Минимальные цены.</span>
+                                                <p class="text-gray-400 text-sm mt-1">На сервере действует система МЦ (Минимальных Цен). Продажа ресурсов дешевле установленного порога считается дестабилизацией экономики.</p>
+                                                <span class="text-brand-red text-xs font-bold block mt-2">⚠️ Нарушение МЦ = Варн или Бан</span>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3 p-3 bg-brand-red/5 rounded-lg border-l-2 border-brand-red">
+                                            <span class="text-brand-red font-bold text-lg">5.3</span>
+                                            <div>
+                                                <span class="text-white font-medium">Реальные деньги.</span>
+                                                <p class="text-gray-400 text-sm mt-1">Продажа игровых ресурсов за реальные деньги (RMT) запрещена.</p>
+                                                <span class="text-brand-red text-xs font-bold block mt-2">⚠️ Наказание: ЧСП (Черный Список Проекта)</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Секция: Техническая информация -->
+                    <section id="technical-info" class="wiki-section hidden mb-16">
+                        <h2 class="font-display font-bold text-3xl text-white mb-8 flex items-center gap-3">
+                            <i class="fa-solid fa-microchip text-brand-copper"></i>
+                            Техническая информация
+                        </h2>
+
+                        <!-- Дисклеймер -->
+                        <div class="bg-brand-red/10 border border-brand-red/30 rounded-2xl p-6 mb-8">
+                            <div class="flex items-start gap-4">
+                                <i class="fa-solid fa-shield-halved text-brand-red text-2xl mt-1"></i>
+                                <div>
+                                    <h3 class="text-white font-bold text-lg mb-2">Важно знать</h3>
+                                    <p class="text-gray-300 text-sm">Администрация оставляет за собой право вызвать игрока на проверку модов при подозрении в использовании запрещенного ПО. Если есть вопросы по модам — спрашивайте у администрации прежде чем устанавливать.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Запрещенные моды -->
+                        <div class="glass rounded-2xl p-8 mb-8">
+                            <h3 class="font-display font-bold text-2xl text-brand-red mb-6 flex items-center gap-3">
+                                <i class="fa-solid fa-ban"></i>
+                                Запрещенные моды и их аналоги
+                            </h3>
+
+                            <!-- 1. Читерские клиенты -->
+                            <div class="mb-8">
+                                <h4 class="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                                    <span class="w-2 h-2 bg-brand-red rounded-full"></span>
+                                    1. Читерские клиенты (Hacked Clients)
+                                </h4>
+                                <p class="text-gray-400 text-sm mb-4">Полная блокировка. Использование любого из этих клиентов — бан по IP без предупреждения.</p>
+                                <ul class="space-y-2 text-sm">
+                                    <li class="text-brand-red font-bold">Meteor Client</li>
+                                    <li class="text-gray-400">— самый популярный чит-мод на Fabric 1.21</li>
+                                    <li class="text-brand-red font-bold">Wurst / Aristois / LiquidBounce</li>
+                                    <li class="text-gray-400">— классические сборники читов</li>
+                                    <li class="text-brand-red font-bold">Impact / Future</li>
+                                    <li class="text-gray-400">— тяжелые чит-клиенты с функциями обхода античитов</li>
+                                </ul>
+                            </div>
+
+                            <!-- 2. Автоматизация и ИИ -->
+                            <div class="mb-8">
+                                <h4 class="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                                    <span class="w-2 h-2 bg-brand-red rounded-full"></span>
+                                    2. Автоматизация и ИИ (Automation)
+                                </h4>
+                                <p class="text-gray-400 text-sm mb-4">Запрещены моды, которые «играют за вас» или выполняют сложные действия автоматически.</p>
+                                <ul class="space-y-2 text-sm">
+                                    <li class="text-brand-red font-bold">Baritone</li>
+                                    <li class="text-gray-400">— ИИ-бот, который сам копает ресурсы, строит и ходит по миру</li>
+                                    <li class="text-brand-red font-bold">Litematica (EasyPlace & Printer)</li>
+                                    <li class="text-gray-400">— сама модификация разрешена для просмотра схем, но функции авто-постановки блоков (EasyPlace) и принтера (автоматическая постройка) строго запрещены</li>
+                                    <li class="text-brand-red font-bold">AutoClicker / AutoEat / AutoFish</li>
+                                    <li class="text-gray-400">— любые моды на авто-клик, авто-еду или авто-рыбалку</li>
+                                    <li class="text-brand-red font-bold">Tweakeroo (Break Restrictions / Fast Place)</li>
+                                    <li class="text-gray-400">— запрещены функции ограничения ломания блоков и сверхбыстрая постановка (Reach/FastPlace)</li>
+                                </ul>
+                            </div>
+
+                            <!-- 3. Визуальные преимущества -->
+                            <div class="mb-8">
+                                <h4 class="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                                    <span class="w-2 h-2 bg-brand-red rounded-full"></span>
+                                    3. Визуальные преимущества (Visual Advantage)
+                                </h4>
+                                <p class="text-gray-400 text-sm mb-4">Моды, позволяющие видеть сквозь блоки или получать скрытую информацию.</p>
+                                <ul class="space-y-2 text-sm">
+                                    <li class="text-brand-red font-bold">X-Ray (Mod & Resource Packs)</li>
+                                    <li class="text-gray-400">— любые виды «рентгена» для поиска руд</li>
+                                    <li class="text-brand-red font-bold">FreeCam</li>
+                                    <li class="text-gray-400">— возможность выходить камерой из тела персонажа (разрешена только администрации)</li>
+                                    <li class="text-brand-red font-bold">Миникарты с радаром (Xaero's / JourneyMap)</li>
+                                    <li class="text-gray-400">— разрешены только при отключенном отображении игроков, мобов и пещер</li>
+                                    <li class="text-brand-red font-bold">Tracer / ESP</li>
+                                    <li class="text-gray-400">— линии к игрокам/сундукам или их подсветка сквозь стены</li>
+                                </ul>
+                            </div>
+
+                            <!-- 4. Технические преимущества -->
+                            <div class="mb-8">
+                                <h4 class="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                                    <span class="w-2 h-2 bg-brand-red rounded-full"></span>
+                                    4. Технические преимущества
+                                </h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li class="text-brand-red font-bold">NoHurtCam / NoFog</li>
+                                    <li class="text-gray-400">— моды, убирающие тряску экрана от урона или туман в лаве/воде (дает преимущество в PvP и поиске ресурсов)</li>
+                                    <li class="text-brand-red font-bold">SeedCracker</li>
+                                    <li class="text-gray-400">— моды для автоматического подбора сида (зерна) мира</li>
+                                    <li class="text-brand-red font-bold">Inventory Profiles Next (Auto-Totem)</li>
+                                    <li class="text-gray-400">— функция автоматической постановки тотема в руку запрещена</li>
+                                </ul>
+                            </div>
+
+                            <!-- 5. Особенности для Redoku -->
+                            <div>
+                                <h4 class="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                                    <span class="w-2 h-2 bg-brand-copper rounded-full"></span>
+                                    🧪 Особенности для Redoku (BreweryX и Cigarettes)
+                                </h4>
+                                <p class="text-gray-400 text-sm mb-4">Так как на сервере стоят моды на алкоголь и табак, обрати внимание на эти моменты:</p>
+                                <ul class="space-y-2 text-sm">
+                                    <li class="text-brand-red font-bold">Auto-Brew Scripts</li>
+                                    <li class="text-gray-400">— запрещено использование макросов для автоматического закидывания ингредиентов в котлы по таймеру</li>
+                                    <li class="text-brand-red font-bold">Recipe Spoilers</li>
+                                    <li class="text-gray-400">— запрещено использование сторонних модов или таблиц, которые «вытаскивают» секретные рецепты BreweryX напрямую из файлов сервера, если они скрыты администрацией</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Разрешенные моды -->
+                        <div class="glass rounded-2xl p-8 border-l-4 border-green-500">
+                            <h3 class="font-display font-bold text-2xl text-green-400 mb-6 flex items-center gap-3">
+                                <i class="fa-solid fa-check-circle"></i>
+                                Разрешенные моды и их аналоги
+                            </h3>
+                            <p class="text-gray-400 text-sm mb-6">Эти моды безопасны и не дают несправедливого преимущества:</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="flex items-center gap-3 p-3 bg-green-500/10 rounded-lg border border-green-500/20">
+                                    <i class="fa-solid fa-check text-green-400"></i>
+                                    <span class="text-white font-medium">Sodium</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 bg-green-500/10 rounded-lg border border-green-500/20">
+                                    <i class="fa-solid fa-check text-green-400"></i>
+                                    <span class="text-white font-medium">Lithium</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 bg-green-500/10 rounded-lg border border-green-500/20">
+                                    <i class="fa-solid fa-check text-green-400"></i>
+                                    <span class="text-white font-medium">Iris / Oculus</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 bg-green-500/10 rounded-lg border border-green-500/20">
+                                    <i class="fa-solid fa-check text-green-400"></i>
+                                    <span class="text-white font-medium">Distant Horizons</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 bg-green-500/10 rounded-lg border border-green-500/20">
+                                    <i class="fa-solid fa-check text-green-400"></i>
+                                    <span class="text-white font-medium">Simple Voice Chat</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 bg-green-500/10 rounded-lg border border-green-500/20">
+                                    <i class="fa-solid fa-check text-green-400"></i>
+                                    <span class="text-white font-medium">EmoteCraft</span>
+                                    <span class="text-gray-500 text-xs">(кроме аморальных анимаций)</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 bg-green-500/10 rounded-lg border border-green-500/20">
+                                    <i class="fa-solid fa-check text-green-400"></i>
+                                    <span class="text-white font-medium">Litematica</span>
+                                    <span class="text-gray-500 text-xs">(только голограммы)</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 bg-green-500/10 rounded-lg border border-green-500/20">
+                                    <i class="fa-solid fa-check text-green-400"></i>
+                                    <span class="text-white font-medium">Xaero's Minimap</span>
+                                    <span class="text-gray-500 text-xs">(без радара)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Секция: Основная информация -->
+                    <section id="basic-info" class="wiki-section hidden mb-16">
+                        <h2 class="font-display font-bold text-3xl text-white mb-8 flex items-center gap-3">
+                            <i class="fa-solid fa-info-circle text-brand-patina"></i>
+                            Основная информация
+                        </h2>
+
+                        <div class="space-y-6">
+                            <!-- Техническая база -->
+                            <div class="glass rounded-2xl p-6">
+                                <h3 class="font-display font-bold text-xl text-white mb-4 flex items-center gap-3">
+                                    <i class="fa-solid fa-microchip text-brand-copper"></i>
+                                    Техническая база
+                                </h3>
+                                <div class="space-y-4">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <span class="text-gray-400 text-sm">Версия Minecraft</span>
+                                            <p class="text-white font-medium">1.21.11 Fabric</p>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <span class="text-gray-400 text-sm">IP сервера</span>
+                                            <p class="text-[#ff2e43] font-medium">redoku.bisquit.host</p>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <span class="text-gray-400 text-sm">Рекомендуемый лаунчер</span>
+                                            <p class="text-white font-medium">Legacy Launcher</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Ссылки на моды и лаунчер -->
+                                    <div class="flex flex-wrap gap-3">
+                                        <a href="https://legacylauncher.net/" target="_blank" class="inline-flex items-center gap-2 bg-brand-red/20 hover:bg-brand-red/30 text-white px-4 py-2 rounded-lg border border-brand-red/30 transition-colors">
+                                            <i class="fa-solid fa-download"></i>
+                                            Legacy Launcher
+                                        </a>
+                                        <a href="https://modrinth.com/mod/simple-voice-chat" target="_blank" class="inline-flex items-center gap-2 bg-brand-copper/20 hover:bg-brand-copper/30 text-white px-4 py-2 rounded-lg border border-brand-copper/30 transition-colors">
+                                            <i class="fa-solid fa-download"></i>
+                                            Simple Voice Chat
+                                        </a>
+                                        <a href="https://modrinth.com/mod/emotecraft" target="_blank" class="inline-flex items-center gap-2 bg-brand-copper/20 hover:bg-brand-copper/30 text-white px-4 py-2 rounded-lg border border-brand-copper/30 transition-colors">
+                                            <i class="fa-solid fa-download"></i>
+                                            EmoteCraft
+                                        </a>
+                                    </div>
+
+                                    <!-- Инструкция по Voice Chat -->
+                                    <div class="bg-brand-copper/10 border border-brand-copper/30 rounded-lg p-4">
+                                        <h4 class="text-white font-medium mb-2 flex items-center gap-2">
+                                            <i class="fa-solid fa-microphone text-brand-copper"></i>
+                                            Voice Chat
+                                        </h4>
+                                        <ul class="text-gray-400 text-sm space-y-1">
+                                            <li>• Нажми <kbd class="bg-black/50 px-2 py-1 rounded text-white">V</kbd> для настроек голосового чата</li>
+                                            <li>• Иконка штекера в углу экрана = проблема с соединением</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Мир и выживание -->
+                            <div class="glass rounded-2xl p-6">
+                                <h3 class="font-display font-bold text-xl text-white mb-4 flex items-center gap-3">
+                                    <i class="fa-solid fa-earth-europe text-brand-copper"></i>
+                                    Мир и выживание
+                                </h3>
+                                <div class="space-y-4">
+                                    <div class="bg-white/5 rounded-lg p-4 border-l-4 border-brand-copper">
+                                        <h4 class="text-white font-medium mb-1">Мир Построек</h4>
+                                        <p class="text-gray-400 text-sm">Основной мир для жизни, творчества и развития лора.</p>
+                                    </div>
+                                    <div class="bg-white/5 rounded-lg p-4 border-l-4 border-brand-copper">
+                                        <h4 class="text-white font-medium mb-1">Экономика</h4>
+                                        <p class="text-gray-400 text-sm">Валюта — <span class="text-[#e67e22] font-medium">Алмазная руда</span> и <span class="text-[#e67e22] font-medium">Алмазный сланец (АР)</span>. Бартер и честная торговля — основа сервера.</p>
+                                    </div>
+                                    <div class="bg-white/5 rounded-lg p-4 border-l-4 border-brand-copper">
+                                        <h4 class="text-white font-medium mb-1">Старт</h4>
+                                        <p class="text-gray-400 text-sm">На сервере нет кит-стартов. Всё начинается с добычи дерева и поиска места для базы.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Полезные команды -->
+                            <div class="glass rounded-2xl p-6">
+                                <h3 class="font-display font-bold text-xl text-white mb-4 flex items-center gap-3">
+                                    <i class="fa-solid fa-terminal text-brand-copper"></i>
+                                    Полезные команды
+                                </h3>
+                                <div class="bg-white/5 rounded-lg p-6 border border-white/10 text-center">
+                                    <i class="fa-solid fa-gear text-gray-500 text-3xl mb-3 animate-spin-slow"></i>
+                                    <p class="text-gray-400">Раздел в разработке. Список команд будет добавлен после финальной настройки плагинов Сезона III.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a href="info.html" class="inline-flex items-center gap-2 mt-6 text-brand-red hover:text-brand-redHover font-medium transition-colors">
+                            Подробнее <i class="fa-solid fa-arrow-right text-sm"></i>
+                        </a>
+                    </section>
+
+                    <!-- Секция: Рецепты BreweryX -->
+                    <section id="recipes" class="wiki-section hidden mb-16">
+                        <h2 class="font-display font-bold text-3xl text-white mb-8 flex items-center gap-3">
+                            <i class="fa-solid fa-flask text-brand-copper"></i>
+                            Рецепты BreweryX
+                        </h2>
+                        <p class="text-gray-400 mb-6 leading-relaxed">
+                            BreweryX — система варения зелий на сервере. Создавай уникальные напитки с различными эффектами.
+                        </p>
+
+                        <!-- Пиво и Эли -->
+                        <h3 class="font-display font-bold text-xl text-white mb-4 mt-8">Пиво и Эли</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                            <div class="glass rounded-xl p-4 border-l-2 border-brand-copper">
+                                <h4 class="font-display font-bold text-white mb-2">Пшеничное пиво</h4>
+                                <p class="text-xs text-gray-400 mb-2">Пшеница ×3 | 8 мин | Береза | 2 года</p>
+                                <p class="text-xs text-brand-copper">Алкоголь: 5%</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-brand-copper">
+                                <h4 class="font-display font-bold text-white mb-2">Пиво</h4>
+                                <p class="text-xs text-gray-400 mb-2">Пшеница ×6 | 8 мин | Любое | 3 года</p>
+                                <p class="text-xs text-brand-copper">Алкоголь: 6%</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-brand-copper">
+                                <h4 class="font-display font-bold text-white mb-2">Темное пиво</h4>
+                                <p class="text-xs text-gray-400 mb-2">Пшеница ×6 | 8 мин | Тёмный дуб | 8 лет</p>
+                                <p class="text-xs text-brand-copper">Алкоголь: 7%</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-brand-copper">
+                                <h4 class="font-display font-bold text-white mb-2">Яблочный сидр</h4>
+                                <p class="text-xs text-gray-400 mb-2">Яблоко ×14 | 7 мин | Любое | 3 года</p>
+                                <p class="text-xs text-brand-copper">Алкоголь: 7%</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-brand-copper">
+                                <h4 class="font-display font-bold text-white mb-2">Квас</h4>
+                                <p class="text-xs text-gray-400 mb-2">Хлеб ×4, Сахар ×2 | 4 мин</p>
+                                <p class="text-xs text-brand-copper">Алкоголь: 2% | Скорость I (40 сек)</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-brand-copper">
+                                <h4 class="font-display font-bold text-white mb-2">Пряный тыквенный эль</h4>
+                                <p class="text-xs text-gray-400 mb-2">Тыква ×4, Сахар ×2, Пшеница ×3 | 6 мин</p>
+                                <p class="text-xs text-brand-copper">Алкоголь: 5% | Ускорение II (100 сек)</p>
+                            </div>
+                        </div>
+
+                        <!-- Вина -->
+                        <h3 class="font-display font-bold text-xl text-white mb-4">Вина</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                            <div class="glass rounded-xl p-4 border-l-2 border-red-500">
+                                <h4 class="font-display font-bold text-white mb-2">Красное вино</h4>
+                                <p class="text-xs text-gray-400 mb-2">Сладкие ягоды ×5 | 5 мин | Любое | 20 лет</p>
+                                <p class="text-xs text-red-400">Алкоголь: 8% | Сложность: 4</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-yellow-500">
+                                <h4 class="font-display font-bold text-white mb-2">Одуванчиковое вино</h4>
+                                <p class="text-xs text-gray-400 mb-2">Одуванчик ×12, Сахар ×4 | 5 мин | Береза | 5 лет</p>
+                                <p class="text-xs text-yellow-400">Алкоголь: 9% | Скорость I (80 сек)</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-purple-500">
+                                <h4 class="font-display font-bold text-white mb-2">Зачарованное вино</h4>
+                                <p class="text-xs text-gray-400 mb-2">Ягоды ×10, Арбуз ×1 | 12 мин | Береза | 50 лет</p>
+                                <p class="text-xs text-purple-400">Алкоголь: 12% | Регенерация II, Сопротивление II</p>
+                            </div>
+                        </div>
+
+                        <!-- Крепкие напитки -->
+                        <h3 class="font-display font-bold text-xl text-white mb-4">Крепкие напитки</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                            <div class="glass rounded-xl p-4 border-l-2 border-orange-500">
+                                <h4 class="font-display font-bold text-white mb-2">Виски</h4>
+                                <p class="text-xs text-gray-400 mb-2">Пшеница ×10 | 10 мин | Ель | 18 лет | 2 дист.</p>
+                                <p class="text-xs text-orange-400">Алкоголь: 26% | Сложность: 7</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-red-600">
+                                <h4 class="font-display font-bold text-white mb-2">Ром</h4>
+                                <p class="text-xs text-gray-400 mb-2">Сахар ×18 | 6 мин | Дуб | 14 лет | 2 дист.</p>
+                                <p class="text-xs text-red-400">Алкоголь: 30% | Огнестойкость</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-gray-300">
+                                <h4 class="font-display font-bold text-white mb-2">Водка</h4>
+                                <p class="text-xs text-gray-400 mb-2">Картофель ×10 | 15 мин | 3 дист.</p>
+                                <p class="text-xs text-gray-400">Алкоголь: 20% | Слабость, Отравление</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-cyan-400">
+                                <h4 class="font-display font-bold text-white mb-2">Джин</h4>
+                                <p class="text-xs text-gray-400 mb-2">Пшеница ×9, Голубой цветок ×6, Яблоко ×1 | 6 мин | 2 дист.</p>
+                                <p class="text-xs text-cyan-400">Алкоголь: 20% | Сложность: 6</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-yellow-400">
+                                <h4 class="font-display font-bold text-white mb-2">Текила</h4>
+                                <p class="text-xs text-gray-400 mb-2">Кактус ×8 | 15 мин | Береза | 12 лет | 2 дист.</p>
+                                <p class="text-xs text-yellow-400">Алкоголь: 20% | Сложность: 5</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-green-500">
+                                <h4 class="font-display font-bold text-white mb-2">Абсент</h4>
+                                <p class="text-xs text-gray-400 mb-2">Трава ×15 | 3 мин | 6 дист.</p>
+                                <p class="text-xs text-green-400">Алкоголь: 42% | Отравление | Сложность: 8</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-lime-500">
+                                <h4 class="font-display font-bold text-white mb-2">Зелёный абсент</h4>
+                                <p class="text-xs text-gray-400 mb-2">Трава ×17, Ядовитый картофель ×2 | 5 мин | 6 дист.</p>
+                                <p class="text-xs text-lime-400">Алкоголь: 46% | Мгновенный урон | Сложность: 9</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-green-600">
+                                <h4 class="font-display font-bold text-white mb-2">Хвойная водка</h4>
+                                <p class="text-xs text-gray-400 mb-2">Картофель ×10, Саженец ели ×4 | 18 мин | 3 дист.</p>
+                                <p class="text-xs text-green-400">Алкоголь: 25% | Сопротивление I</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-lime-400">
+                                <h4 class="font-display font-bold text-white mb-2">Бамбуковая настойка</h4>
+                                <p class="text-xs text-gray-400 mb-2">Бамбук ×16 | 14 мин | 3 дист.</p>
+                                <p class="text-xs text-lime-400">Алкоголь: 28% | Поглощение II</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-cyan-500">
+                                <h4 class="font-display font-bold text-white mb-2">Морской бриз</h4>
+                                <p class="text-xs text-gray-400 mb-2">Ламинария ×15, Сахар ×5 | 10 мин | Акация | 15 лет | 2 дист.</p>
+                                <p class="text-xs text-cyan-400">Алкоголь: 35% | Дыхание под водой, Ускорение</p>
+                            </div>
+                        </div>
+
+                        <!-- Ликеры и настойки -->
+                        <h3 class="font-display font-bold text-xl text-white mb-4">Ликеры и настойки</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                            <div class="glass rounded-xl p-4 border-l-2 border-orange-400">
+                                <h4 class="font-display font-bold text-white mb-2">Медовуха</h4>
+                                <p class="text-xs text-gray-400 mb-2">Сахар ×6 | 3 мин | Дуб | 4 года</p>
+                                <p class="text-xs text-orange-400">Алкоголь: 9%</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-orange-300">
+                                <h4 class="font-display font-bold text-white mb-2">Яблочная медовуха</h4>
+                                <p class="text-xs text-gray-400 mb-2">Сахар ×6, Яблоко ×2 | 4 мин | Дуб | 4 года</p>
+                                <p class="text-xs text-orange-300">Алкоголь: 11% | Дыхание под водой</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-red-400">
+                                <h4 class="font-display font-bold text-white mb-2">Яблочный ликер</h4>
+                                <p class="text-xs text-gray-400 mb-2">Яблоко ×12 | 16 мин | Акация | 6 лет | 3 дист.</p>
+                                <p class="text-xs text-red-400">Алкоголь: 14% | Сложность: 5</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-amber-700">
+                                <h4 class="font-display font-bold text-white mb-2">Кофе</h4>
+                                <p class="text-xs text-gray-400 mb-2">Какао ×12, Молоко ×2 | 2 мин</p>
+                                <p class="text-xs text-amber-700">Алкоголь: -6% | Регенерация, Скорость</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-yellow-200">
+                                <h4 class="font-display font-bold text-white mb-2">Эгг-ног</h4>
+                                <p class="text-xs text-gray-400 mb-2">Яйцо ×5, Сахар ×2, Молоко ×1 | 2 мин | 3 года</p>
+                                <p class="text-xs text-yellow-200">Алкоголь: 10%</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-yellow-500">
+                                <h4 class="font-display font-bold text-white mb-2">Золотая водка</h4>
+                                <p class="text-xs text-gray-400 mb-2">Картофель ×10, Золотой самородок ×2 | 18 мин | 3 дист.</p>
+                                <p class="text-xs text-yellow-500">Алкоголь: 20% | Слабость, Отравление</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-orange-600">
+                                <h4 class="font-display font-bold text-white mb-2">Обжигающий виски</h4>
+                                <p class="text-xs text-gray-400 mb-2">Пшеница ×10, Пыль ифрита ×2 | 12 мин | Ель | 18 лет | 3 дист.</p>
+                                <p class="text-xs text-orange-600">Алкоголь: 28%</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-amber-800">
+                                <h4 class="font-display font-bold text-white mb-2">Горячий шоколад</h4>
+                                <p class="text-xs text-gray-400 mb-2">Печенье ×3 | 2 мин</p>
+                                <p class="text-xs text-amber-800">Ускорение (40 сек)</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-gray-600">
+                                <h4 class="font-display font-bold text-white mb-2">Холодный кофе</h4>
+                                <p class="text-xs text-gray-400 mb-2">Печенье ×8, Снежок ×4, Молоко ×1 | 1 мин</p>
+                                <p class="text-xs text-gray-600">Алкоголь: -8% | Регенерация, Скорость</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-yellow-500">
+                                <h4 class="font-display font-bold text-white mb-2">Золотая маргарита</h4>
+                                <p class="text-xs text-gray-400 mb-2">Кактус ×4, Золотое яблоко ×1 | 8 мин | 1 дист.</p>
+                                <p class="text-xs text-yellow-500">Алкоголь: 15% | Удача, Герой деревни</p>
+                            </div>
+                        </div>
+
+                        <!-- Магические зелья -->
+                        <h3 class="font-display font-bold text-xl text-white mb-4">Магические зелья</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                            <div class="glass rounded-xl p-4 border-l-2 border-purple-600">
+                                <h4 class="font-display font-bold text-white mb-2">Драконье Дыхание</h4>
+                                <p class="text-xs text-gray-400 mb-2">Плод хоруса ×5, Пыль ифрита ×2 | 10 мин | 3 дист.</p>
+                                <p class="text-xs text-purple-400">Алкоголь: 45% | Огнестойкость, Сила I, Иссушение</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-pink-500">
+                                <h4 class="font-display font-bold text-white mb-2">Слезы Края</h4>
+                                <p class="text-xs text-gray-400 mb-2">Плод хоруса ×8, Слеза гаста ×1 | 8 мин</p>
+                                <p class="text-xs text-pink-400">Алкоголь: 15% | Ночное зрение, Невидимость</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-red-700">
+                                <h4 class="font-display font-bold text-white mb-2">Адский пунш</h4>
+                                <p class="text-xs text-gray-400 mb-2">Незерский нарост ×10, Ягоды ×5 | 12 мин | 2 дист.</p>
+                                <p class="text-xs text-red-400">Алкоголь: 22% | Сила I, Ускорение I</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-white">
+                                <h4 class="font-display font-bold text-white mb-2">Ихор Гаста</h4>
+                                <p class="text-xs text-gray-400 mb-2">Пшеница ×6, Слеза гаста ×1 | 6 мин</p>
+                                <p class="text-xs text-white">Алкоголь: 8% | Медленное падение, Прыгучесть</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-green-700">
+                                <h4 class="font-display font-bold text-white mb-2">Болотная тина</h4>
+                                <p class="text-xs text-gray-400 mb-2">Лиана ×10, Коричневый гриб ×3 | 9 мин</p>
+                                <p class="text-xs text-green-400">Алкоголь: 12% | Дыхание под водой, Регенерация</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-pink-400">
+                                <h4 class="font-display font-bold text-white mb-2">Цветочный нектар</h4>
+                                <p class="text-xs text-gray-400 mb-2">Мак ×5, Одуванчик ×5, Василёк ×5 | 7 мин | 1 дист.</p>
+                                <p class="text-xs text-pink-400">Алкоголь: 18% | Удача, Увеличение здоровья</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-white">
+                                <h4 class="font-display font-bold text-white mb-2">Светящийся латте</h4>
+                                <p class="text-xs text-gray-400 mb-2">Светящиеся ягоды ×6, Молоко ×2, Какао ×2 | 3 мин</p>
+                                <p class="text-xs text-white">Алкоголь: -15% | Свечение (10 мин)</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-red-800">
+                                <h4 class="font-display font-bold text-white mb-2">Грибной чай</h4>
+                                <p class="text-xs text-gray-400 mb-2">Красный гриб ×1, Коричневый гриб ×1, Трава ×2 | 2 мин</p>
+                                <p class="text-xs text-red-400">Ночное зрение, Тошнота</p>
+                            </div>
+                        </div>
+
+                        <!-- Безалкогольные -->
+                        <h3 class="font-display font-bold text-xl text-white mb-4">Безалкогольные</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div class="glass rounded-xl p-4 border-l-2 border-orange-300">
+                                <h4 class="font-display font-bold text-white mb-2">Картофельный суп</h4>
+                                <p class="text-xs text-gray-400 mb-2">Картофель ×5, Трава ×3 | 3 мин</p>
+                                <p class="text-xs text-orange-300">Мгновенное лечение</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-green-400">
+                                <h4 class="font-display font-bold text-white mb-2">Кактусовый сок</h4>
+                                <p class="text-xs text-gray-400 mb-2">Кактус ×12, Сахар ×2 | 4 мин</p>
+                                <p class="text-xs text-green-400">Насыщение (20 сек)</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Секция: Сигареты и табак -->
+                    <section id="tobacco" class="wiki-section hidden mb-16">
+                        <h2 class="font-display font-bold text-3xl text-white mb-8 flex items-center gap-3">
+                            <i class="fa-solid fa-smoking text-gray-400"></i>
+                            Сигареты и табак
+                        </h2>
+                        <p class="text-gray-400 mb-6 leading-relaxed">
+                            Система табакокурения позволяет создавать различные виды сигарет с разными эффектами. Будь осторожен — чрезмерное употребление может привести к зависимостям.
+                        </p>
+
+                        <!-- Обычные -->
+                        <h3 class="font-display font-bold text-xl text-white mb-4">Обычные</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                            <div class="glass rounded-xl p-4 border-l-2 border-red-500">
+                                <h4 class="font-display font-bold text-white mb-2">Мальборо</h4>
+                                <p class="text-xs text-gray-400 mb-2">Бумага ×6, Порох ×3 | 15 сек</p>
+                                <p class="text-xs text-red-400">Без эффектов</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-gray-500">
+                                <h4 class="font-display font-bold text-white mb-2">Стахановские</h4>
+                                <p class="text-xs text-gray-400 mb-2">Бумага ×6, Уголь ×3 | 20 сек</p>
+                                <p class="text-xs text-gray-400">Ускорение копания, Замедление</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-white">
+                                <h4 class="font-display font-bold text-white mb-2">Беломор-Незер</h4>
+                                <p class="text-xs text-gray-400 mb-2">Бумага ×6, Незерак ×3 | 22 сек</p>
+                                <p class="text-xs text-white">Огнестойкость (3 мин)</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-gray-600">
+                                <h4 class="font-display font-bold text-white mb-2">Гарь</h4>
+                                <p class="text-xs text-gray-400 mb-2">Бумага ×6, Уголь ×3 | 20 сек</p>
+                                <p class="text-xs text-gray-600">Сопротивление, Замедление</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-red-600">
+                                <h4 class="font-display font-bold text-white mb-2">Стачка</h4>
+                                <p class="text-xs text-gray-400 mb-2">Бумага ×6, Порох ×3 | 16 сек</p>
+                                <p class="text-xs text-red-600">Сила, Слепота</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-red-400">
+                                <h4 class="font-display font-bold text-white mb-2">Ударник</h4>
+                                <p class="text-xs text-gray-400 mb-2">Бумага ×6, Железо ×3 | 14 сек</p>
+                                <p class="text-xs text-red-400">Ускорение копания II, Слабость</p>
+                            </div>
+                        </div>
+
+                        <!-- С эффектами -->
+                        <h3 class="font-display font-bold text-xl text-white mb-4">С эффектами</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                            <div class="glass rounded-xl p-4 border-l-2 border-green-500">
+                                <h4 class="font-display font-bold text-white mb-2">Травка</h4>
+                                <p class="text-xs text-gray-400 mb-2">Бумага, Порох | 15 сек</p>
+                                <p class="text-xs text-green-400">Тошнота, Пассивный дым</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-purple-500">
+                                <h4 class="font-display font-bold text-white mb-2">Грибостой</h4>
+                                <p class="text-xs text-gray-400 mb-2">Бумага, Красный гриб | 25 сек</p>
+                                <p class="text-xs text-purple-400">Регенерация, Тошнота, Пассивный дым</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-green-400">
+                                <h4 class="font-display font-bold text-white mb-2">Дозиметр</h4>
+                                <p class="text-xs text-gray-400 mb-2">Душевой факел | 30 сек</p>
+                                <p class="text-xs text-green-400">Свечение, Удача</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-purple-600">
+                                <h4 class="font-display font-bold text-white mb-2">Искажение</h4>
+                                <p class="text-xs text-gray-400 mb-2">Душевой факел | 35 сек</p>
+                                <p class="text-xs text-purple-600">Медленное падение, Левитация</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-green-600">
+                                <h4 class="font-display font-bold text-white mb-2">Мшистые</h4>
+                                <p class="text-xs text-gray-400 mb-2">Бумага ×6, Лиана ×3 | 18 сек</p>
+                                <p class="text-xs text-green-600">Скорость, Прыгучесть</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-cyan-400">
+                                <h4 class="font-display font-bold text-white mb-2">Трясина</h4>
+                                <p class="text-xs text-gray-400 mb-2">Бумага ×6, Вода ×3 | 20 сек</p>
+                                <p class="text-xs text-cyan-400">Невидимость, Слепота</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-red-700">
+                                <h4 class="font-display font-bold text-white mb-2">Бензин</h4>
+                                <p class="text-xs text-gray-400 mb-2">Бумага ×6, Порох ×3 | 12 сек</p>
+                                <p class="text-xs text-red-700">Скорость II, Огнестойкость, Отравление</p>
+                            </div>
+                        </div>
+
+                        <!-- Специальные -->
+                        <h3 class="font-display font-bold text-xl text-white mb-4">Специальные</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                            <div class="glass rounded-xl p-4 border-l-2 border-yellow-500">
+                                <h4 class="font-display font-bold text-white mb-2">Дизель-Голд</h4>
+                                <p class="text-xs text-gray-400 mb-2">Бумага ×6, Порох ×3 | 18 сек</p>
+                                <p class="text-xs text-yellow-500">Скорость, Голод</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-blue-500">
+                                <h4 class="font-display font-bold text-white mb-2">Вторая смена</h4>
+                                <p class="text-xs text-gray-400 mb-2">Бумага ×6, Редстоун ×3 | 25 сек</p>
+                                <p class="text-xs text-blue-500">Ночное зрение, Замедление</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-yellow-400">
+                                <h4 class="font-display font-bold text-white mb-2">95-й Октан</h4>
+                                <p class="text-xs text-gray-400 mb-2">Бумага ×6, Порох ×3 | 15 сек</p>
+                                <p class="text-xs text-yellow-400">Сила II, Тошнота</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-cyan-500">
+                                <h4 class="font-display font-bold text-white mb-2">Нулевой фильтр</h4>
+                                <p class="text-xs text-gray-400 mb-2">Бумага ×6, Кварц ×3 | 15 сек</p>
+                                <p class="text-xs text-cyan-500">Насыщение (1 мин)</p>
+                            </div>
+                        </div>
+
+                        <!-- Трубки -->
+                        <h3 class="font-display font-bold text-xl text-white mb-4">Трубки</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div class="glass rounded-xl p-4 border-l-2 border-pink-500">
+                                <h4 class="font-display font-bold text-white mb-2">Классическая трубка</h4>
+                                <p class="text-xs text-gray-400 mb-2">Деревянная мотыга | 15 сек</p>
+                                <p class="text-xs text-pink-400">Без эффектов</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 border-l-2 border-yellow-600">
+                                <h4 class="font-display font-bold text-white mb-2">Золотая трубка</h4>
+                                <p class="text-xs text-gray-400 mb-2">Золотая мотыга | 30 сек</p>
+                                <p class="text-xs text-yellow-600">Маленькая, без эффектов</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Секция: Система репортов -->
+                    <section id="reports" class="wiki-section hidden mb-16">
+                        <h2 class="font-display font-bold text-3xl text-white mb-8 flex items-center gap-3">
+                            <i class="fa-solid fa-flag text-brand-red"></i>
+                            Система репортов
+                        </h2>
+                        <div class="glass rounded-2xl p-8">
+                            <p class="text-gray-300 mb-6 text-lg">
+                                Заметили подозрительного игрока или прямое нарушение правил? Сообщите администрации — мы оперативно отреагируем.
+                            </p>
+                            
+                            <div class="bg-brand-red/5 border border-brand-red/20 rounded-xl p-6 mb-6">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <i class="fa-solid fa-terminal text-brand-red text-xl"></i>
+                                    <h3 class="text-white font-display font-bold text-lg">Команда репорта</h3>
+                                </div>
+                                <div class="space-y-4">
+                                    <div class="flex items-center gap-3">
+                                        <code class="bg-black/50 text-brand-red px-4 py-2 rounded-lg font-mono text-sm border border-brand-red/30">/report <span class="text-gray-400">&lt;ник&gt;</span> <span class="text-gray-400">&lt;причина&gt;</span></code>
+                                        <span class="text-gray-400 text-sm">— быстрый способ</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <code class="bg-black/50 text-brand-red px-4 py-2 rounded-lg font-mono text-sm border border-brand-red/30">/report <span class="text-gray-400">&lt;ник&gt;</span></code>
+                                        <span class="text-gray-400 text-sm">— откроет меню с выбором причины</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="flex items-start gap-3 p-4 bg-white/5 rounded-xl border border-white/10">
+                                    <i class="fa-solid fa-user-shield text-brand-copper mt-1"></i>
+                                    <div>
+                                        <h4 class="text-white font-medium mb-1">Укажите ник нарушителя</h4>
+                                        <p class="text-gray-400 text-sm">Точное имя игрока для быстрого поиска</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3 p-4 bg-white/5 rounded-xl border border-white/10">
+                                    <i class="fa-solid fa-file-lines text-brand-copper mt-1"></i>
+                                    <div>
+                                        <h4 class="text-white font-medium mb-1">Опишите ситуацию</h4>
+                                        <p class="text-gray-400 text-sm">Кратко, но суть нарушения</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3 p-4 bg-white/5 rounded-xl border border-white/10">
+                                    <i class="fa-solid fa-triangle-exclamation text-brand-red mt-1"></i>
+                                    <div>
+                                        <h4 class="text-white font-medium mb-1">Ложные репорты</h4>
+                                        <p class="text-gray-400 text-sm">За злоупотребление — наказание</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3 p-4 bg-white/5 rounded-xl border border-white/10">
+                                    <i class="fa-solid fa-clock text-brand-copper mt-1"></i>
+                                    <div>
+                                        <h4 class="text-white font-medium mb-1">Время ответа</h4>
+                                        <p class="text-gray-400 text-sm">Администрация ответит за 10-15 минут</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Секция: Медные Големы -->
+                    <section id="copper-golems" class="wiki-section hidden mb-16">
+                        <h2 class="font-display font-bold text-3xl text-white mb-8 flex items-center gap-3">
+                            <i class="fa-solid fa-robot text-brand-copper"></i>
+                            Медные Големы
+                        </h2>
+                        <div class="glass rounded-2xl p-6 leading-relaxed">
+                            <p class="text-gray-300 mb-4">
+                                Древняя цивилизация автоматонов, созданная неизвестными мастерами. Медные Големы строили величественные города и разрабатывали Хроно-Орудие — устройство, способное манипулировать временем.
+                            </p>
+                            <p class="text-gray-300 mb-4">
+                                Их технология была основана на меди и редких кристаллах. После Коллапса многие Големы мутировали, став агрессивными стражами заброшенных лабораторий.
+                            </p>
+                            <ul class="custom-list list-disc pl-6 space-y-2 text-gray-400">
+                                <li>Обитали в подземных медных пещерах</li>
+                                <li>Создали Хроно-Орудие для контроля времени</li>
+                                <li>После Коллапса мутировали в враждебных существ</li>
+                                <li>Их технологии можно найти в разбросанных лабораториях</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Секция: Эхо Коллапса -->
+                    <section id="collapse-echo" class="wiki-section hidden mb-16">
+                        <h2 class="font-display font-bold text-3xl text-white mb-8 flex items-center gap-3">
+                            <i class="fa-solid fa-burst text-brand-red"></i>
+                            Эхо Коллапса
+                        </h2>
+                        <div class="glass rounded-2xl p-6 leading-relaxed">
+                            <p class="text-gray-300 mb-4">
+                                Катастрофа, произошедшая при активации Хроно-Орудия. Энергетический взрыв смешал измерения, создав аномальные зоны с мутировавшими существами.
+                            </p>
+                            <p class="text-gray-300 mb-4">
+                                Эхо Коллапса до сих пор ощущается в мире — временные аномалии, странные биомы и артефакты Големов напоминают о той трагедии.
+                            </p>
+                            <ul class="custom-list list-disc pl-6 space-y-2 text-gray-400">
+                                <li>Произошла при активации Хроно-Орудия</li>
+                                <li>Смешала измерения и создала аномалии</li>
+                                <li>Привела к мутации существ и Големов</li>
+                                <li>Затерянная Лаборатория — эпицентр Коллапса</li>
+                            </ul>
+                            <a href="lore.html" class="inline-flex items-center gap-2 mt-4 text-brand-red hover:text-brand-redHover font-medium transition-colors">
+                                Читать полный лор <i class="fa-solid fa-arrow-right text-sm"></i>
+                            </a>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast уведомление -->
+    <div id="toast" class="fixed bottom-6 right-6 glass bg-brand-red/20 border border-brand-red/50 px-6 py-4 rounded-xl text-white font-medium transform translate-y-20 opacity-0 transition-all duration-300 z-[200] flex items-center gap-3">
+        <i class="fa-solid fa-check-circle text-brand-red"></i>
+        <span>IP скопирован!</span>
+    </div>
+
+    <script>
+        // Аккордеоны для правил
+        function toggleAccordion(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('.accordion-icon');
+            
+            // Переключаем видимость контента с плавной анимацией
+            content.classList.toggle('open');
+            
+            // Поворачиваем иконку
+            icon.classList.toggle('rotate');
+        }
+
+        // Переключение секций вики
+        function showSection(sectionId) {
+            // Скрываем все секции
+            document.querySelectorAll('.wiki-section').forEach(section => {
+                section.classList.remove('visible');
+                section.classList.add('hidden');
+            });
+            
+            // Показываем выбранную секцию
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+                // Небольшая задержка для анимации
+                setTimeout(() => {
+                    targetSection.classList.add('visible');
+                }, 10);
+            }
+            
+            // Обновляем активное состояние кнопок сайдбара
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-section') === sectionId) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Обновляем хеш в URL
+            history.pushState(null, null, `#${sectionId}`);
+            
+            // Прокручиваем к началу контента на мобильных
+            if (window.innerWidth < 1024) {
+                window.scrollTo({ top: 280, behavior: 'smooth' });
+            }
+        }
+
+        // Проверка хеша при загрузке страницы
+        function checkHash() {
+            const hash = window.location.hash.replace('#', '');
+            if (hash && document.getElementById(hash)) {
+                showSection(hash);
+            } else {
+                // По умолчанию показываем первую секцию
+                showSection('full-rules');
+            }
+        }
+
+        // Обработка изменения хеша в браузере
+        window.addEventListener('hashchange', checkHash);
+        window.addEventListener('load', checkHash);
+
+        // Копирование IP
+        function copyIp() {
+            const ip = "redoku.bisquit.host";
+            navigator.clipboard.writeText(ip).then(() => {
+                showToast();
+                
+                // Анимация иконки
+                const navIcon = document.getElementById('ip-icon-nav');
+                if (navIcon) {
+                    navIcon.classList.remove('fa-regular');
+                    navIcon.classList.add('fa-solid', 'text-brand-red');
+                    setTimeout(() => {
+                        navIcon.classList.remove('fa-solid', 'text-brand-red');
+                        navIcon.classList.add('fa-regular');
+                    }, 2000);
+                }
+            });
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 2000);
+        }
+
+        // Мобильное меню
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            const isOpen = !menu.classList.contains('opacity-0');
+            
+            if (isOpen) {
+                menu.classList.add('opacity-0', 'pointer-events-none');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            } else {
+                menu.classList.remove('opacity-0', 'pointer-events-none');
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            }
+        }
+
+        // Закрытие мобильного меню при клике на ссылку
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                const menu = document.getElementById('mobile-menu');
+                const icon = document.getElementById('mobile-menu-icon');
+                menu.classList.add('opacity-0', 'pointer-events-none');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            });
+        });
+
+        // Scroll Reveal
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(reveal => {
+                const windowHeight = window.innerHeight;
+                const revealTop = reveal.getBoundingClientRect().top;
+                const revealPoint = 150;
+                
+                if (revealTop < windowHeight - revealPoint) {
+                    reveal.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        // Spotlight Effect для карточек
+        document.querySelectorAll('.spotlight-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // Blur навбара при скролле
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-brand-bg/90');
+            } else {
+                navbar.classList.remove('bg-brand-bg/90');
+            }
+        });
+    </script>
+</body>
+</html>

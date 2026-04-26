@@ -92,6 +92,7 @@
                 <a href="info.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Инфо</a>
                 <a href="lore.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Лор</a>
                 <a href="news.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Новости</a>
+                <a href="wiki.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Вики</a>
                 <a href="rules.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Правила</a>
                 <a href="team.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Команда</a>
             </div>
@@ -114,6 +115,7 @@
         <a href="info.html" class="text-2xl font-display font-bold text-white">Как начать</a>
         <a href="lore.html" class="text-2xl font-display font-bold text-white">Лор</a>
         <a href="news.html" class="text-2xl font-display font-bold text-white">Новости</a>
+        <a href="wiki.html" class="text-2xl font-display font-bold text-white">Вики</a>
         <a href="rules.html" class="text-2xl font-display font-bold text-white">Правила</a>
         <a href="team.html" class="text-2xl font-display font-bold text-white">Команда</a>
         <a href="donate.html" class="text-2xl font-display font-bold text-yellow-500">Магазин</a>
@@ -122,7 +124,7 @@
     <!-- Header -->
     <header class="pt-40 pb-16 px-4 text-center">
         <div class="max-w-4xl mx-auto reveal">
-            <h1 class="text-5xl md:text-7xl font-display font-black text-white uppercase tracking-tighter mb-4">Наша <span class="text-brand-red text-glow">Команда</span></h1>
+            <h1 class="text-4xl md:text-6xl font-display font-black text-white uppercase tracking-tighter mb-4">Наша <span class="text-brand-red text-glow">Команда</span></h1>
             <p class="text-gray-400 text-lg max-w-2xl mx-auto font-light">Те, кто вдыхает жизнь в Redoku. От технической части до игрового порядка.</p>
         </div>
     </header>
@@ -216,7 +218,7 @@
     </section>
 
     <!-- AI Chat Toggle Button -->
-    <button onclick="toggleAIChat()" class="fixed bottom-8 left-8 w-16 h-16 bg-brand-red text-white rounded-full shadow-2xl flex items-center justify-center z-[100] ai-btn-pulse hover:scale-110 transition-transform">
+    <button onclick="toggleAIChat()" class="fixed bottom-8 left-8 w-14 h-14 bg-brand-red text-white rounded-full shadow-2xl flex items-center justify-center z-[100] ai-btn-pulse hover:scale-110 transition-transform">
         <i class="fa-solid fa-robot text-2xl"></i>
     </button>
 
@@ -353,7 +355,7 @@
 
         async function askGemini(query) {
             const systemPrompt = "Ты - официальный ИИ-ассистент Minecraft сервера Redoku. " +
-                "Твоя задача: помогать игрокам. На сервере версия 1.21.11, Fabric. " +
+                "Твоя задача: помогать игрокам. На сервере версия 1.21.11. " +
                 "Основатель: Hexdecillion (@Hexdecillion). Руководитель: LuMon1x (@kiri11krypko). " +
                 "Тех админ: brajnito (@qweqeeer). Модератор: AttractiveModee. " +
                 "Админ по спорам: VelVel01. Дизайнер/Хелпер: regander. Модератор чата: GrandDang. " +
