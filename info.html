@@ -68,6 +68,28 @@
         .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: opacity, transform; }
         .reveal.active { opacity: 1; transform: translateY(0); }
         .step-number-bg { -webkit-text-stroke: 2px rgba(255, 255, 255, 0.05); color: transparent; }
+
+        /* Timeline Styles */
+        .timeline-container { position: relative; padding-left: 40px; }
+        .timeline-line { position: absolute; left: 15px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, transparent, rgba(255, 46, 67, 0.2), rgba(255, 46, 67, 0.2)); }
+        .timeline-progress { position: absolute; left: 15px; top: 0; width: 2px; background: linear-gradient(to bottom, #ff2e43, #ff8a00); height: 0%; transition: height 0.3s ease-out; }
+        .timeline-item { position: relative; margin-bottom: 24px; }
+        .timeline-dot { position: absolute; left: -32px; top: 0; width: 14px; height: 14px; border-radius: 50%; background: #0a0b0e; border: 2px solid rgba(255, 46, 67, 0.3); transition: all 0.3s ease; z-index: 1; }
+        .timeline-item.active .timeline-dot { background: #ff2e43; border-color: #ff2e43; box-shadow: 0 0 15px rgba(255, 46, 67, 0.5); }
+        .timeline-card { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 1.5rem; padding: 1.5rem; transition: all 0.3s ease; cursor: pointer; }
+        .timeline-card:hover { border-color: rgba(255, 46, 67, 0.3); background: rgba(255, 255, 255, 0.04); transform: translateX(8px); }
+        .timeline-card.active { border-color: rgba(255, 46, 67, 0.5); background: rgba(255, 46, 67, 0.05); }
+        .timeline-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, opacity 0.3s ease; opacity: 0; }
+        .timeline-content.open { max-height: 500px; opacity: 1; padding-top: 1rem; }
+
+        /* FAQ Accordion */
+        .faq-item { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 1rem; margin-bottom: 12px; overflow: hidden; transition: all 0.3s ease; }
+        .faq-item:hover { border-color: rgba(255, 46, 67, 0.2); }
+        .faq-question { padding: 1.25rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; padding: 0 1.25rem; }
+        .faq-answer.open { max-height: 200px; padding-bottom: 1.25rem; }
+        .faq-icon { transition: transform 0.3s ease; }
+        .faq-item.open .faq-icon { transform: rotate(180deg); }
     </style>
 </head>
 <body class="antialiased selection:bg-brand-red/30 selection:text-white">
@@ -76,7 +98,7 @@
     <div id="preloader" class="fixed inset-0 z-[999] bg-[#0a0b0e] flex items-center justify-center transition-opacity duration-500">
         <div class="relative flex items-center justify-center">
             <div class="absolute w-20 h-20 border-t-4 border-b-4 border-brand-red border-solid rounded-full animate-spin opacity-50"></div>
-            <div class="w-12 h-12 bg-brand-red rounded-xl flex items-center justify-center text-white font-display font-bold text-2xl rotate-3 shadow-[0_0_20px_rgba(255,46,67,0.5)]">R</div>
+            <div class="w-12 h-12 bg-brand-red rounded-xl flex items-center justify-center rotate-3"><img src="logotip.jpg" alt="R" class="w-10 h-10 rounded-lg"></div>
         </div>
     </div>
 
@@ -86,37 +108,43 @@
 
     <!-- Навигация -->
     <nav class="fixed top-0 w-full z-[100] glass-nav transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-3 group relative z-20">
-                <div class="w-10 h-10 bg-brand-red rounded-xl flex items-center justify-center text-white font-display font-bold text-xl rotate-3 group-hover:rotate-12 transition-all shadow-[0_0_15px_rgba(255,46,67,0.4)]">R</div>
-                <span class="font-display font-bold text-2xl tracking-tighter text-white">REDOKU</span>
+        <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
+            <!-- Логотип -->
+            <a href="index.html" class="flex items-center gap-2 group relative z-20">
+                <img src="logotip.jpg" alt="Redoku" class="w-8 h-8 rounded-lg rotate-3 group-hover:rotate-12 transition-all">
+                <span class="font-display font-bold text-xl tracking-tighter text-white">REDOKU</span>
             </a>
 
-            <div class="hidden lg:flex items-center gap-8 bg-white/5 px-8 py-2.5 rounded-full border border-white/5 nav-links">
+            <!-- Десктопное меню -->
+            <div class="hidden lg:flex items-center gap-6">
                 <a href="index.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Главная</a>
-                <a href="info.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Инфо</a>
-                <a href="lore.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Лор</a>
+                <a href="info.html" class="text-sm font-medium text-brand-red drop-shadow-[0_0_8px_rgba(255,46,67,0.5)] transition-all">Инфо</a>
+                <a href="lore.html" class="text-sm font-medium text-gray-400 hover:text-brand-copper transition-all">Лор</a>
                 <a href="news.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Новости</a>
-                <a href="wiki.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Вики</a>
+                <a href="wiki.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">wiki</a>
                 <a href="rules.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Правила</a>
-                <a href="team.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Команда</a>
-                <a href="https://map.redoku.ru" target="_blank" class="text-sm font-medium text-gray-400 hover:text-white transition-all flex items-center gap-1.5">
-                    Карта <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                <a href="https://map.redoku.ru" target="_blank" class="text-sm font-medium text-gray-400 hover:text-white transition-all flex items-center gap-1">
+                    Карта <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                 </a>
             </div>
 
-            <div class="hidden lg:flex items-center gap-4">
-                <a href="donate.html" class="text-sm font-medium text-yellow-500 hover:text-yellow-400 transition-colors flex items-center gap-2">
-                    <i class="fa-solid fa-store"></i> Магазин
+            <!-- Правый блок -->
+            <div class="hidden lg:flex items-center gap-3 ml-auto">
+                <a href="team.html" class="text-sm font-medium text-gray-400 hover:text-white transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-users text-xs"></i> Команда
                 </a>
-                <button onclick="copyIp()" class="btn-ip-copy bg-white/10 hover:bg-white/15 border border-white/10 text-white px-5 py-2.5 rounded-xl text-sm font-bold tracking-wide flex items-center gap-2 transition-all relative overflow-hidden">
+                <a href="donate.html" class="text-sm font-medium text-yellow-500 hover:text-yellow-400 transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-store text-xs"></i> Магазин
+                </a>
+                <button onclick="copyIp()" class="btn-ip-copy bg-white/10 hover:bg-white/15 border border-white/10 text-white px-3 py-1.5 rounded-lg text-xs font-bold tracking-wide flex items-center gap-1.5 transition-all">
                     <span id="ip-text-nav" class="font-display">redoku.bisquit.host</span>
-                    <i class="fa-regular fa-copy opacity-50 text-xs" id="ip-icon-nav"></i>
+                    <i class="fa-regular fa-copy opacity-50 text-[10px]" id="ip-icon-nav"></i>
                 </button>
             </div>
 
-            <button class="lg:hidden text-white p-2 relative z-20" onclick="toggleMobileMenu()">
-                <i class="fa-solid fa-bars text-2xl" id="mobile-menu-icon"></i>
+            <!-- Гамбургер (Мобильный) -->
+            <button class="lg:hidden text-white p-1.5 relative z-20" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-bars text-xl" id="mobile-menu-icon"></i>
             </button>
         </div>
     </nav>
@@ -124,12 +152,11 @@
     <!-- Мобильное меню -->
     <div id="mobile-menu" class="fixed inset-0 bg-brand-bg/98 backdrop-blur-xl z-[90] flex flex-col items-center justify-center gap-6 opacity-0 pointer-events-none transition-all duration-300 mobile-nav-links">
         <a href="index.html" class="text-2xl font-display font-bold text-white">Главная</a>
-        <a href="info.html" class="text-2xl font-display font-bold text-white">Как начать</a>
+        <a href="info.html" class="text-2xl font-display font-bold text-brand-red">Инфо</a>
         <a href="lore.html" class="text-2xl font-display font-bold text-white">Лор сервера</a>
         <a href="news.html" class="text-2xl font-display font-bold text-white">Новости</a>
-        <a href="wiki.html" class="text-2xl font-display font-bold text-white">Вики</a>
+        <a href="wiki.html" class="text-2xl font-display font-bold text-white">wiki</a>
         <a href="rules.html" class="text-2xl font-display font-bold text-white">Правила</a>
-        <a href="team.html" class="text-2xl font-display font-bold text-white">Команда</a>
         <a href="donate.html" class="text-2xl font-display font-bold text-yellow-500 mt-4">Магазин</a>
         
         <button onclick="copyIp()" class="mt-8 bg-brand-red/20 border border-brand-red text-white px-8 py-4 rounded-2xl text-lg font-bold flex items-center gap-3">
@@ -139,178 +166,251 @@
     </div>
 
     <!-- Page Header -->
-    <header class="pt-40 pb-16 px-4 relative z-10 text-center">
-        <div class="max-w-4xl mx-auto reveal">
-            <div class="inline-flex items-center justify-center px-5 py-2 rounded-full border border-brand-red/30 bg-brand-red/10 text-brand-red text-xs font-bold tracking-[0.2em] uppercase mb-6 shadow-[0_0_20px_rgba(255,46,67,0.15)]">
+    <header class="pt-32 pb-12 px-4 relative z-10 text-center">
+        <div class="max-w-3xl mx-auto reveal">
+            <div class="inline-flex items-center justify-center px-4 py-2 rounded-full border border-brand-red/30 bg-brand-red/10 text-brand-red text-xs font-bold tracking-[0.2em] uppercase mb-4">
                 <i class="fa-solid fa-gamepad mr-2"></i> Инструкция
             </div>
-            <h1 class="text-4xl md:text-6xl font-display font-black text-white uppercase tracking-tighter mb-6">
-                КАК НАЧАТЬ <span class="gradient-text text-glow block sm:inline mt-2 sm:mt-0">ИГРАТЬ</span>
+            <h1 class="text-3xl md:text-5xl font-display font-black text-white uppercase tracking-tighter mb-4">
+                КАК НАЧАТЬ <span class="gradient-text text-glow">ИГРАТЬ</span>
             </h1>
-            <p class="text-gray-400 text-lg md:text-xl font-light max-w-2xl mx-auto">Всего 4 простых шага отделяют тебя от погружения в уникальный мир Redoku. Лицензия не требуется!</p>
+            <p class="text-gray-400 text-base md:text-lg font-light max-w-xl mx-auto mb-6">4 простых шага к Redoku. Лицензия не требуется.</p>
+            <a href="#timeline" class="inline-flex items-center gap-2 text-brand-red hover:text-white transition-colors text-sm font-bold tracking-wider uppercase">
+                Начать <i class="fa-solid fa-arrow-down animate-bounce"></i>
+            </a>
         </div>
     </header>
 
-    <!-- Шаги -->
-    <section class="py-12 px-4 relative z-10 mb-20">
-        <div class="max-w-5xl mx-auto relative">
-            <!-- Соединительная линия для десктопа -->
-            <div class="hidden md:block absolute left-12 top-20 bottom-20 w-px bg-gradient-to-b from-brand-red/50 via-white/10 to-brand-red/50 z-0"></div>
+    <!-- Timeline секция -->
+    <section id="timeline" class="py-16 px-4 relative z-10 mb-12">
+        <div class="max-w-3xl mx-auto">
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                <div class="timeline-progress" id="timeline-progress"></div>
 
-            <div class="space-y-8 md:space-y-12 relative z-10">
                 <!-- Шаг 1 -->
-                <div class="reveal spotlight-card bg-gradient-to-br from-[#161214] to-[#0a0b0e] border border-white/5 hover:border-brand-red/30 rounded-[2.5rem] p-8 md:p-12 shadow-lg flex flex-col md:flex-row gap-8 md:gap-12 items-center md:items-start group">
-                    <div class="hidden md:flex w-24 h-24 shrink-0 rounded-[2rem] bg-[#1a0f12] border border-brand-red/20 items-center justify-center relative overflow-hidden group-hover:border-brand-red/50 transition-colors">
-                        <span class="absolute text-6xl font-display font-black step-number-bg right-[-10px] bottom-[-35px] select-none opacity-50 group-hover:opacity-100 transition-opacity">1</span>
-                        <i class="fa-solid fa-download text-3xl text-brand-red relative z-10"></i>
-                    </div>
-                    <div class="spotlight-content w-full flex-1 text-center md:text-left">
-                        <div class="md:hidden inline-block px-4 py-1.5 rounded-full bg-brand-red/10 text-brand-red font-bold text-xs uppercase tracking-widest mb-4 border border-brand-red/20">Шаг 01</div>
-                        <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-4">Скачай лаунчер</h2>
-                        <p class="text-gray-400 text-lg leading-relaxed mb-8">Для игры на нашем сервере подойдет любой лаунчер (TLauncher, TL Legacy, официальный). Если у тебя нет лицензии, мы настоятельно рекомендуем использовать <strong>Legacy Launcher</strong> — он чистый, без рекламы и отлично работает с модами.</p>
-                        <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                            <a href="https://llaun.ch/ru" target="_blank" class="px-8 py-4 bg-brand-red text-white font-display font-bold text-sm md:text-base rounded-2xl shadow-[0_0_20px_rgba(255,46,67,0.3)] hover:shadow-[0_0_40px_rgba(255,46,67,0.5)] hover:bg-brand-redHover transition-all flex items-center justify-center gap-3">
-                                <i class="fa-solid fa-rocket"></i> Скачать Legacy Launcher
+                <div class="timeline-item reveal" data-step="1">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card" onclick="toggleTimeline(this)">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-brand-red/20 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-download text-brand-red text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-display font-bold text-white">Скачай лаунчер</h3>
+                                <p class="text-gray-500 text-sm">Legacy Launcher рекомендуем</p>
+                            </div>
+                            <i class="fa-solid fa-chevron-down text-gray-500 transition-transform faq-icon"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <p class="text-gray-400 text-sm leading-relaxed mb-4">Для игры подойдет любой лаунчер (TLauncher, TL Legacy, официальный). Если нет лицензии, рекомендуем <strong>Legacy Launcher</strong> — чистый, без рекламы.</p>
+                            <a href="https://llaun.ch/ru" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-brand-red text-white rounded-lg text-sm font-bold hover:bg-brand-redHover transition-all">
+                                <i class="fa-solid fa-rocket"></i> Скачать Legacy
                             </a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Шаг 2 -->
-                <div class="reveal spotlight-card bg-gradient-to-br from-[#161214] to-[#0a0b0e] border border-white/5 hover:border-brand-red/30 rounded-[2.5rem] p-8 md:p-12 shadow-lg flex flex-col md:flex-row gap-8 md:gap-12 items-center md:items-start group" style="transition-delay: 100ms;">
-                    <div class="hidden md:flex w-24 h-24 shrink-0 rounded-[2rem] bg-[#1a0f12] border border-brand-red/20 items-center justify-center relative overflow-hidden group-hover:border-brand-red/50 transition-colors">
-                        <span class="absolute text-7xl font-display font-black step-number-bg right-[-10px] bottom-[-35px] select-none opacity-50 group-hover:opacity-100 transition-opacity">2</span>
-                        <i class="fa-solid fa-gear text-3xl text-brand-red relative z-10"></i>
-                    </div>
-                    <div class="spotlight-content w-full flex-1 text-center md:text-left">
-                        <div class="md:hidden inline-block px-4 py-1.5 rounded-full bg-brand-red/10 text-brand-red font-bold text-xs uppercase tracking-widest mb-4 border border-brand-red/20">Шаг 02</div>
-                        <div class="flex flex-col md:flex-row md:items-center gap-4 mb-4 justify-center md:justify-start">
-                            <h2 class="text-3xl md:text-4xl font-display font-bold text-white">Установи версию</h2>
-                            <span class="inline-block px-3 py-1 bg-white/10 text-white border border-white/20 rounded-lg text-sm font-bold font-mono">1.21.11</span>
+                <div class="timeline-item reveal" data-step="2">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card" onclick="toggleTimeline(this)">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-brand-red/20 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-gear text-brand-red text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-display font-bold text-white">Установи версию</h3>
+                                <span class="inline-block px-2 py-0.5 bg-white/10 text-white rounded text-xs font-mono font-bold">1.21.11 Fabric</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down text-gray-500 transition-transform faq-icon"></i>
                         </div>
-                        <p class="text-gray-400 text-lg leading-relaxed mb-6">В твоем лаунчере необходимо найти в списке версий и выбрать <code class="bg-black/50 px-2 py-1 rounded text-white border border-white/10">Fabric 1.21.11</code>. Установка займет пару минут.</p>
-                        <div class="p-4 bg-brand-red/5 border border-brand-red/20 rounded-xl flex gap-4 items-start text-left">
-                            <i class="fa-solid fa-circle-info text-brand-red mt-1"></i>
-                            <p class="text-sm text-gray-300">Обязательно запусти игру хотя бы один раз на этой версии, чтобы лаунчер скачал все необходимые файлы, перед тем как переходить к следующему шагу.</p>
+                        <div class="timeline-content">
+                            <p class="text-gray-400 text-sm leading-relaxed mb-4">В лаунчере выбери <code class="bg-black/50 px-1.5 py-0.5 rounded text-white border border-white/10">Fabric 1.21.11</code>. Запусти игру один раз для загрузки файлов.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Шаг 3 -->
-                <div class="reveal spotlight-card bg-gradient-to-br from-[#161214] to-[#0a0b0e] border border-white/5 hover:border-brand-red/30 rounded-[2.5rem] p-8 md:p-12 shadow-lg flex flex-col md:flex-row gap-8 md:gap-12 items-center md:items-start group" style="transition-delay: 200ms;">
-                    <div class="hidden md:flex w-24 h-24 shrink-0 rounded-[2rem] bg-[#1a0f12] border border-brand-red/20 items-center justify-center relative overflow-hidden group-hover:border-brand-red/50 transition-colors">
-                        <span class="absolute text-7xl font-display font-black step-number-bg right-[-10px] bottom-[-35px] select-none opacity-50 group-hover:opacity-100 transition-opacity">3</span>
-                        <i class="fa-solid fa-puzzle-piece text-3xl text-brand-red relative z-10"></i>
-                    </div>
-                    <div class="spotlight-content w-full flex-1 text-center md:text-left">
-                        <div class="md:hidden inline-block px-4 py-1.5 rounded-full bg-brand-red/10 text-brand-red font-bold text-xs uppercase tracking-widest mb-4 border border-brand-red/20">Шаг 03</div>
-                        <div class="flex items-center gap-3 mb-4 justify-center md:justify-start">
-                            <h2 class="text-3xl md:text-4xl font-display font-bold text-white">Добавь моды</h2>
-                            <span class="bg-yellow-500/20 text-yellow-500 text-[10px] px-2 py-1 rounded border border-yellow-500/30 uppercase font-bold tracking-widest">Желательно</span>
+                <div class="timeline-item reveal" data-step="3">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card" onclick="toggleTimeline(this)">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-brand-red/20 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-puzzle-piece text-brand-red text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-display font-bold text-white">Добавь моды</h3>
+                                <span class="text-xs text-yellow-500 font-bold">Желательно</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down text-gray-500 transition-transform faq-icon"></i>
                         </div>
-                        <p class="text-gray-400 text-lg leading-relaxed mb-8">Для полного погружения (Vanilla+ опыт) мы настоятельно рекомендуем установить два клиентских мода в папку <code class="bg-black/50 px-2 py-1 rounded text-white border border-white/10">/mods</code> вашей игры.</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <a href="https://modrinth.com/plugin/simple-voice-chat" target="_blank" class="glass p-5 rounded-2xl border-white/10 hover:border-brand-red/40 hover:bg-white/5 transition-all group/btn flex flex-col gap-3">
-                                <div class="flex items-center justify-between">
-                                    <div class="w-10 h-10 rounded-xl bg-black/40 flex items-center justify-center"><i class="fa-solid fa-microphone text-gray-300 group-hover/btn:text-white transition-colors"></i></div>
-                                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-600 group-hover/btn:text-brand-red transition-colors text-xs"></i>
-                                </div>
-                                <div><div class="text-white font-bold mb-1">Simple Voice Chat</div><div class="text-xs text-gray-500">Общение голосом в игре с 3D звуком.</div></div>
-                            </a>
-                            <a href="https://modrinth.com/mod/emotecraft" target="_blank" class="glass p-5 rounded-2xl border-white/10 hover:border-brand-red/40 hover:bg-white/5 transition-all group/btn flex flex-col gap-3">
-                                <div class="flex items-center justify-between">
-                                    <div class="w-10 h-10 rounded-xl bg-black/40 flex items-center justify-center"><i class="fa-solid fa-face-smile text-gray-300 group-hover/btn:text-white transition-colors"></i></div>
-                                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-600 group-hover/btn:text-brand-red transition-colors text-xs"></i>
-                                </div>
-                                <div><div class="text-white font-bold mb-1">Emotecraft</div><div class="text-xs text-gray-500">Анимации персонажа: танцы, приветствия.</div></div>
-                            </a>
+                        <div class="timeline-content">
+                            <p class="text-gray-400 text-sm leading-relaxed mb-4">Установи моды в папку <code class="bg-black/50 px-1.5 py-0.5 rounded text-white border border-white/10">/mods</code> для Vanilla+ опыта:</p>
+                            <div class="grid grid-cols-2 gap-3">
+                                <a href="https://modrinth.com/plugin/simple-voice-chat" target="_blank" class="p-3 bg-white/5 rounded-lg border border-white/10 hover:border-brand-red/30 transition-all text-center">
+                                    <i class="fa-solid fa-microphone text-gray-400 mb-1"></i>
+                                    <div class="text-xs text-white font-bold">Voice Chat</div>
+                                </a>
+                                <a href="https://modrinth.com/mod/emotecraft" target="_blank" class="p-3 bg-white/5 rounded-lg border border-white/10 hover:border-brand-red/30 transition-all text-center">
+                                    <i class="fa-solid fa-face-smile text-gray-400 mb-1"></i>
+                                    <div class="text-xs text-white font-bold">Emotecraft</div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Шаг 4 -->
-                <div class="reveal spotlight-card bg-gradient-to-br from-[#161214] to-[#0a0b0e] border border-white/5 hover:border-brand-red/30 rounded-[2.5rem] p-8 md:p-12 shadow-lg flex flex-col md:flex-row gap-8 md:gap-12 items-center md:items-start group" style="transition-delay: 300ms;">
-                    <div class="hidden md:flex w-24 h-24 shrink-0 rounded-[2rem] bg-[#1a0f12] border border-brand-red/20 items-center justify-center relative overflow-hidden group-hover:border-brand-red/50 transition-colors">
-                        <span class="absolute text-7xl font-display font-black step-number-bg right-[-10px] bottom-[-35px] select-none opacity-50 group-hover:opacity-100 transition-opacity">4</span>
-                        <i class="fa-solid fa-globe text-3xl text-brand-red relative z-10"></i>
-                    </div>
-                    <div class="spotlight-content w-full flex-1 text-center md:text-left">
-                        <div class="md:hidden inline-block px-4 py-1.5 rounded-full bg-brand-red/10 text-brand-red font-bold text-xs uppercase tracking-widest mb-4 border border-brand-red/20">Шаг 04</div>
-                        <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-4">Вставь IP и заходи</h2>
-                        <p class="text-gray-400 text-lg leading-relaxed mb-6">Запускай игру, открывай <strong>«Сетевую игру»</strong>, нажимай <strong>«Добавить»</strong> или «По адресу» и вставляй скопированный IP сервера. Добро пожаловать!</p>
-                        <div class="bg-black/40 border border-white/10 p-2 md:p-3 rounded-2xl flex flex-col sm:flex-row items-center gap-4 max-w-lg mx-auto md:mx-0">
-                            <div class="flex-1 w-full text-center sm:text-left sm:pl-4 py-2">
-                                <div class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">Скопируй этот адрес</div>
-                                <div class="text-xl font-mono font-bold text-brand-red tracking-wider select-all">redoku.bisquit.host</div>
+                <div class="timeline-item reveal" data-step="4">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card" onclick="toggleTimeline(this)">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-brand-red/20 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-globe text-brand-red text-xl"></i>
                             </div>
-                            <button onclick="copyIpStep4()" id="btn-copy-step4" class="w-full sm:w-auto px-6 py-3 bg-white hover:bg-gray-200 text-black font-display font-bold rounded-xl transition-colors flex items-center justify-center gap-3 group/btn">
-                                <span id="text-copy-step4">СКОПИРОВАТЬ</span>
-                                <i class="fa-regular fa-copy" id="icon-copy-step4"></i>
-                            </button>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-display font-bold text-white">Вставь IP</h3>
+                                <p class="text-gray-500 text-sm">redoku.bisquit.host</p>
+                            </div>
+                            <i class="fa-solid fa-chevron-down text-gray-500 transition-transform faq-icon"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <p class="text-gray-400 text-sm leading-relaxed mb-4">Открой «Сетевую игру», нажми «Добавить» и вставь IP:</p>
+                            <div class="flex gap-2">
+                                <div class="flex-1 bg-black/40 border border-white/10 rounded-lg px-3 py-2">
+                                    <code class="text-brand-red font-mono font-bold text-sm">redoku.bisquit.host</code>
+                                </div>
+                                <button onclick="event.stopPropagation(); copyIp()" class="px-4 py-2 bg-white text-black rounded-lg font-bold text-sm hover:bg-gray-200 transition-all">
+                                    <i class="fa-regular fa-copy"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- Финальный блок -->
-    <section class="py-16 px-4 mb-20 relative z-10">
-        <div class="max-w-4xl mx-auto reveal relative">
-            <div class="absolute inset-0 bg-brand-red/20 blur-[100px] rounded-full pointer-events-none -z-10"></div>
-            <div class="glass border border-brand-red/30 p-10 md:p-16 rounded-[3rem] text-center bg-gradient-to-b from-[#1a1114] to-[#0a0b0e] shadow-[0_0_50px_rgba(255,46,67,0.15)] relative overflow-hidden">
-                <i class="fa-solid fa-crown text-4xl text-brand-red mb-6 drop-shadow-[0_0_15px_rgba(255,46,67,0.5)]"></i>
-                <h2 class="text-3xl md:text-4xl font-display font-black text-white mb-4 uppercase tracking-tight">Ждем тебя на сервере!</h2>
-                <p class="text-gray-400 mb-10 max-w-lg mx-auto">Присоединяйся к нашему Discord комьюнити, чтобы найти друзей, город или узнать последние новости.</p>
-                <a href="https://dsc.gg/redoku" target="_blank" class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#5865F2] hover:bg-[#4752C4] text-white font-display font-bold text-lg rounded-2xl shadow-[0_0_30px_rgba(88,101,242,0.3)] transition-all">
-                    <i class="fa-brands fa-discord text-xl"></i> ПЕРЕЙТИ В DISCORD
-                </a>
+    <!-- FAQ секция -->
+    <section class="py-12 px-4 relative z-10 mb-12">
+        <div class="max-w-3xl mx-auto reveal">
+            <h2 class="text-2xl font-display font-bold text-white mb-6 text-center">Частые вопросы</h2>
+            
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span class="text-white font-medium">Нужна ли лицензия?</span>
+                    <i class="fa-solid fa-chevron-down text-gray-500 faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p class="text-gray-400 text-sm">Нет, сервер доступен как для лицензионных аккаунтов, так и для пиратов. Рекомендуем Legacy Launcher для комфортной игры.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span class="text-white font-medium">Какой лаунчер лучше?</span>
+                    <i class="fa-solid fa-chevron-down text-gray-500 faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p class="text-gray-400 text-sm">Legacy Launcher — чистый, без рекламы, отлично работает с модами. Подойдет любой другой лаунчер.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span class="text-white font-medium">Обязательны ли моды?</span>
+                    <i class="fa-solid fa-chevron-down text-gray-500 faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p class="text-gray-400 text-sm">Нет, моды не обязательны. Но Voice Chat и Emotecraft улучшат Vanilla+ опыт и помогут общаться с другими игроками.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span class="text-white font-medium">Не работает IP — что делать?</span>
+                    <i class="fa-solid fa-chevron-down text-gray-500 faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p class="text-gray-400 text-sm">Убедись что версия 1.21.11 Fabric установлена и запущена хотя бы один раз. Проверь правильность IP: redoku.bisquit.host</p>
+                </div>
             </div>
         </div>
     </section>
-
+    <section class="py-12 px-4 mb-16 relative z-10">
+        <div class="max-w-3xl mx-auto reveal text-center">
+            <div class="glass border border-brand-red/30 p-8 rounded-2xl bg-gradient-to-b from-[#1a1114] to-[#0a0b0e]">
+                <h2 class="text-2xl font-display font-bold text-white mb-3">Готов играть?</h2>
+                <p class="text-gray-400 mb-6 text-sm">Скопируй IP и присоединяйся к нам!</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <div class="bg-black/40 border border-white/10 rounded-lg px-4 py-3 flex items-center gap-3">
+                        <code class="text-brand-red font-mono font-bold">redoku.bisquit.host</code>
+                    </div>
+                    <button onclick="copyIp()" class="px-6 py-3 bg-brand-red text-white rounded-lg font-bold hover:bg-brand-redHover transition-all flex items-center gap-2">
+                        <i class="fa-regular fa-copy"></i> Скопировать
+                    </button>
+                </div>
+                <div class="mt-6 pt-6 border-t border-white/10">
+                    <a href="https://dsc.gg/redoku" target="_blank" class="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm">
+                        <i class="fa-brands fa-discord"></i> Присоединиться к Discord
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- Footer -->
-    <footer class="pt-20 pb-10 px-6 border-t border-white/10 bg-black/60 backdrop-blur-md relative z-20">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-            <div class="md:col-span-2">
-                <div class="flex items-center gap-3 mb-6">
-                    <div class="w-8 h-8 bg-brand-red rounded-lg flex items-center justify-center text-white font-display font-bold text-sm shadow-[0_0_10px_rgba(255,46,67,0.3)]">R</div>
-                    <span class="font-display font-bold text-xl text-white tracking-widest uppercase">REDOKU</span>
+    <footer class="pt-12 pb-6 px-4 border-t border-white/10 bg-black/60 backdrop-blur-md relative z-20">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            
+            <!-- Описание -->
+            <div class="md:col-span-1">
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-7 h-7 rounded-lg flex items-center justify-center"><img src="logotip.jpg" alt="R" class="w-5 h-5 rounded-md"></div>
+                    <span class="font-display font-bold text-lg text-white tracking-widest uppercase">REDOKU</span>
                 </div>
-                <p class="text-gray-400 max-w-sm mb-8 text-sm leading-relaxed">
-                    Премиальный Vanilla+ проект, созданный игроками для игроков. Мы ценим атмосферу классического майнкрафта, честность и техническое совершенство.
+                <p class="text-gray-400 max-w-xs mb-4 text-xs leading-relaxed">
+                    Премиальный Vanilla+ проект. Честная игра, красивый мир и активное комьюнити.
                 </p>
-                <div class="flex gap-3">
-                    <a href="https://dsc.gg/redoku" target="_blank" class="w-10 h-10 glass rounded-xl flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#5865F2] hover:border-[#5865F2] transition-all"><i class="fa-brands fa-discord text-lg"></i></a>
-                    <a href="https://t.me/Redoku" target="_blank" class="w-10 h-10 glass rounded-xl flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#229ED9] hover:border-[#229ED9] transition-all"><i class="fa-brands fa-telegram text-lg"></i></a>
-                    <a href="mailto:support@redoku.ru" class="w-10 h-10 glass rounded-xl flex items-center justify-center text-gray-300 hover:text-white hover:bg-brand-red hover:border-brand-red transition-all"><i class="fa-solid fa-envelope text-lg"></i></a>
+                <div class="flex gap-2">
+                    <a href="https://dsc.gg/redoku" target="_blank" class="w-8 h-8 glass rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#5865F2] hover:border-[#5865F2] transition-all" aria-label="Discord">
+                        <i class="fa-brands fa-discord text-sm"></i>
+                    </a>
+                    <a href="https://t.me/Redoku" target="_blank" class="w-8 h-8 glass rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#229ED9] hover:border-[#229ED9] transition-all" aria-label="Telegram">
+                        <i class="fa-brands fa-telegram text-sm"></i>
+                    </a>
                 </div>
             </div>
+
+            <!-- Ссылки -->
             <div>
-                <h4 class="text-white font-display font-bold mb-6 text-sm tracking-widest uppercase">Навигация</h4>
-                <ul class="space-y-3 text-sm text-gray-400">
-                    <li><a href="info.html" class="hover:text-brand-red transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Как начать</a></li>
-                    <li><a href="lore.html" class="hover:text-brand-red transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Лор мира</a></li>
-                    <li><a href="rules.html" class="hover:text-brand-red transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Правила</a></li>
-                    <li><a href="team.html" class="hover:text-brand-red transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Команда</a></li>
+                <h4 class="text-white font-display font-bold mb-4 text-xs tracking-widest uppercase">Навигация</h4>
+                <ul class="space-y-2 text-xs text-gray-400">
+                    <li><a href="index.html" class="hover:text-brand-red transition-colors">Главная</a></li>
+                    <li><a href="info.html" class="hover:text-brand-red transition-colors">Как начать</a></li>
+                    <li><a href="lore.html" class="hover:text-brand-red transition-colors">Лор мира</a></li>
+                    <li><a href="rules.html" class="hover:text-brand-red transition-colors">Правила</a></li>
+                    <li><a href="donate.html" class="hover:text-brand-red transition-colors">Поддержать</a></li>
                 </ul>
             </div>
+
+            <!-- Доки -->
             <div>
-                <h4 class="text-white font-display font-bold mb-6 text-sm tracking-widest uppercase">Документы</h4>
-                <ul class="space-y-3 text-sm text-gray-400">
+                <h4 class="text-white font-display font-bold mb-4 text-xs tracking-widest uppercase">Документы</h4>
+                <ul class="space-y-2 text-xs text-gray-400">
                     <li><a href="offer.html" class="hover:text-white transition-colors">Публичная оферта</a></li>
                     <li><a href="privacy.html" class="hover:text-white transition-colors">Политика конф-ти</a></li>
                 </ul>
-                <div class="mt-8 p-4 glass rounded-xl inline-block border-white/5">
-                    <div class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">IP Сервера</div>
-                    <code class="text-xs text-white font-mono font-bold select-all">redoku.bisquit.host</code>
+                <div class="mt-4 p-3 glass rounded-lg inline-block border-white/5">
+                    <div class="text-[9px] text-gray-500 font-bold uppercase tracking-widest mb-1">IP Сервера</div>
+                    <code class="text-[10px] text-white font-mono font-bold select-all">redoku.bisquit.host</code>
                 </div>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] text-gray-500 font-bold tracking-widest uppercase">
+
+        <div class="max-w-7xl mx-auto pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3 text-[10px] text-gray-500 font-bold tracking-widest uppercase">
             <div>&copy; 2025 Redoku. Все права защищены.</div>
-            <div class="text-center md:text-right opacity-50">Not an official Minecraft product.<br>Not approved by or associated with Mojang.</div>
+            <div class="text-center md:text-right opacity-50">Not an official Minecraft product. Not approved by or associated with Mojang.</div>
         </div>
     </footer>
 
@@ -424,6 +524,54 @@
             if (window.scrollY > 20) { nav.classList.add('shadow-lg'); nav.style.background = 'rgba(15, 17, 22, 0.85)'; } 
             else { nav.classList.remove('shadow-lg'); nav.style.background = 'rgba(15, 17, 22, 0.7)'; }
         });
+
+        // Timeline toggle function
+        function toggleTimeline(card) {
+            const content = card.querySelector('.timeline-content');
+            const icon = card.querySelector('.faq-icon');
+            const isOpen = content.classList.contains('open');
+            const progress = document.getElementById('timeline-progress');
+            
+            // Close all other timeline cards
+            document.querySelectorAll('.timeline-card').forEach(c => {
+                c.classList.remove('active');
+                c.querySelector('.timeline-content').classList.remove('open');
+                c.querySelector('.faq-icon').style.transform = 'rotate(0deg)';
+            });
+            
+            // Toggle current card
+            if (!isOpen) {
+                card.classList.add('active');
+                content.classList.add('open');
+                icon.style.transform = 'rotate(180deg)';
+                
+                // Update progress based on opened step
+                const step = card.closest('.timeline-item').dataset.step;
+                const progressValue = step * 25; // 4 steps = 25% each
+                progress.style.height = progressValue + '%';
+            } else {
+                // Reset progress when closing
+                progress.style.height = '0%';
+            }
+        }
+
+        // FAQ toggle function
+        function toggleFaq(item) {
+            const answer = item.querySelector('.faq-answer');
+            const isOpen = item.classList.contains('open');
+            
+            // Close all other FAQ items
+            document.querySelectorAll('.faq-item').forEach(i => {
+                i.classList.remove('open');
+                i.querySelector('.faq-answer').classList.remove('open');
+            });
+            
+            // Toggle current item
+            if (!isOpen) {
+                item.classList.add('open');
+                answer.classList.add('open');
+            }
+        }
     </script>
 </body>
 </html>

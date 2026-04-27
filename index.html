@@ -223,40 +223,43 @@
 
     <!-- Навигация -->
     <nav class="fixed top-0 w-full z-[100] glass-nav transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
             <!-- Логотип -->
-            <a href="index.html" class="flex items-center gap-3 group relative z-20">
-                <div class="w-10 h-10 bg-brand-red rounded-xl flex items-center justify-center text-white font-display font-bold text-xl rotate-3 group-hover:rotate-12 transition-all shadow-[0_0_15px_rgba(255,46,67,0.4)]">R</div>
-                <span class="font-display font-bold text-2xl tracking-tighter text-white">REDOKU</span>
+            <a href="index.html" class="flex items-center gap-2 group relative z-20">
+                <img src="logotip.jpg" alt="Redoku" class="w-8 h-8 rounded-lg rotate-3 group-hover:rotate-12 transition-all">
+                <span class="font-display font-bold text-xl tracking-tighter text-white">REDOKU</span>
             </a>
 
             <!-- Десктопное меню -->
-            <div class="hidden lg:flex items-center gap-8 bg-white/5 px-8 py-2.5 rounded-full border border-white/5">
+            <div class="hidden lg:flex items-center gap-6">
                 <a href="index.html" class="text-sm font-medium text-brand-red drop-shadow-[0_0_8px_rgba(255,46,67,0.5)] transition-all">Главная</a>
                 <a href="info.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Инфо</a>
                 <a href="lore.html" class="text-sm font-medium text-gray-400 hover:text-brand-copper transition-all">Лор</a>
                 <a href="news.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Новости</a>
-                <a href="wiki.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Вики</a>
+                <a href="wiki.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">wiki</a>
                 <a href="rules.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Правила</a>
-                <a href="https://map.redoku.ru" target="_blank" class="text-sm font-medium text-gray-400 hover:text-white transition-all flex items-center gap-1.5">
-                    Карта <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                <a href="https://map.redoku.ru" target="_blank" class="text-sm font-medium text-gray-400 hover:text-white transition-all flex items-center gap-1">
+                    Карта <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                 </a>
             </div>
 
             <!-- Правый блок -->
-            <div class="hidden lg:flex items-center gap-4">
-                <a href="donate.html" class="text-sm font-medium text-yellow-500 hover:text-yellow-400 transition-colors flex items-center gap-2">
-                    <i class="fa-solid fa-store"></i> Магазин
+            <div class="hidden lg:flex items-center gap-3 ml-auto">
+                <a href="team.html" class="text-sm font-medium text-gray-400 hover:text-white transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-users text-xs"></i> Команда
                 </a>
-                <button onclick="copyIp()" class="btn-ip-copy bg-white/10 hover:bg-white/15 border border-white/10 text-white px-5 py-2.5 rounded-xl text-sm font-bold tracking-wide flex items-center gap-2 transition-all">
+                <a href="donate.html" class="text-sm font-medium text-yellow-500 hover:text-yellow-400 transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-store text-xs"></i> Магазин
+                </a>
+                <button onclick="copyIp()" class="btn-ip-copy bg-white/10 hover:bg-white/15 border border-white/10 text-white px-3 py-1.5 rounded-lg text-xs font-bold tracking-wide flex items-center gap-1.5 transition-all">
                     <span id="ip-text-nav" class="font-display">redoku.bisquit.host</span>
-                    <i class="fa-regular fa-copy opacity-50 text-xs" id="ip-icon-nav"></i>
+                    <i class="fa-regular fa-copy opacity-50 text-[10px]" id="ip-icon-nav"></i>
                 </button>
             </div>
 
             <!-- Гамбургер (Мобильный) -->
-            <button class="lg:hidden text-white p-2 relative z-20" onclick="toggleMobileMenu()">
-                <i class="fa-solid fa-bars text-2xl" id="mobile-menu-icon"></i>
+            <button class="lg:hidden text-white p-1.5 relative z-20" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-bars text-xl" id="mobile-menu-icon"></i>
             </button>
         </div>
     </nav>
@@ -267,7 +270,7 @@
         <a href="info.html" class="text-2xl font-display font-bold text-white">Как начать</a>
         <a href="lore.html" class="text-2xl font-display font-bold text-white">Лор сервера</a>
         <a href="news.html" class="text-2xl font-display font-bold text-white">Новости</a>
-        <a href="wiki.html" class="text-2xl font-display font-bold text-white">Вики</a>
+        <a href="wiki.html" class="text-2xl font-display font-bold text-white">wiki</a>
         <a href="rules.html" class="text-2xl font-display font-bold text-white">Правила</a>
         <a href="donate.html" class="text-2xl font-display font-bold text-yellow-500 mt-4">Магазин</a>
         
@@ -442,7 +445,7 @@
             <!-- Компактная сетка этапов -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <!-- Этап 1 -->
-                <div class="reveal glass rounded-2xl p-6 border border-brand-red/40 bg-gradient-to-br from-brand-red/10 to-[#0a0b0e] shadow-[0_0_30px_rgba(255,46,67,0.15)] hover:shadow-[0_0_40px_rgba(255,46,67,0.3)] hover:-translate-y-1 transition-all duration-300">
+                <div onclick="openModal('modal-season')" class="reveal glass rounded-2xl p-6 border border-brand-red/40 bg-gradient-to-br from-brand-red/10 to-[#0a0b0e] shadow-[0_0_30px_rgba(255,46,67,0.15)] hover:shadow-[0_0_40px_rgba(255,46,67,0.3)] hover:-translate-y-1 transition-all duration-300 cursor-pointer">
                     <div class="flex items-center justify-between mb-4">
                         <span class="px-3 py-1 rounded-lg bg-brand-red text-white text-[10px] font-bold uppercase tracking-widest">Активно</span>
                         <div class="w-2 h-2 bg-brand-red rounded-full animate-pulse"></div>
@@ -452,7 +455,7 @@
                 </div>
 
                 <!-- Этап 2 -->
-                <div class="reveal glass rounded-2xl p-6 border border-white/5 hover:border-brand-copper/40 bg-gradient-to-br from-[#161214] to-[#0a0b0e] hover:from-brand-copper/10 shadow-lg hover:shadow-[0_0_30px_rgba(230,126,34,0.15)] hover:-translate-y-1 transition-all duration-300" style="transition-delay: 100ms;">
+                <div onclick="openModal('modal-nether')" class="reveal glass rounded-2xl p-6 border border-white/5 hover:border-brand-copper/40 bg-gradient-to-br from-[#161214] to-[#0a0b0e] hover:from-brand-copper/10 shadow-lg hover:shadow-[0_0_30px_rgba(230,126,34,0.15)] hover:-translate-y-1 transition-all duration-300 cursor-pointer" style="transition-delay: 100ms;">
                     <div class="flex items-center justify-between mb-4">
                         <span class="px-3 py-1 rounded-lg bg-orange-500/10 text-brand-copper text-[10px] font-bold uppercase tracking-widest border border-orange-500/20">Скоро</span>
                         <div class="w-2 h-2 bg-brand-copper/50 rounded-full"></div>
@@ -462,7 +465,7 @@
                 </div>
 
                 <!-- Этап 3 -->
-                <div class="reveal glass rounded-2xl p-6 border border-white/5 hover:border-brand-patina/40 bg-gradient-to-br from-[#161214] to-[#0a0b0e] hover:from-brand-patina/10 shadow-lg hover:shadow-[0_0_30px_rgba(26,188,156,0.15)] hover:-translate-y-1 transition-all duration-300" style="transition-delay: 200ms;">
+                <div onclick="openModal('modal-excavation')" class="reveal glass rounded-2xl p-6 border border-white/5 hover:border-brand-patina/40 bg-gradient-to-br from-[#161214] to-[#0a0b0e] hover:from-brand-patina/10 shadow-lg hover:shadow-[0_0_30px_rgba(26,188,156,0.15)] hover:-translate-y-1 transition-all duration-300 cursor-pointer" style="transition-delay: 200ms;">
                     <div class="flex items-center justify-between mb-4">
                         <span class="px-3 py-1 rounded-lg bg-brand-patina/10 text-brand-patina text-[10px] font-bold uppercase tracking-widest border border-brand-patina/20">Скоро</span>
                         <div class="w-2 h-2 bg-brand-patina/50 rounded-full"></div>
@@ -472,7 +475,7 @@
                 </div>
 
                 <!-- Этап 4 -->
-                <div class="reveal glass rounded-2xl p-6 border border-white/5 hover:border-purple-500/40 bg-gradient-to-br from-[#161214] to-[#0a0b0e] hover:from-purple-500/10 shadow-lg hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] hover:-translate-y-1 transition-all duration-300" style="transition-delay: 300ms;">
+                <div onclick="openModal('modal-end')" class="reveal glass rounded-2xl p-6 border border-white/5 hover:border-purple-500/40 bg-gradient-to-br from-[#161214] to-[#0a0b0e] hover:from-purple-500/10 shadow-lg hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] hover:-translate-y-1 transition-all duration-300 cursor-pointer" style="transition-delay: 300ms;">
                     <div class="flex items-center justify-between mb-4">
                         <span class="px-3 py-1 rounded-lg bg-purple-500/10 text-purple-400 text-[10px] font-bold uppercase tracking-widest border border-purple-500/20">В планах</span>
                         <div class="w-2 h-2 bg-purple-500/50 rounded-full"></div>
@@ -588,59 +591,55 @@
     </section>
 
     <!-- Footer -->
-    <footer class="pt-20 pb-10 px-6 border-t border-white/10 bg-black/60 backdrop-blur-md relative z-20">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+    <footer class="pt-12 pb-6 px-4 border-t border-white/10 bg-black/60 backdrop-blur-md relative z-20">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             
             <!-- Описание -->
-            <div class="md:col-span-2">
-                <div class="flex items-center gap-3 mb-6">
-                    <div class="w-8 h-8 bg-brand-red rounded-lg flex items-center justify-center text-white font-display font-bold text-sm shadow-[0_0_10px_rgba(255,46,67,0.3)]">R</div>
-                    <span class="font-display font-bold text-xl text-white tracking-widest uppercase">REDOKU</span>
+            <div class="md:col-span-1">
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-7 h-7 rounded-lg flex items-center justify-center"><img src="logotip.jpg" alt="R" class="w-5 h-5 rounded-md"></div>
+                    <span class="font-display font-bold text-lg text-white tracking-widest uppercase">REDOKU</span>
                 </div>
-                <p class="text-gray-400 max-w-sm mb-8 text-sm leading-relaxed">
-                    Премиальный Vanilla+ проект, созданный игроками для игроков. Мы ценим атмосферу классического майнкрафта, честность и техническое совершенство.
+                <p class="text-gray-400 max-w-xs mb-4 text-xs leading-relaxed">
+                    Премиальный Vanilla+ проект. Честная игра, красивый мир и активное комьюнити.
                 </p>
-                <div class="flex gap-3">
-                    <a href="https://dsc.gg/redoku" target="_blank" class="w-10 h-10 glass rounded-xl flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#5865F2] hover:border-[#5865F2] transition-all" aria-label="Discord">
-                        <i class="fa-brands fa-discord text-lg"></i>
+                <div class="flex gap-2">
+                    <a href="https://dsc.gg/redoku" target="_blank" class="w-8 h-8 glass rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#5865F2] hover:border-[#5865F2] transition-all" aria-label="Discord">
+                        <i class="fa-brands fa-discord text-sm"></i>
                     </a>
-                    <a href="https://t.me/Redoku" target="_blank" class="w-10 h-10 glass rounded-xl flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#229ED9] hover:border-[#229ED9] transition-all" aria-label="Telegram">
-                        <i class="fa-brands fa-telegram text-lg"></i>
-                    </a>
-                    <a href="mailto:support@redoku.ru" class="w-10 h-10 glass rounded-xl flex items-center justify-center text-gray-300 hover:text-white hover:bg-brand-red hover:border-brand-red transition-all" aria-label="Email">
-                        <i class="fa-solid fa-envelope text-lg"></i>
+                    <a href="https://t.me/Redoku" target="_blank" class="w-8 h-8 glass rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#229ED9] hover:border-[#229ED9] transition-all" aria-label="Telegram">
+                        <i class="fa-brands fa-telegram text-sm"></i>
                     </a>
                 </div>
             </div>
 
             <!-- Ссылки -->
             <div>
-                <h4 class="text-white font-display font-bold mb-6 text-sm tracking-widest uppercase">Навигация</h4>
-                <ul class="space-y-3 text-sm text-gray-400">
-                    <li><a href="info.html" class="hover:text-brand-red transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Как начать</a></li>
-                    <li><a href="lore.html" class="hover:text-brand-red transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Лор мира</a></li>
-                    <li><a href="rules.html" class="hover:text-brand-red transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Правила</a></li>
-                    <li><a href="donate.html" class="hover:text-brand-red transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Поддержать</a></li>
+                <h4 class="text-white font-display font-bold mb-4 text-xs tracking-widest uppercase">Навигация</h4>
+                <ul class="space-y-2 text-xs text-gray-400">
+                    <li><a href="info.html" class="hover:text-brand-red transition-colors">Как начать</a></li>
+                    <li><a href="lore.html" class="hover:text-brand-red transition-colors">Лор мира</a></li>
+                    <li><a href="rules.html" class="hover:text-brand-red transition-colors">Правила</a></li>
+                    <li><a href="donate.html" class="hover:text-brand-red transition-colors">Поддержать</a></li>
                 </ul>
             </div>
 
             <!-- Доки -->
             <div>
-                <h4 class="text-white font-display font-bold mb-6 text-sm tracking-widest uppercase">Документы</h4>
-                <ul class="space-y-3 text-sm text-gray-400">
+                <h4 class="text-white font-display font-bold mb-4 text-xs tracking-widest uppercase">Документы</h4>
+                <ul class="space-y-2 text-xs text-gray-400">
                     <li><a href="offer.html" class="hover:text-white transition-colors">Публичная оферта</a></li>
                     <li><a href="privacy.html" class="hover:text-white transition-colors">Политика конф-ти</a></li>
                 </ul>
-                <div class="mt-8 p-4 glass rounded-xl inline-block border-white/5">
-                    <div class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">IP Сервера</div>
-                    <code class="text-xs text-white font-mono font-bold select-all">redoku.bisquit.host</code>
+                <div class="mt-4 p-3 glass rounded-lg inline-block border-white/5">
+                    <div class="text-[9px] text-gray-500 font-bold uppercase tracking-widest mb-1">IP Сервера</div>
+                    <code class="text-[10px] text-white font-mono font-bold select-all">redoku.bisquit.host</code>
                 </div>
             </div>
         </div>
 
-        <div class="max-w-7xl mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] text-gray-500 font-bold tracking-widest uppercase">
-            <div>&copy; 2025 Redoku. Все права защищены.</div>
-            <div class="text-center md:text-right opacity-50">Not an official Minecraft product.<br>Not approved by or associated with Mojang.</div>
+        <div class="max-w-7xl mx-auto pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3 text-[10px] text-gray-500 font-bold tracking-widest uppercase">
+            <div class="text-center md:text-right opacity-50">Not an official Minecraft product. Not approved by or associated with Mojang.</div>
         </div>
     </footer>
 
@@ -652,6 +651,155 @@
         <div>
             <div class="font-display font-bold text-sm text-white">УСПЕШНО!</div>
             <div class="text-xs text-gray-400">IP скопирован в буфер обмена</div>
+        </div>
+    </div>
+
+    <!-- Модальные окна для дорожной карты -->
+    <!-- Modal: Открытие Сезона -->
+    <div id="modal-season" class="modal-overlay fixed inset-0 bg-black/80 backdrop-blur-sm z-[300] hidden items-center justify-center p-4">
+        <div class="modal-content glass rounded-3xl p-8 max-w-2xl w-full border border-brand-red/40 bg-gradient-to-br from-brand-red/10 to-[#0a0b0e] shadow-[0_0_60px_rgba(255,46,67,0.3)] transform scale-95 opacity-0 transition-all duration-300">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-display font-bold text-white flex items-center gap-3">
+                    <i class="fa-solid fa-earth-americas text-brand-red"></i>
+                    Открытие Сезона
+                </h3>
+                <button onclick="closeModal('modal-season')" class="w-10 h-10 rounded-full bg-white/5 hover:bg-brand-red/20 text-gray-400 hover:text-white transition-all flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="text-gray-300 leading-relaxed space-y-4">
+                <p>Мир, разорванный Хроно-разломом, ждет исследователей. Новая генерация создала уникальные ландшафты:</p>
+                <ul class="space-y-2 text-gray-400">
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-mountain text-brand-red mt-1"></i>
+                        <span>Искаженные биомы с вкраплениями аномалий</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-cloud text-brand-red mt-1"></i>
+                        <span>Летающие острова, парящие в небе</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-clock text-brand-red mt-1"></i>
+                        <span>Зоны замедленного времени, где секунды тянутся вечностью</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-city text-brand-red mt-1"></i>
+                        <span>Руины древних городов Големов, скрытые в земле</span>
+                    </li>
+                </ul>
+                <p class="text-brand-red font-medium">Начните с формирования спавна, постройте первые города и захватите территории!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Открытие Ада -->
+    <div id="modal-nether" class="modal-overlay fixed inset-0 bg-black/80 backdrop-blur-sm z-[300] hidden items-center justify-center p-4">
+        <div class="modal-content glass rounded-3xl p-8 max-w-2xl w-full border border-brand-copper/40 bg-gradient-to-br from-brand-copper/10 to-[#0a0b0e] shadow-[0_0_60px_rgba(230,126,34,0.3)] transform scale-95 opacity-0 transition-all duration-300">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-display font-bold text-white flex items-center gap-3">
+                    <i class="fa-solid fa-fire text-brand-copper"></i>
+                    Открытие Ада
+                </h3>
+                <button onclick="closeModal('modal-nether')" class="w-10 h-10 rounded-full bg-white/5 hover:bg-brand-copper/20 text-gray-400 hover:text-white transition-all flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="text-gray-300 leading-relaxed space-y-4">
+                <p>Нижний мир стал опаснее, но и награды ценнее. Барьер снят, и путь к Незеру открыт:</p>
+                <ul class="space-y-2 text-gray-400">
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-skull text-brand-copper mt-1"></i>
+                        <span>Усиленные мобы с хроно-эффектами</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-gem text-brand-copper mt-1"></i>
+                        <span>Редкие ресурсы в опасных зонах</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-fire-flame-curved text-brand-copper mt-1"></i>
+                        <span>Искаженные крепости с новыми структурами</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-coins text-brand-copper mt-1"></i>
+                        <span>Незерит и ресурсы — ключ к прогрессу</span>
+                    </li>
+                </ul>
+                <p class="text-brand-copper font-medium">Битва за ресурсы начнется. Готовьтесь к суровым испытаниям!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Медные Раскопки -->
+    <div id="modal-excavation" class="modal-overlay fixed inset-0 bg-black/80 backdrop-blur-sm z-[300] hidden items-center justify-center p-4">
+        <div class="modal-content glass rounded-3xl p-8 max-w-2xl w-full border border-brand-patina/40 bg-gradient-to-br from-brand-patina/10 to-[#0a0b0e] shadow-[0_0_60px_rgba(26,188,156,0.3)] transform scale-95 opacity-0 transition-all duration-300">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-display font-bold text-white flex items-center gap-3">
+                    <i class="fa-solid fa-dungeon text-brand-patina"></i>
+                    Медные Раскопки
+                </h3>
+                <button onclick="closeModal('modal-excavation')" class="w-10 h-10 rounded-full bg-white/5 hover:bg-brand-patina/20 text-gray-400 hover:text-white transition-all flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="text-gray-300 leading-relaxed space-y-4">
+                <p>Эхо Коллапса начинает звучать. Легенды говорят о Затерянной Лаборатории:</p>
+                <ul class="space-y-2 text-gray-400">
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-robot text-brand-patina mt-1"></i>
+                        <span>Руины Медных Големов скрыты под землей</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-hourglass text-brand-patina mt-1"></i>
+                        <span>Хроно-энергия пронизывает раскопки</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-dungeon text-brand-patina mt-1"></i>
+                        <span>Объект Ноль — цель финального этапа</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-burst text-brand-patina mt-1"></i>
+                        <span>Аномалии становятся сильнее</span>
+                    </li>
+                </ul>
+                <p class="text-brand-patina font-medium">Поиск лаборатории — ключ к пониманию Хроно-разлома.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Битва с Драконом -->
+    <div id="modal-end" class="modal-overlay fixed inset-0 bg-black/80 backdrop-blur-sm z-[300] hidden items-center justify-center p-4">
+        <div class="modal-content glass rounded-3xl p-8 max-w-2xl w-full border border-purple-500/40 bg-gradient-to-br from-purple-500/10 to-[#0a0b0e] shadow-[0_0_60px_rgba(168,85,247,0.3)] transform scale-95 opacity-0 transition-all duration-300">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-display font-bold text-white flex items-center gap-3">
+                    <i class="fa-solid fa-dragon text-purple-400"></i>
+                    Битва с Драконом
+                </h3>
+                <button onclick="closeModal('modal-end')" class="w-10 h-10 rounded-full bg-white/5 hover:bg-purple-500/20 text-gray-400 hover:text-white transition-all flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="text-gray-300 leading-relaxed space-y-4">
+                <p>Энд — это реально тяжелое путешествие через искаженные острова:</p>
+                <ul class="space-y-2 text-gray-400">
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-island-tropical text-purple-400 mt-1"></i>
+                        <span>Искаженные острова с хроно-аномалиями</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-wind text-purple-400 mt-1"></i>
+                        <span>Воздушные пути между островами</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-bolt text-purple-400 mt-1"></i>
+                        <span>Хронические аномалии меняют реальность</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-dragon text-purple-400 mt-1"></i>
+                        <span>Усиленный Дракон с хроно-механиками</span>
+                    </li>
+                </ul>
+                <p class="text-purple-400 font-medium">Совместный поход необходим. Подготовьтесь к самому сложному испытанию сезона!</p>
+            </div>
         </div>
     </div>
 
@@ -773,6 +921,60 @@
         // Запускаем при загрузке и обновляем каждую минуту
         fetchOnline();
         setInterval(fetchOnline, 60000);
+
+        // Модальные окна для дорожной карты
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            const content = modal.querySelector('.modal-content');
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Блокируем скролл страницы
+            document.body.style.overflow = 'hidden';
+            
+            // Анимация появления
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            const content = modal.querySelector('.modal-content');
+            
+            // Анимация закрытия
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        // Закрытие по клику на overlay
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    const modalId = overlay.id;
+                    closeModal(modalId);
+                }
+            });
+        });
+
+        // Закрытие по Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay').forEach(modal => {
+                    if (!modal.classList.contains('hidden')) {
+                        closeModal(modal.id);
+                    }
+                });
+            }
+        });
     </script>
 </body>
 </html>

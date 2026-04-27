@@ -63,7 +63,7 @@
     <div id="preloader" class="fixed inset-0 z-[999] bg-[#0a0b0e] flex items-center justify-center transition-opacity duration-500">
         <div class="relative flex items-center justify-center">
             <div class="absolute w-20 h-20 border-t-4 border-b-4 border-brand-red border-solid rounded-full animate-spin opacity-50"></div>
-            <div class="w-12 h-12 bg-brand-red rounded-xl flex items-center justify-center text-white font-display font-bold text-2xl rotate-3 shadow-[0_0_20px_rgba(255,46,67,0.5)]">R</div>
+            <div class="w-12 h-12 bg-brand-red rounded-xl flex items-center justify-center rotate-3"><img src="logotip.jpg" alt="R" class="w-10 h-10 rounded-lg"></div>
         </div>
     </div>
 
@@ -71,33 +71,43 @@
 
     <!-- Навигация -->
     <nav class="fixed top-0 w-full z-[100] glass-nav transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-3 group relative z-20">
-                <div class="w-10 h-10 bg-brand-red rounded-xl flex items-center justify-center text-white font-display font-bold text-xl rotate-3 group-hover:rotate-12 transition-all shadow-[0_0_15px_rgba(255,46,67,0.4)]">R</div>
-                <span class="font-display font-bold text-2xl tracking-tighter text-white">REDOKU</span>
+        <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
+            <!-- Логотип -->
+            <a href="index.html" class="flex items-center gap-2 group relative z-20">
+                <img src="logotip.jpg" alt="Redoku" class="w-8 h-8 rounded-lg rotate-3 group-hover:rotate-12 transition-all">
+                <span class="font-display font-bold text-xl tracking-tighter text-white">REDOKU</span>
             </a>
 
-            <div class="hidden lg:flex items-center gap-8 bg-white/5 px-8 py-2.5 rounded-full border border-white/5 nav-links">
+            <!-- Десктопное меню -->
+            <div class="hidden lg:flex items-center gap-6">
                 <a href="index.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Главная</a>
                 <a href="info.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Инфо</a>
-                <a href="lore.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Лор</a>
+                <a href="lore.html" class="text-sm font-medium text-gray-400 hover:text-brand-copper transition-all">Лор</a>
                 <a href="news.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Новости</a>
-                <a href="wiki.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Вики</a>
-                <a href="rules.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Правила</a>
-                <a href="team.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Команда</a>
-                <a href="https://map.redoku.ru" target="_blank" class="text-sm font-medium text-gray-400 hover:text-white transition-all flex items-center gap-1.5">
-                    Карта <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                <a href="wiki.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">wiki</a>
+                <a href="rules.html" class="text-sm font-medium text-brand-red drop-shadow-[0_0_8px_rgba(255,46,67,0.5)] transition-all">Правила</a>
+                <a href="https://map.redoku.ru" target="_blank" class="text-sm font-medium text-gray-400 hover:text-white transition-all flex items-center gap-1">
+                    Карта <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                 </a>
             </div>
 
-            <div class="hidden lg:flex items-center gap-4">
-                <a href="donate.html" class="text-sm font-medium text-yellow-500 hover:text-yellow-400 transition-colors flex items-center gap-2">
-                    <i class="fa-solid fa-store"></i> Магазин
+            <!-- Правый блок -->
+            <div class="hidden lg:flex items-center gap-3">
+                <a href="team.html" class="text-sm font-medium text-gray-400 hover:text-white transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-users text-xs"></i> Команда
                 </a>
+                <a href="donate.html" class="text-sm font-medium text-yellow-500 hover:text-yellow-400 transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-store text-xs"></i> Магазин
+                </a>
+                <button onclick="copyIp()" class="btn-ip-copy bg-white/10 hover:bg-white/15 border border-white/10 text-white px-3 py-1.5 rounded-lg text-xs font-bold tracking-wide flex items-center gap-1.5 transition-all">
+                    <span id="ip-text-nav" class="font-display">redoku.bisquit.host</span>
+                    <i class="fa-regular fa-copy opacity-50 text-[10px]" id="ip-icon-nav"></i>
+                </button>
             </div>
 
-            <button class="lg:hidden text-white p-2 relative z-20" onclick="toggleMobileMenu()">
-                <i class="fa-solid fa-bars text-2xl" id="mobile-menu-icon"></i>
+            <!-- Гамбургер (Мобильный) -->
+            <button class="lg:hidden text-white p-1.5 relative z-20" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-bars text-xl" id="mobile-menu-icon"></i>
             </button>
         </div>
     </nav>
@@ -108,7 +118,7 @@
         <a href="info.html" class="text-2xl font-display font-bold text-white">Как начать</a>
         <a href="lore.html" class="text-2xl font-display font-bold text-white">Лор сервера</a>
         <a href="news.html" class="text-2xl font-display font-bold text-white">Новости</a>
-        <a href="wiki.html" class="text-2xl font-display font-bold text-white">Вики</a>
+        <a href="wiki.html" class="text-2xl font-display font-bold text-white">wiki</a>
         <a href="rules.html" class="text-2xl font-display font-bold text-white">Правила</a>
         <a href="team.html" class="text-2xl font-display font-bold text-white">Команда</a>
         <a href="donate.html" class="text-2xl font-display font-bold text-yellow-500 mt-4">Магазин</a>
@@ -120,36 +130,39 @@
             <h1 class="text-4xl md:text-6xl font-display font-black text-white uppercase tracking-tighter mb-4">
                 КОДЕКС <span class="text-brand-red text-glow">СЕРВЕРА</span>
             </h1>
-            <p class="text-gray-400 text-lg md:text-xl font-light max-w-2xl mx-auto">
+            <p class="text-gray-400 text-lg md:text-xl font-light max-w-2xl mx-auto mb-6">
                 Правила созданы для комфорта, а не для ограничений. Играй честно, уважай других и наслаждайся ваниллой.
             </p>
+            <a href="wiki.html#full-rules" class="inline-flex items-center gap-2 text-brand-red hover:text-white transition-colors text-sm font-bold tracking-wider uppercase">
+                <i class="fa-solid fa-book"></i> Подробнее в wiki
+            </a>
         </div>
     </header>
 
     <!-- Правила Bento Grid -->
-    <section class="py-20 px-4 relative z-10">
+    <section class="py-12 px-4 relative z-10">
         <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
             
-            <div class="reveal spotlight-card glass p-8 md:p-10 rounded-[2.5rem] bg-gradient-to-br from-[#161214] to-[#0a0b0e] border-white/5 hover:border-brand-red/30 shadow-lg group">
+            <div class="reveal spotlight-card glass p-6 md:p-8 rounded-[2rem] bg-gradient-to-br from-[#161214] to-[#0a0b0e] border-white/5 hover:border-brand-red/30 shadow-lg group">
                 <div class="spotlight-content">
-                    <div class="flex items-center gap-5 mb-8 border-b border-white/10 pb-6">
-                        <div class="w-14 h-14 bg-[#1a0f12] rounded-2xl flex items-center justify-center text-brand-red text-2xl border border-brand-red/20 shadow-[0_0_15px_rgba(255,46,67,0.15)] group-hover:scale-110 transition-transform">
+                    <div class="flex items-center gap-4 mb-6 border-b border-white/10 pb-5">
+                        <div class="w-12 h-12 bg-[#1a0f12] rounded-xl flex items-center justify-center text-brand-red text-xl border border-brand-red/20 shadow-[0_0_15px_rgba(255,46,67,0.15)] group-hover:scale-110 transition-transform">
                             <i class="fa-regular fa-comments"></i>
                         </div>
                         <div>
-                            <h2 class="text-2xl md:text-3xl font-display font-bold text-white leading-tight">Общение в чате</h2>
+                            <h2 class="text-xl md:text-2xl font-display font-bold text-white leading-tight">Общение в чате</h2>
                             <p class="text-sm text-gray-500 font-medium">Уважаем друг друга</p>
                         </div>
                     </div>
-                    <ul class="space-y-4">
-                        <li class="flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors">
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors">
                             <i class="fa-solid fa-ban text-brand-red mt-1 text-sm"></i>
                             <div>
                                 <strong class="text-white block mb-1">Запрещен токсик и оскорбления</strong>
                                 <p class="text-gray-400 text-sm leading-relaxed">Будьте вежливы. Прямые оскорбления игроков или администрации, а также разжигание конфликтов строго наказываются.</p>
                             </div>
                         </li>
-                        <li class="flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors">
+                        <li class="flex items-start gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors">
                             <i class="fa-solid fa-ban text-brand-red mt-1 text-sm"></i>
                             <div>
                                 <strong class="text-white block mb-1">Спам, мат и реклама</strong>
@@ -163,33 +176,33 @@
                 </div>
             </div>
 
-            <div class="reveal spotlight-card glass p-8 md:p-10 rounded-[2.5rem] bg-gradient-to-br from-[#161214] to-[#0a0b0e] border-white/5 hover:border-brand-red/30 shadow-lg group" style="transition-delay: 100ms;">
+            <div class="reveal spotlight-card glass p-6 md:p-8 rounded-[2rem] bg-gradient-to-br from-[#161214] to-[#0a0b0e] border-white/5 hover:border-brand-red/30 shadow-lg group" style="transition-delay: 100ms;">
                 <div class="spotlight-content">
-                    <div class="flex items-center gap-5 mb-8 border-b border-white/10 pb-6">
-                        <div class="w-14 h-14 bg-[#1a0f12] rounded-2xl flex items-center justify-center text-brand-red text-2xl border border-brand-red/20 shadow-[0_0_15px_rgba(255,46,67,0.15)] group-hover:scale-110 transition-transform">
+                    <div class="flex items-center gap-4 mb-6 border-b border-white/10 pb-5">
+                        <div class="w-12 h-12 bg-[#1a0f12] rounded-xl flex items-center justify-center text-brand-red text-xl border border-brand-red/20 shadow-[0_0_15px_rgba(255,46,67,0.15)] group-hover:scale-110 transition-transform">
                             <i class="fa-solid fa-shield-halved"></i>
                         </div>
                         <div>
-                            <h2 class="text-2xl md:text-3xl font-display font-bold text-white leading-tight">Игровой процесс</h2>
+                            <h2 class="text-xl md:text-2xl font-display font-bold text-white leading-tight">Игровой процесс</h2>
                             <p class="text-sm text-gray-500 font-medium">Гриф и стороннее ПО</p>
                         </div>
                     </div>
-                    <ul class="space-y-4">
-                        <li class="flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors">
+                    <ul class="space-y-2">
+                        <li class="flex items-start gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors">
                             <i class="fa-solid fa-hammer text-brand-red mt-1 text-sm"></i>
                             <div>
                                 <strong class="text-white block mb-1">Запрещен Гриф</strong>
                                 <p class="text-gray-400 text-sm leading-relaxed">Разрушение чужих построек, воровство из сундуков, убийство питомцев. (Все откатывается через CoreProtect).</p>
                             </div>
                         </li>
-                        <li class="flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors">
+                        <li class="flex items-start gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors">
                             <i class="fa-solid fa-bug text-brand-red mt-1 text-sm"></i>
                             <div>
                                 <strong class="text-white block mb-1">Запрещены Читы и ПО</strong>
                                 <p class="text-gray-400 text-sm leading-relaxed">Использование X-Ray, KillAura, Baritone, дюпов и любых макросов, дающих нечестное преимущество.</p>
                             </div>
                         </li>
-                        <li class="flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors">
+                        <li class="flex items-start gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors">
                             <i class="fa-solid fa-magnifying-glass text-brand-red mt-1 text-sm"></i>
                             <div>
                                 <strong class="text-white block mb-1">Проверки на читы</strong>
@@ -204,59 +217,62 @@
             </div>
 
             <!-- Широкая карточка -->
-            <div class="reveal spotlight-card glass p-8 md:p-10 rounded-[2.5rem] bg-gradient-to-br from-[#161214] to-[#0a0b0e] border-white/5 hover:border-brand-red/30 shadow-lg group md:col-span-2" style="transition-delay: 200ms;">
+            <div class="reveal spotlight-card glass p-6 md:p-8 rounded-[2rem] bg-gradient-to-br from-[#161214] to-[#0a0b0e] border-white/5 hover:border-brand-red/30 shadow-lg group md:col-span-2" style="transition-delay: 200ms;">
                 <div class="spotlight-content">
-                    <div class="flex items-center gap-5 mb-8 border-b border-white/10 pb-6">
-                        <div class="w-14 h-14 bg-[#1a0f12] rounded-2xl flex items-center justify-center text-brand-red text-2xl border border-brand-red/20 shadow-[0_0_15px_rgba(255,46,67,0.15)] group-hover:scale-110 transition-transform">
+                    <div class="flex items-center gap-4 mb-6 border-b border-white/10 pb-5">
+                        <div class="w-12 h-12 bg-[#1a0f12] rounded-xl flex items-center justify-center text-brand-red text-xl border border-brand-red/20 shadow-[0_0_15px_rgba(255,46,67,0.15)] group-hover:scale-110 transition-transform">
                             <i class="fa-solid fa-puzzle-piece"></i>
                         </div>
                         <div>
-                            <h2 class="text-2xl md:text-3xl font-display font-bold text-white leading-tight">Клиентские моды</h2>
+                            <h2 class="text-lg md:text-xl font-display font-bold text-white leading-tight">Клиентские моды</h2>
                             <p class="text-sm text-gray-500 font-medium">Что можно, а что нельзя</p>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="bg-green-500/5 border border-green-500/10 rounded-2xl p-6">
-                            <div class="flex items-center gap-3 mb-6 text-green-400">
-                                <i class="fa-solid fa-check-circle text-xl"></i>
-                                <h3 class="font-display font-bold text-xl uppercase tracking-wider">Разрешено</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-green-500/5 border border-green-500/10 rounded-xl p-4">
+                            <div class="flex items-center gap-3 mb-4 text-green-400">
+                                <i class="fa-solid fa-check-circle text-lg"></i>
+                                <h3 class="font-display font-bold text-lg uppercase tracking-wider">Разрешено</h3>
                             </div>
-                            <ul class="space-y-3">
-                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-2.5 rounded-xl"><i class="fa-solid fa-check text-green-500/50"></i> Litematica (Строго без принтера!)</li>
-                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-2.5 rounded-xl"><i class="fa-solid fa-check text-green-500/50"></i> MiniHUD (Отображение инфы, хитбоксы)</li>
-                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-2.5 rounded-xl"><i class="fa-solid fa-check text-green-500/50"></i> ReplayMod (Для съемки таймлапсов)</li>
-                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-2.5 rounded-xl"><i class="fa-solid fa-check text-green-500/50"></i> Xaero's Minimap / WorldMap</li>
-                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-2.5 rounded-xl"><i class="fa-solid fa-check text-green-500/50"></i> Оптимизирующие моды (Sodium, Lithium)</li>
+                            <ul class="space-y-2">
+                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-3 py-2 rounded-lg"><i class="fa-solid fa-check text-green-500/50 text-sm"></i> Litematica (Строго без принтера!)</li>
+                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-3 py-2 rounded-lg"><i class="fa-solid fa-check text-green-500/50 text-sm"></i> MiniHUD (Отображение инфы, хитбоксы)</li>
+                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-3 py-2 rounded-lg"><i class="fa-solid fa-check text-green-500/50 text-sm"></i> ReplayMod (Для съемки таймлапсов)</li>
+                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-3 py-2 rounded-lg"><i class="fa-solid fa-check text-green-500/50 text-sm"></i> Xaero's Minimap / WorldMap</li>
+                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-3 py-2 rounded-lg"><i class="fa-solid fa-check text-green-500/50 text-sm"></i> Оптимизирующие моды (Sodium, Lithium)</li>
                             </ul>
                         </div>
 
-                        <div class="bg-brand-red/5 border border-brand-red/10 rounded-2xl p-6">
-                            <div class="flex items-center gap-3 mb-6 text-brand-red">
-                                <i class="fa-solid fa-circle-xmark text-xl"></i>
-                                <h3 class="font-display font-bold text-xl uppercase tracking-wider">Запрещено</h3>
+                        <div class="bg-brand-red/5 border border-brand-red/10 rounded-xl p-4">
+                            <div class="flex items-center gap-3 mb-4 text-brand-red">
+                                <i class="fa-solid fa-circle-xmark text-lg"></i>
+                                <h3 class="font-display font-bold text-lg uppercase tracking-wider">Запрещено</h3>
                             </div>
-                            <ul class="space-y-3">
-                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-2.5 rounded-xl"><i class="fa-solid fa-xmark text-brand-red/50"></i> X-Ray (Любые ресурспаки и моды)</li>
-                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-2.5 rounded-xl"><i class="fa-solid fa-xmark text-brand-red/50"></i> Baritone (Авто-копка, боты)</li>
-                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-2.5 rounded-xl"><i class="fa-solid fa-xmark text-brand-red/50"></i> FreeCam (Поиск ресурсов/игроков)</li>
-                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-4 py-2.5 rounded-xl"><i class="fa-solid fa-xmark text-brand-red/50"></i> Авто-кликеры (В АФК-зонах или PvP)</li>
+                            <ul class="space-y-2">
+                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-3 py-2 rounded-lg"><i class="fa-solid fa-xmark text-brand-red/50 text-sm"></i> X-Ray (Любые ресурспаки и моды)</li>
+                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-3 py-2 rounded-lg"><i class="fa-solid fa-xmark text-brand-red/50 text-sm"></i> Baritone (Авто-копка, боты)</li>
+                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-3 py-2 rounded-lg"><i class="fa-solid fa-xmark text-brand-red/50 text-sm"></i> FreeCam (Поиск ресурсов/игроков)</li>
+                                <li class="flex items-center gap-3 text-gray-300 bg-white/5 px-3 py-2 rounded-lg"><i class="fa-solid fa-xmark text-brand-red/50 text-sm"></i> Авто-кликеры (В АФК-зонах или PvP)</li>
                             </ul>
-                            <p class="mt-6 text-xs text-gray-500 italic">Администрация оставляет за собой право блокировать за любые модификации, дающие явное преимущество.</p>
+                            <p class="mt-4 text-xs text-gray-500 italic">Администрация оставляет за собой право блокировать за любые модификации, дающие явное преимущество.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Уточнение -->
-            <div class="reveal md:col-span-2 mt-4 p-6 sm:p-8 glass rounded-[2rem] border border-brand-red/30 bg-gradient-to-r from-brand-red/10 to-transparent flex flex-col sm:flex-row items-start sm:items-center gap-6 shadow-[0_0_30px_rgba(255,46,67,0.1)]">
-                <div class="w-14 h-14 shrink-0 bg-[#1a0f12] rounded-2xl flex items-center justify-center text-brand-red text-2xl border border-brand-red/30 shadow-[0_0_15px_rgba(255,46,67,0.2)]">
+            <div class="reveal md:col-span-2 mt-4 p-5 sm:p-6 glass rounded-[1.5rem] border border-brand-red/30 bg-gradient-to-r from-brand-red/10 to-transparent flex flex-col sm:flex-row items-start sm:items-center gap-5 shadow-[0_0_30px_rgba(255,46,67,0.1)]">
+                <div class="w-12 h-12 shrink-0 bg-[#1a0f12] rounded-xl flex items-center justify-center text-brand-red text-xl border border-brand-red/30 shadow-[0_0_15px_rgba(255,46,67,0.2)]">
                     <i class="fa-solid fa-scale-balanced"></i>
                 </div>
                 <div>
                     <h3 class="text-white font-bold font-display text-xl mb-2">Особые полномочия</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed max-w-4xl">
+                    <p class="text-gray-400 text-sm leading-relaxed max-w-4xl mb-3">
                         Администрация оставляет за собой право выдавать срок и тип наказания, <strong class="text-gray-200">отличающийся от указанных в правилах</strong>. Итоговое решение принимается на усмотрение модератора в зависимости от ситуации и тяжести проступка.
+                    </p>
+                    <p class="text-brand-red text-sm leading-relaxed max-w-4xl font-medium">
+                        <i class="fa-solid fa-triangle-exclamation mr-2"></i>Главная администрация в праве изменить правило сразу же если игрок использует явное преимущество при помощи багов, читов, модов. Даже если их нет в списке.
                     </p>
                 </div>
             </div>
@@ -265,46 +281,61 @@
     </section>
 
     <!-- Footer -->
-    <footer class="pt-20 pb-10 px-6 border-t border-white/10 bg-black/60 backdrop-blur-md relative z-20">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-            <div class="md:col-span-2">
-                <div class="flex items-center gap-3 mb-6">
-                    <div class="w-8 h-8 bg-brand-red rounded-lg flex items-center justify-center text-white font-display font-bold text-sm shadow-[0_0_10px_rgba(255,46,67,0.3)]">R</div>
-                    <span class="font-display font-bold text-xl text-white tracking-widest uppercase">REDOKU</span>
+    <footer class="pt-12 pb-6 px-4 border-t border-white/10 bg-black/60 backdrop-blur-md relative z-20">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            
+            <!-- Описание -->
+            <div class="md:col-span-1">
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-7 h-7 rounded-lg flex items-center justify-center"><img src="logotip.jpg" alt="R" class="w-5 h-5 rounded-md"></div>
+                    <span class="font-display font-bold text-lg text-white tracking-widest uppercase">REDOKU</span>
                 </div>
-                <p class="text-gray-400 max-w-sm mb-8 text-sm leading-relaxed">
-                    Премиальный Vanilla+ проект, созданный игроками для игроков. Мы ценим атмосферу классического майнкрафта, честность и техническое совершенство.
+                <p class="text-gray-400 max-w-xs mb-4 text-xs leading-relaxed">
+                    Премиальный Vanilla+ проект. Честная игра, красивый мир и активное комьюнити.
                 </p>
-                <div class="flex gap-3">
-                    <a href="https://dsc.gg/redoku" target="_blank" class="w-10 h-10 glass rounded-xl flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#5865F2] hover:border-[#5865F2] transition-all"><i class="fa-brands fa-discord text-lg"></i></a>
-                    <a href="https://t.me/Redoku" target="_blank" class="w-10 h-10 glass rounded-xl flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#229ED9] hover:border-[#229ED9] transition-all"><i class="fa-brands fa-telegram text-lg"></i></a>
+                <div class="flex gap-2">
+                    <a href="https://dsc.gg/redoku" target="_blank" class="w-8 h-8 glass rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#5865F2] hover:border-[#5865F2] transition-all" aria-label="Discord">
+                        <i class="fa-brands fa-discord text-sm"></i>
+                    </a>
+                    <a href="https://t.me/Redoku" target="_blank" class="w-8 h-8 glass rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#229ED9] hover:border-[#229ED9] transition-all" aria-label="Telegram">
+                        <i class="fa-brands fa-telegram text-sm"></i>
+                    </a>
                 </div>
             </div>
+
+            <!-- Ссылки -->
             <div>
-                <h4 class="text-white font-display font-bold mb-6 text-sm tracking-widest uppercase">Навигация</h4>
-                <ul class="space-y-3 text-sm text-gray-400">
-                    <li><a href="info.html" class="hover:text-brand-red transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Как начать</a></li>
-                    <li><a href="lore.html" class="hover:text-brand-red transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Лор мира</a></li>
-                    <li><a href="rules.html" class="hover:text-brand-red transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Правила</a></li>
-                    <li><a href="team.html" class="hover:text-brand-red transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Команда</a></li>
+                <h4 class="text-white font-display font-bold mb-4 text-xs tracking-widest uppercase">Навигация</h4>
+                <ul class="space-y-2 text-xs text-gray-400">
+                    <li><a href="index.html" class="hover:text-brand-red transition-colors">Главная</a></li>
+                    <li><a href="info.html" class="hover:text-brand-red transition-colors">Как начать</a></li>
+                    <li><a href="lore.html" class="hover:text-brand-red transition-colors">Лор мира</a></li>
+                    <li><a href="rules.html" class="hover:text-brand-red transition-colors">Правила</a></li>
+                    <li><a href="donate.html" class="hover:text-brand-red transition-colors">Поддержать</a></li>
                 </ul>
             </div>
+
+            <!-- Доки -->
             <div>
-                <h4 class="text-white font-display font-bold mb-6 text-sm tracking-widest uppercase">Документы</h4>
-                <ul class="space-y-3 text-sm text-gray-400">
+                <h4 class="text-white font-display font-bold mb-4 text-xs tracking-widest uppercase">Документы</h4>
+                <ul class="space-y-2 text-xs text-gray-400">
                     <li><a href="offer.html" class="hover:text-white transition-colors">Публичная оферта</a></li>
                     <li><a href="privacy.html" class="hover:text-white transition-colors">Политика конф-ти</a></li>
                 </ul>
+                <div class="mt-4 p-3 glass rounded-lg inline-block border-white/5">
+                    <div class="text-[9px] text-gray-500 font-bold uppercase tracking-widest mb-1">IP Сервера</div>
+                    <code class="text-[10px] text-white font-mono font-bold select-all">redoku.bisquit.host</code>
+                </div>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] text-gray-500 font-bold tracking-widest uppercase">
+
+        <div class="max-w-7xl mx-auto pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3 text-[10px] text-gray-500 font-bold tracking-widest uppercase">
             <div>&copy; 2025 Redoku. Все права защищены.</div>
-            <div class="text-center md:text-right opacity-50">Not an official Minecraft product.</div>
+            <div class="text-center md:text-right opacity-50">Not an official Minecraft product. Not approved by or associated with Mojang.</div>
         </div>
     </footer>
 
     <script>
-        // --- ПРЕЛОАДЕР И АКТИВНОЕ МЕНЮ ---
         window.addEventListener('load', () => {
             const preloader = document.getElementById('preloader');
             preloader.classList.add('opacity-0');

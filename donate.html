@@ -77,7 +77,7 @@
     <div id="preloader" class="fixed inset-0 z-[999] bg-[#0a0b0e] flex items-center justify-center transition-opacity duration-500">
         <div class="relative flex items-center justify-center">
             <div class="absolute w-20 h-20 border-t-4 border-b-4 border-brand-red border-solid rounded-full animate-spin opacity-50"></div>
-            <div class="w-12 h-12 bg-brand-red rounded-xl flex items-center justify-center text-white font-display font-bold text-2xl rotate-3 shadow-[0_0_20px_rgba(255,46,67,0.5)]">R</div>
+            <div class="w-12 h-12 bg-brand-red rounded-xl flex items-center justify-center rotate-3"><img src="logotip.jpg" alt="R" class="w-10 h-10 rounded-lg"></div>
         </div>
     </div>
 
@@ -87,27 +87,44 @@
 
     <!-- Навигация -->
     <nav class="fixed top-0 w-full z-[100] glass-nav transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-3 group relative z-20">
-                <div class="w-10 h-10 bg-brand-red rounded-xl flex items-center justify-center text-white font-display font-bold text-xl rotate-3 group-hover:rotate-12 transition-all shadow-[0_0_15px_rgba(255,46,67,0.4)]">R</div>
-                <span class="font-display font-bold text-2xl tracking-tighter text-white">REDOKU</span>
+        <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
+            <!-- Логотип -->
+            <a href="index.html" class="flex items-center gap-2 group relative z-20">
+                <img src="logotip.jpg" alt="Redoku" class="w-8 h-8 rounded-lg rotate-3 group-hover:rotate-12 transition-all">
+                <span class="font-display font-bold text-xl tracking-tighter text-white">REDOKU</span>
             </a>
-            <div class="hidden lg:flex items-center gap-8 bg-white/5 px-8 py-2.5 rounded-full border border-white/5 nav-links">
+
+            <!-- Десктопное меню -->
+            <div class="hidden lg:flex items-center gap-6">
                 <a href="index.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Главная</a>
                 <a href="info.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Инфо</a>
-                <a href="lore.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Лор</a>
+                <a href="lore.html" class="text-sm font-medium text-gray-400 hover:text-brand-copper transition-all">Лор</a>
                 <a href="news.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Новости</a>
-                <a href="wiki.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Вики</a>
+                <a href="wiki.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">wiki</a>
                 <a href="rules.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Правила</a>
-                <a href="team.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Команда</a>
-                <a href="https://map.redoku.ru" target="_blank" class="text-sm font-medium text-gray-400 hover:text-white transition-all flex items-center gap-1.5">Карта <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>
-            </div>
-            <div class="hidden lg:flex items-center gap-4 nav-links">
-                <a href="donate.html" class="text-sm font-bold text-yellow-400 drop-shadow-[0_0_8px_rgba(241,196,15,0.5)] transition-colors flex items-center gap-2 bg-yellow-400/10 px-4 py-2 rounded-xl border border-yellow-400/20">
-                    <i class="fa-solid fa-store"></i> Магазин
+                <a href="https://map.redoku.ru" target="_blank" class="text-sm font-medium text-gray-400 hover:text-white transition-all flex items-center gap-1">
+                    Карта <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                 </a>
             </div>
-            <button class="lg:hidden text-white p-2 relative z-20" onclick="toggleMobileMenu()"><i class="fa-solid fa-bars text-2xl" id="mobile-menu-icon"></i></button>
+
+            <!-- Правый блок -->
+            <div class="hidden lg:flex items-center gap-3">
+                <a href="team.html" class="text-sm font-medium text-gray-400 hover:text-white transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-users text-xs"></i> Команда
+                </a>
+                <a href="donate.html" class="text-sm font-medium text-yellow-500 hover:text-yellow-400 transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-store text-xs"></i> Магазин
+                </a>
+                <button onclick="copyIp()" class="btn-ip-copy bg-white/10 hover:bg-white/15 border border-white/10 text-white px-3 py-1.5 rounded-lg text-xs font-bold tracking-wide flex items-center gap-1.5 transition-all">
+                    <span id="ip-text-nav" class="font-display">redoku.bisquit.host</span>
+                    <i class="fa-regular fa-copy opacity-50 text-[10px]" id="ip-icon-nav"></i>
+                </button>
+            </div>
+
+            <!-- Гамбургер (Мобильный) -->
+            <button class="lg:hidden text-white p-1.5 relative z-20" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-bars text-xl" id="mobile-menu-icon"></i>
+            </button>
         </div>
     </nav>
 
@@ -117,7 +134,7 @@
         <a href="info.html" class="text-2xl font-display font-bold text-white">Как начать</a>
         <a href="lore.html" class="text-2xl font-display font-bold text-white">Лор сервера</a>
         <a href="news.html" class="text-2xl font-display font-bold text-white">Новости</a>
-        <a href="wiki.html" class="text-2xl font-display font-bold text-white">Вики</a>
+        <a href="wiki.html" class="text-2xl font-display font-bold text-white">wiki</a>
         <a href="rules.html" class="text-2xl font-display font-bold text-white">Правила</a>
         <a href="team.html" class="text-2xl font-display font-bold text-white">Команда</a>
         <a href="donate.html" class="text-3xl font-display font-bold text-yellow-500 mt-4">Магазин</a>
@@ -158,14 +175,24 @@
                                     <span class="text-sm text-gray-500 mb-2">/ 1 неделя</span>
                                 </div>
                             </div>
-                            <ul class="space-y-4 mb-10 flex-1">
-                                <li class="flex items-start gap-3 text-sm text-gray-300"><i class="fa-solid fa-check text-green-500 mt-1"></i> Команда <code>/name</code> (цветной ник)</li>
-                                <li class="flex items-start gap-3 text-sm text-gray-300"><i class="fa-solid fa-check text-green-500 mt-1"></i> Изменение роста (выше/ниже)</li>
-                                <li class="flex items-start gap-3 text-sm text-gray-300"><i class="fa-solid fa-check text-green-500 mt-1"></i> Настройка профиля</li>
-                                <li class="flex items-start gap-3 text-sm text-gray-300"><i class="fa-solid fa-check text-green-500 mt-1"></i> Роль [Спонсор] в Discord</li>
-                                <li class="flex items-start gap-3 text-sm text-gray-300"><i class="fa-solid fa-check text-green-500 mt-1"></i> Кастомный маркер на веб-карте</li>
-                                <li class="flex items-start gap-3 text-sm text-gray-300"><i class="fa-solid fa-check text-green-500 mt-1"></i> +1 Точка дома (Home)</li>
+                            <ul class="space-y-4 mb-6 flex-1">
+                                <li class="flex items-start gap-3 text-sm text-gray-300"><i class="fa-solid fa-check text-green-500 mt-1"></i> Цветные сообщения в чате (&)</li>
+                                <li class="flex items-start gap-3 text-sm text-gray-300"><i class="fa-solid fa-check text-green-500 mt-1"></i> Изменение роста (/resize)</li>
+                                <li class="flex items-start gap-3 text-sm text-gray-300"><i class="fa-solid fa-check text-green-500 mt-1"></i> +1 дом</li>
                             </ul>
+                            <button onclick="toggleDonateDetails(this)" class="w-full py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-sm transition-colors mb-4">Подробнее</button>
+                            <div class="donate-details hidden space-y-3 mb-6">
+                                <div class="pt-4 border-t border-white/10">
+                                    <p class="text-xs text-gray-500 font-bold uppercase tracking-widest mb-3">Дополнительно:</p>
+                                    <ul class="space-y-2 text-sm text-gray-400">
+                                        <li class="flex items-start gap-2"><i class="fa-solid fa-star text-brand-gold mt-1 text-xs"></i> Роль на сервере</li>
+                                        <li class="flex items-start gap-2"><i class="fa-brands fa-discord text-brand-gold mt-1 text-xs"></i> Роль в Discord</li>
+                                        <li class="flex items-start gap-2"><i class="fa-brands fa-telegram text-brand-gold mt-1 text-xs"></i> Роль в Telegram</li>
+                                        <li class="flex items-start gap-2"><i class="fa-solid fa-scale-balanced text-brand-gold mt-1 text-xs"></i> Больший вес в решениях</li>
+                                        <li class="flex items-start gap-2"><i class="fa-solid fa-user-gear text-brand-gold mt-1 text-xs"></i> Кастомизация профиля</li>
+                                    </ul>
+                                </div>
+                            </div>
                             <button class="w-full py-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold transition-colors">Выбрать</button>
                         </div>
                     </div>
@@ -191,12 +218,25 @@
                                         <span class="text-sm text-gray-500 mb-3">/ 1 месяц</span>
                                     </div>
                                 </div>
-                                <ul class="space-y-4 mb-10 flex-1 relative z-10">
+                                <ul class="space-y-4 mb-6 flex-1 relative z-10">
                                     <li class="flex items-start gap-3 text-sm text-white font-medium"><i class="fa-solid fa-check text-brand-red mt-1 drop-shadow-[0_0_5px_rgba(255,46,67,0.5)]"></i> Все функции "Тест-драйва"</li>
                                     <li class="flex items-start gap-3 text-sm text-gray-300"><i class="fa-solid fa-check text-green-500 mt-1"></i> Уникальный значок в табе/чате</li>
                                     <li class="flex items-start gap-3 text-sm text-gray-300"><i class="fa-solid fa-check text-green-500 mt-1"></i> Особый цвет сообщений (по желанию)</li>
                                     <li class="flex items-start gap-3 text-sm text-gray-300"><i class="fa-solid fa-check text-green-500 mt-1"></i> Поддержка сервера на 1 месяц</li>
                                 </ul>
+                                <button onclick="toggleDonateDetails(this)" class="w-full py-3 rounded-xl bg-brand-red/20 hover:bg-brand-red/30 border border-brand-red/30 text-white font-bold text-sm transition-colors mb-4">Подробнее</button>
+                                <div class="donate-details hidden space-y-3 mb-6">
+                                    <div class="pt-4 border-t border-brand-red/20">
+                                        <p class="text-xs text-brand-red/60 font-bold uppercase tracking-widest mb-3">Дополнительно:</p>
+                                        <ul class="space-y-2 text-sm text-gray-400">
+                                            <li class="flex items-start gap-2"><i class="fa-solid fa-star text-brand-gold mt-1 text-xs"></i> Роль на сервере</li>
+                                            <li class="flex items-start gap-2"><i class="fa-brands fa-discord text-brand-gold mt-1 text-xs"></i> Роль в Discord</li>
+                                            <li class="flex items-start gap-2"><i class="fa-brands fa-telegram text-brand-gold mt-1 text-xs"></i> Роль в Telegram</li>
+                                            <li class="flex items-start gap-2"><i class="fa-solid fa-scale-balanced text-brand-gold mt-1 text-xs"></i> Больший вес в решениях</li>
+                                            <li class="flex items-start gap-2"><i class="fa-solid fa-user-gear text-brand-gold mt-1 text-xs"></i> Кастомизация профиля</li>
+                                        </ul>
+                                    </div>
+                                </div>
                                 <button class="w-full py-5 rounded-xl bg-brand-red hover:bg-brand-redHover shadow-[0_0_20px_rgba(255,46,67,0.4)] text-white font-black uppercase tracking-wider transition-all">Приобрести</button>
                             </div>
                         </div>
@@ -223,11 +263,24 @@
                                         <span class="text-sm text-gray-500 mb-2">/ 6 месяцев</span>
                                     </div>
                                 </div>
-                                <ul class="space-y-4 mb-10 flex-1">
+                                <ul class="space-y-4 mb-6 flex-1">
                                     <li class="flex items-start gap-3 text-sm text-white font-medium"><i class="fa-solid fa-star text-brand-gold mt-1"></i> Все функции "Стандарта"</li>
                                     <li class="flex items-start gap-3 text-sm text-brand-gold/90"><i class="fa-solid fa-infinity text-brand-gold mt-1"></i> Сохранение статуса навсегда*</li>
                                     <li class="flex items-start gap-3 text-sm text-gray-300"><i class="fa-solid fa-check text-green-500 mt-1"></i> Приоритетная поддержка</li>
                                 </ul>
+                                <button onclick="toggleDonateDetails(this)" class="w-full py-3 rounded-xl bg-brand-gold/20 hover:bg-brand-gold/30 border border-brand-gold/30 text-brand-gold font-bold text-sm transition-colors mb-4">Подробнее</button>
+                                <div class="donate-details hidden space-y-3 mb-6">
+                                    <div class="pt-4 border-t border-brand-gold/20">
+                                        <p class="text-xs text-brand-gold/60 font-bold uppercase tracking-widest mb-3">Дополнительно:</p>
+                                        <ul class="space-y-2 text-sm text-gray-400">
+                                            <li class="flex items-start gap-2"><i class="fa-solid fa-star text-brand-gold mt-1 text-xs"></i> Роль на сервере</li>
+                                            <li class="flex items-start gap-2"><i class="fa-brands fa-discord text-brand-gold mt-1 text-xs"></i> Роль в Discord</li>
+                                            <li class="flex items-start gap-2"><i class="fa-brands fa-telegram text-brand-gold mt-1 text-xs"></i> Роль в Telegram</li>
+                                            <li class="flex items-start gap-2"><i class="fa-solid fa-scale-balanced text-brand-gold mt-1 text-xs"></i> Больший вес в решениях</li>
+                                            <li class="flex items-start gap-2"><i class="fa-solid fa-user-gear text-brand-gold mt-1 text-xs"></i> Кастомизация профиля</li>
+                                        </ul>
+                                    </div>
+                                </div>
                                 <div class="text-[10px] text-gray-600 mb-4">*Даже после окончания 6 месяцев, значок [Легенда] останется с вами навсегда как знак почета.</div>
                                 <button class="w-full py-4 rounded-xl bg-transparent border-2 border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-black font-bold uppercase tracking-wider transition-all">Взять выгодно</button>
                             </div>
@@ -282,45 +335,56 @@
     </section>
 
     <!-- Footer -->
-    <footer class="pt-20 pb-10 px-6 border-t border-white/10 bg-black/60 backdrop-blur-md relative z-20">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-            <div class="md:col-span-2">
-                <div class="flex items-center gap-3 mb-6">
-                    <div class="w-8 h-8 bg-brand-red rounded-lg flex items-center justify-center text-white font-display font-bold text-sm shadow-[0_0_10px_rgba(255,46,67,0.3)]">R</div>
-                    <span class="font-display font-bold text-xl text-white tracking-widest uppercase">REDOKU</span>
+    <footer class="pt-12 pb-6 px-4 border-t border-white/10 bg-black/60 backdrop-blur-md relative z-20">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            
+            <!-- Описание -->
+            <div class="md:col-span-1">
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-7 h-7 rounded-lg flex items-center justify-center"><img src="logotip.jpg" alt="R" class="w-5 h-5 rounded-md"></div>
+                    <span class="font-display font-bold text-lg text-white tracking-widest uppercase">REDOKU</span>
                 </div>
-                <p class="text-gray-400 max-w-sm mb-8 text-sm leading-relaxed">Премиальный Vanilla+ проект, созданный игроками для игроков. Мы ценим атмосферу классического майнкрафта, честность и техническое совершенство.</p>
-                <div class="flex gap-3">
-                    <a href="https://dsc.gg/redoku" target="_blank" class="w-10 h-10 glass rounded-xl flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#5865F2] transition-all"><i class="fa-brands fa-discord text-lg"></i></a>
-                    <a href="https://t.me/Redoku" target="_blank" class="w-10 h-10 glass rounded-xl flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#229ED9] transition-all"><i class="fa-brands fa-telegram text-lg"></i></a>
+                <p class="text-gray-400 max-w-xs mb-4 text-xs leading-relaxed">
+                    Премиальный Vanilla+ проект. Честная игра, красивый мир и активное комьюнити.
+                </p>
+                <div class="flex gap-2">
+                    <a href="https://dsc.gg/redoku" target="_blank" class="w-8 h-8 glass rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#5865F2] hover:border-[#5865F2] transition-all" aria-label="Discord">
+                        <i class="fa-brands fa-discord text-sm"></i>
+                    </a>
+                    <a href="https://t.me/Redoku" target="_blank" class="w-8 h-8 glass rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#229ED9] hover:border-[#229ED9] transition-all" aria-label="Telegram">
+                        <i class="fa-brands fa-telegram text-sm"></i>
+                    </a>
                 </div>
             </div>
+
+            <!-- Ссылки -->
             <div>
-                <h4 class="text-white font-display font-bold mb-6 text-sm tracking-widest uppercase">Навигация</h4>
-                <ul class="space-y-3 text-sm text-gray-400">
-                    <li><a href="index.html" class="hover:text-brand-red transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Главная</a></li>
-                    <li><a href="info.html" class="hover:text-brand-red transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Как начать</a></li>
-                    <li><a href="lore.html" class="hover:text-brand-red transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Лор</a></li>
-                    <li><a href="team.html" class="hover:text-brand-red transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[8px]"></i> Команда</a></li>
+                <h4 class="text-white font-display font-bold mb-4 text-xs tracking-widest uppercase">Навигация</h4>
+                <ul class="space-y-2 text-xs text-gray-400">
+                    <li><a href="index.html" class="hover:text-brand-red transition-colors">Главная</a></li>
+                    <li><a href="info.html" class="hover:text-brand-red transition-colors">Как начать</a></li>
+                    <li><a href="lore.html" class="hover:text-brand-red transition-colors">Лор мира</a></li>
+                    <li><a href="rules.html" class="hover:text-brand-red transition-colors">Правила</a></li>
+                    <li><a href="donate.html" class="hover:text-brand-red transition-colors">Поддержать</a></li>
                 </ul>
             </div>
+
+            <!-- Доки -->
             <div>
-                <h4 class="text-white font-display font-bold mb-6 text-sm tracking-widest uppercase">Документы</h4>
-                <ul class="space-y-3 text-sm text-gray-400">
+                <h4 class="text-white font-display font-bold mb-4 text-xs tracking-widest uppercase">Документы</h4>
+                <ul class="space-y-2 text-xs text-gray-400">
                     <li><a href="offer.html" class="hover:text-white transition-colors">Публичная оферта</a></li>
                     <li><a href="privacy.html" class="hover:text-white transition-colors">Политика конф-ти</a></li>
                 </ul>
-                <div class="mt-8">
-                    <div class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">Оплата безопасна</div>
-                    <div class="flex gap-2 text-gray-400 text-2xl">
-                        <i class="fa-brands fa-cc-visa hover:text-white transition-colors"></i>
-                        <i class="fa-brands fa-cc-mastercard hover:text-white transition-colors"></i>
-                    </div>
+                <div class="mt-4 p-3 glass rounded-lg inline-block border-white/5">
+                    <div class="text-[9px] text-gray-500 font-bold uppercase tracking-widest mb-1">IP Сервера</div>
+                    <code class="text-[10px] text-white font-mono font-bold select-all">redoku.bisquit.host</code>
                 </div>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] text-gray-500 font-bold tracking-widest uppercase">
+        <div class="max-w-7xl mx-auto pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3 text-[10px] text-gray-500 font-bold tracking-widest uppercase">
             <div>&copy; 2025 Redoku. Все права защищены.</div>
+            <div class="text-center md:text-right opacity-50">Not an official Minecraft product. Not approved by or associated with Mojang.</div>
         </div>
     </footer>
 
@@ -380,6 +444,12 @@
             if (window.scrollY > 20) { nav.classList.add('shadow-lg'); nav.style.background = 'rgba(15, 17, 22, 0.85)'; } 
             else { nav.classList.remove('shadow-lg'); nav.style.background = 'rgba(15, 17, 22, 0.7)'; }
         });
+
+        function toggleDonateDetails(button) {
+            const details = button.nextElementSibling;
+            details.classList.toggle('hidden');
+            button.textContent = details.classList.contains('hidden') ? 'Подробнее' : 'Скрыть';
+        }
     </script>
 </body>
 </html>
