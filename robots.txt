@@ -1,0 +1,27 @@
+User-agent: *
+Allow: /
+
+# Разрешить индексацию всех основных страниц
+Allow: /index.html
+Allow: /info.html
+Allow: /wiki.html
+Allow: /rules.html
+Allow: /news.html
+Allow: /team.html
+Allow: /donate.html
+Allow: /offer.html
+Allow: /privacy.html
+
+# Запретить индексацию служебных файлов
+Disallow: /logotip.jpg
+Disallow: /og-image.jpg
+Disallow: /*.json
+Disallow: /*.xml$
+Disallow: /admin/
+Disallow: /private/
+
+# Указать путь к sitemap
+Sitemap: https://redoku.vercel.app/sitemap.xml
+
+# Указать местоположение сайта
+# Host: https://redoku.vercel.app (для Яндекса, если понадобится)
