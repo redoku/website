@@ -63,11 +63,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0a0b0e; }
-        ::-webkit-scrollbar-thumb { background: #1f222b; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #ff2e43; }
-
         /* Фоновые эффекты */
         .bg-grid {
             position: fixed;
@@ -214,14 +209,42 @@
             opacity: 0;
         }
         .accordion-content.open {
-            max-height: 1000px;
+            max-height: 2000px;
+            padding-top: 1rem;
             opacity: 1;
         }
+
         .accordion-icon {
             transition: transform 0.3s ease-out;
         }
         .accordion-icon.rotate {
             transform: rotate(180deg);
+        }
+
+        /* Модальное окно команды */
+        .team-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .team-modal.active {
+            display: flex;
+        }
+
+        .team-modal-content {
+            background: rgba(15, 17, 22, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
         }
     </style>
 </head>
@@ -328,12 +351,9 @@
                             <button onclick="showSection('lore-mechanics'); return false;" class="sidebar-link px-4 py-2 rounded-lg bg-white/5 text-sm font-medium text-gray-300 hover:bg-white/10 transition-all border-l-2 border-transparent" data-section="lore-mechanics">Необычные механики</button>
                         </div>
                     </div>
-
-                    <!-- Desktop: Sticky Sidebar -->
-                    <div class="hidden lg:block glass rounded-2xl p-6 sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto sidebar-scroll">
-                        <h3 class="font-display font-bold text-white mb-4 text-lg">Содержание</h3>
-                        
-                        <!-- Категория: Введение -->
+                    
+                    <!-- Desktop: Vertical Menu -->
+                    <div class="hidden lg:block mb-6">
                         <div class="mb-6">
                             <span class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 block">Введение</span>
                             <ul class="space-y-1">
@@ -341,7 +361,6 @@
                             </ul>
                         </div>
 
-                        <!-- Категория: Правила и информация -->
                         <div class="mb-6">
                             <span class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 block">Правила и информация</span>
                             <ul class="space-y-1">
@@ -353,7 +372,6 @@
                             </ul>
                         </div>
 
-                        <!-- Категория: Механики -->
                         <div class="mb-6">
                             <span class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 block">Механики</span>
                             <ul class="space-y-1">
@@ -362,21 +380,21 @@
                                 <li><button onclick="showSection('reports'); return false;" class="sidebar-link w-full text-left block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-all border-l-2 border-transparent" data-section="reports">Система репортов</button></li>
                                 <li><button onclick="showSection('mods-rp'); return false;" class="sidebar-link w-full text-left block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-all border-l-2 border-transparent" data-section="mods-rp">Моды и РП</button></li>
                                 <li><button onclick="showSection('commands'); return false;" class="sidebar-link w-full text-left block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-all border-l-2 border-transparent" data-section="commands">Команды</button></li>
+                                <li><button onclick="showSection('lore-basic'); return false;" class="sidebar-link w-full text-left block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-all border-l-2 border-transparent" data-section="lore-basic">Основная инфа</button></li>
+                                <li><button onclick="showSection('lore-mechanics'); return false;" class="sidebar-link w-full text-left block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-all border-l-2 border-transparent" data-section="lore-mechanics">Необычные механики</button></li>
                             </ul>
                         </div>
 
-                        <!-- Категория: Лор Сезона III -->
-                        <div>
-                            <span class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 block">Лор Сезона III</span>
+                        <div class="mb-6">
+                            <span class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 block">Команда</span>
                             <ul class="space-y-1">
-                                <li><button onclick="showSection('lore-basic'); return false;" class="sidebar-link w-full text-left block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-all border-l-2 border-transparent" data-section="lore-basic">Основная инфа</button></li>
-                                <li><button onclick="showSection('lore-mechanics'); return false;" class="sidebar-link w-full text-left block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-all border-l-2 border-transparent" data-section="lore-mechanics">Необычные механики</button></li>
+                                <li><a href="team.html" class="w-full text-left block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-all border-l-2 border-transparent">Команда проекта</a></li>
                             </ul>
                         </div>
                     </div>
                 </aside>
 
-                <!-- Область контента -->
+                <!-- Основной контент -->
                 <div class="flex-1 min-w-0">
                     
                     <!-- Секция: Добро пожаловать -->
@@ -484,7 +502,7 @@
                                     </div>
                                     <div class="bg-white/5 rounded-lg p-4 border border-white/10">
                                         <h4 class="text-white font-medium mb-2">Какие моды обязательны для игры?</h4>
-                                        <p class="text-gray-400 text-sm">Обязательные моды: <span class="text-brand-copper font-bold">Simple Voice Chat</span> (позиционный голосовой чат) и <span class="text-brand-copper font-bold">Emotecraft</span> (анимации персонажа).</p>
+                                        <p class="text-gray-400 text-sm">Обязательные моды: <span class="text-brand-copper font-bold">Simple Voice Chat</span> (позиционный голосовой чат), <span class="text-brand-copper font-bold">Emotecraft</span> (анимации персонажа) и <span class="text-brand-copper font-bold">DistantHorizons</span> (рендеринг дальних горизонтов).</p>
                                     </div>
                                 </div>
                             </div>
@@ -540,13 +558,451 @@
                     </section>
 
                     <!-- Секция: Информация о сервере -->
-                    <section id="server-info" class="wiki-section hidden mb-16 pt-4">
+                    <section id="server-info" class="wiki-section visible mb-16 pt-4">
                         <h2 class="font-display font-bold text-3xl text-white mb-8 flex items-center gap-3">
                             <i class="fa-solid fa-server text-brand-red"></i>
                             Информация о сервере
                         </h2>
-                        <div class="glass rounded-2xl p-8 border border-white/10">
-                            <p class="text-gray-400">Контент будет добавлен позже.</p>
+
+                        <!-- Аккордеоны -->
+                        <div class="space-y-4">
+                            <!-- Основная информация -->
+                            <div class="accordion-item glass rounded-2xl overflow-hidden border border-brand-red/20">
+                                <button onclick="toggleAccordion(this)" class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left hover:bg-brand-red/5 transition-all group">
+                                    <span class="font-display font-bold text-white flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-brand-red/20 flex items-center justify-center group-hover:bg-brand-red/30 transition-colors">
+                                            <i class="fa-solid fa-info text-brand-red"></i>
+                                        </div>
+                                        Основная информация
+                                    </span>
+                                    <i class="fa-solid fa-chevron-down text-gray-400 accordion-icon group-hover:text-white transition-colors rotate"></i>
+                                </button>
+                                <div class="accordion-content open px-6 pb-5 pt-2">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <div class="text-gray-400 text-xs uppercase tracking-wider mb-1">IP Сервера</div>
+                                            <div class="flex items-center gap-2">
+                                                <code class="text-brand-red font-mono font-bold text-lg">redoku.bisquit.host</code>
+                                                <button onclick="copyToClipboard('redoku.bisquit.host')" class="text-gray-400 hover:text-white transition-colors">
+                                                    <i class="fa-regular fa-copy"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <div class="text-gray-400 text-xs uppercase tracking-wider mb-1">Версия</div>
+                                            <div class="text-white font-bold text-lg">1.21.11 Fabric</div>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <div class="text-gray-400 text-xs uppercase tracking-wider mb-1">Тип</div>
+                                            <div class="text-white font-bold text-lg">Vanilla+</div>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <div class="text-gray-400 text-xs uppercase tracking-wider mb-1">Карта</div>
+                                            <a href="https://map.redoku.ru" target="_blank" class="text-brand-copper font-bold text-lg hover:underline">map.redoku.ru</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Как начать играть -->
+                            <div class="accordion-item glass rounded-2xl overflow-hidden border border-white/10 hover:border-brand-copper/30 transition-colors">
+                                <button onclick="toggleAccordion(this)" class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/5 transition-all group">
+                                    <span class="font-display font-bold text-white flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-brand-copper/20 flex items-center justify-center group-hover:bg-brand-copper/30 transition-colors">
+                                            <i class="fa-solid fa-rocket text-brand-copper"></i>
+                                        </div>
+                                        Как начать играть
+                                    </span>
+                                    <i class="fa-solid fa-chevron-down text-gray-400 accordion-icon group-hover:text-white transition-colors rotate"></i>
+                                </button>
+                                <div class="accordion-content open px-6 pb-5 pt-2">
+                                    <ol class="space-y-3">
+                                        <li class="flex gap-3 p-3 bg-white/5 rounded-lg border-l-2 border-brand-copper/50">
+                                            <span class="text-brand-copper font-bold text-lg">1</span>
+                                            <div>
+                                                <span class="text-white font-medium">Скачай лаунчер</span>
+                                                <p class="text-gray-400 text-sm mt-1">Рекомендуем <a href="https://llaun.ch/ru" target="_blank" class="text-brand-copper hover:underline">Legacy Launcher</a> — чистый, без рекламы.</p>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3 p-3 bg-white/5 rounded-lg border-l-2 border-brand-copper/50">
+                                            <span class="text-brand-copper font-bold text-lg">2</span>
+                                            <div>
+                                                <span class="text-white font-medium">Установи версию</span>
+                                                <p class="text-gray-400 text-sm mt-1">Выбери <code class="bg-black/50 px-1.5 py-0.5 rounded text-white border border-white/10">Fabric 1.21.11</code> в лаунчере.</p>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3 p-3 bg-white/5 rounded-lg border-l-2 border-brand-copper/50">
+                                            <span class="text-brand-copper font-bold text-lg">3</span>
+                                            <div>
+                                                <span class="text-white font-medium">Добавь моды</span>
+                                                <p class="text-gray-400 text-sm mt-1"><a href="https://modrinth.com/plugin/simple-voice-chat" target="_blank" class="text-brand-copper hover:underline">Voice Chat</a> и <a href="https://modrinth.com/mod/emotecraft" target="_blank" class="text-brand-copper hover:underline">Emotecraft</a> для лучшего опыта.</p>
+                                            </div>
+                                        </li>
+                                        <li class="flex gap-3 p-3 bg-white/5 rounded-lg border-l-2 border-brand-copper/50">
+                                            <span class="text-brand-copper font-bold text-lg">4</span>
+                                            <div>
+                                                <span class="text-white font-medium">Вставь IP и заходи</span>
+                                                <p class="text-gray-400 text-sm mt-1">IP: <code class="bg-black/50 px-1.5 py-0.5 rounded text-white border border-white/10">redoku.bisquit.host</code></p>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+
+                            <!-- Базовые команды -->
+                            <div class="accordion-item glass rounded-2xl overflow-hidden border border-white/10 hover:border-brand-patina/30 transition-colors">
+                                <button onclick="toggleAccordion(this)" class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/5 transition-all group">
+                                    <span class="font-display font-bold text-white flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-brand-patina/20 flex items-center justify-center group-hover:bg-brand-patina/30 transition-colors">
+                                            <i class="fa-solid fa-terminal text-brand-patina"></i>
+                                        </div>
+                                        Базовые команды
+                                    </span>
+                                    <i class="fa-solid fa-chevron-down text-gray-400 accordion-icon group-hover:text-white transition-colors rotate"></i>
+                                </button>
+                                <div class="accordion-content open px-6 pb-5 pt-2">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                        <div class="command-item flex items-center justify-between p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer" onclick="copyToClipboard('/spawn')">
+                                            <div>
+                                                <code class="text-brand-patina font-mono font-bold">/spawn</code>
+                                                <span class="text-gray-400 text-xs ml-2">Телепорт на спавн</span>
+                                            </div>
+                                            <i class="fa-regular fa-copy text-gray-500 text-xs"></i>
+                                        </div>
+                                        <div class="command-item flex items-center justify-between p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer" onclick="copyToClipboard('/home')">
+                                            <div>
+                                                <code class="text-brand-patina font-mono font-bold">/home</code>
+                                                <span class="text-gray-400 text-xs ml-2">Домой</span>
+                                            </div>
+                                            <i class="fa-regular fa-copy text-gray-500 text-xs"></i>
+                                        </div>
+                                        <div class="command-item flex items-center justify-between p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer" onclick="copyToClipboard('/sethome')">
+                                            <div>
+                                                <code class="text-brand-patina font-mono font-bold">/sethome</code>
+                                                <span class="text-gray-400 text-xs ml-2">Установить дом</span>
+                                            </div>
+                                            <i class="fa-regular fa-copy text-gray-500 text-xs"></i>
+                                        </div>
+                                        <div class="command-item flex items-center justify-between p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer" onclick="copyToClipboard('/delhome')">
+                                            <div>
+                                                <code class="text-brand-patina font-mono font-bold">/delhome</code>
+                                                <span class="text-gray-400 text-xs ml-2">Удалить дом</span>
+                                            </div>
+                                            <i class="fa-regular fa-copy text-gray-500 text-xs"></i>
+                                        </div>
+                                        <div class="command-item flex items-center justify-between p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer" onclick="copyToClipboard('/tpa')">
+                                            <div>
+                                                <code class="text-brand-patina font-mono font-bold">/tpa</code>
+                                                <span class="text-gray-400 text-xs ml-2">Запрос ТП</span>
+                                            </div>
+                                            <i class="fa-regular fa-copy text-gray-500 text-xs"></i>
+                                        </div>
+                                        <div class="command-item flex items-center justify-between p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer" onclick="copyToClipboard('/sit')">
+                                            <div>
+                                                <code class="text-brand-patina font-mono font-bold">/sit</code>
+                                                <span class="text-gray-400 text-xs ml-2">Сесть</span>
+                                            </div>
+                                            <i class="fa-regular fa-copy text-gray-500 text-xs"></i>
+                                        </div>
+                                        <div class="command-item flex items-center justify-between p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer" onclick="copyToClipboard('/lay')">
+                                            <div>
+                                                <code class="text-brand-patina font-mono font-bold">/lay</code>
+                                                <span class="text-gray-400 text-xs ml-2">Лечь</span>
+                                            </div>
+                                            <i class="fa-regular fa-copy text-gray-500 text-xs"></i>
+                                        </div>
+                                        <div class="command-item flex items-center justify-between p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer" onclick="copyToClipboard('/msg')">
+                                            <div>
+                                                <code class="text-brand-patina font-mono font-bold">/msg</code>
+                                                <span class="text-gray-400 text-xs ml-2">Личное сообщение</span>
+                                            </div>
+                                            <i class="fa-regular fa-copy text-gray-500 text-xs"></i>
+                                        </div>
+                                        <div class="command-item flex items-center justify-between p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer" onclick="copyToClipboard('/r')">
+                                            <div>
+                                                <code class="text-brand-patina font-mono font-bold">/r</code>
+                                                <span class="text-gray-400 text-xs ml-2">Ответ</span>
+                                            </div>
+                                            <i class="fa-regular fa-copy text-gray-500 text-xs"></i>
+                                        </div>
+                                        <div class="command-item flex items-center justify-between p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer" onclick="copyToClipboard('/discord')">
+                                            <div>
+                                                <code class="text-brand-patina font-mono font-bold">/discord</code>
+                                                <span class="text-gray-400 text-xs ml-2">Discord</span>
+                                            </div>
+                                            <i class="fa-regular fa-copy text-gray-500 text-xs"></i>
+                                        </div>
+                                        <div class="command-item flex items-center justify-between p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer" onclick="copyToClipboard('/reg')">
+                                            <div>
+                                                <code class="text-brand-patina font-mono font-bold">/reg</code>
+                                                <span class="text-gray-400 text-xs ml-2">Регистрация</span>
+                                            </div>
+                                            <i class="fa-regular fa-copy text-gray-500 text-xs"></i>
+                                        </div>
+                                        <div class="command-item flex items-center justify-between p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer" onclick="copyToClipboard('/login')">
+                                            <div>
+                                                <code class="text-brand-patina font-mono font-bold">/login</code>
+                                                <span class="text-gray-400 text-xs ml-2">Вход</span>
+                                            </div>
+                                            <i class="fa-regular fa-copy text-gray-500 text-xs"></i>
+                                        </div>
+                                        <div class="command-item flex items-center justify-between p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer" onclick="copyToClipboard('/q')">
+                                            <div>
+                                                <code class="text-brand-patina font-mono font-bold">/q</code>
+                                                <span class="text-gray-400 text-xs ml-2">Квесты</span>
+                                            </div>
+                                            <i class="fa-regular fa-copy text-gray-500 text-xs"></i>
+                                        </div>
+                                        <div class="command-item flex items-center justify-between p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer" onclick="copyToClipboard('/clan')">
+                                            <div>
+                                                <code class="text-brand-patina font-mono font-bold">/clan</code>
+                                                <span class="text-gray-400 text-xs ml-2">Кланы</span>
+                                            </div>
+                                            <i class="fa-regular fa-copy text-gray-500 text-xs"></i>
+                                        </div>
+                                        <div class="command-item flex items-center justify-between p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer" onclick="copyToClipboard('/skin')">
+                                            <div>
+                                                <code class="text-brand-patina font-mono font-bold">/skin</code>
+                                                <span class="text-gray-400 text-xs ml-2">Смена скина</span>
+                                            </div>
+                                            <i class="fa-regular fa-copy text-gray-500 text-xs"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Краткий лор -->
+                            <div class="accordion-item glass rounded-2xl overflow-hidden border border-white/10 hover:border-brand-copper/30 transition-colors">
+                                <button onclick="toggleAccordion(this)" class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/5 transition-all group">
+                                    <span class="font-display font-bold text-white flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-brand-copper/20 flex items-center justify-center group-hover:bg-brand-copper/30 transition-colors">
+                                            <i class="fa-solid fa-book text-brand-copper"></i>
+                                        </div>
+                                        Лор мира
+                                    </span>
+                                    <i class="fa-solid fa-chevron-down text-gray-400 accordion-icon group-hover:text-white transition-colors rotate"></i>
+                                </button>
+                                <div class="accordion-content open px-6 pb-5 pt-2">
+                                    <div class="space-y-4">
+                                        <div class="bg-brand-copper/5 border-l-4 border-brand-copper rounded-r-lg p-4">
+                                            <h4 class="text-brand-copper font-bold mb-2">Эпоха Великого Окисления</h4>
+                                            <p class="text-gray-300 text-sm">В глубокой древности этим миром правила высокоразвитая цивилизация <span class="text-brand-copper font-bold">Медных Големов</span>. Их города из латуни и меди сияли под вечным закатом, а механизмы питали целые континенты.</p>
+                                        </div>
+                                        <div class="bg-brand-patina/5 border-l-4 border-brand-patina rounded-r-lg p-4">
+                                            <h4 class="text-brand-patina font-bold mb-2">Хроно-разлом</h4>
+                                            <p class="text-gray-300 text-sm">В попытке остановить время Големы построили <span class="text-brand-patina font-bold">Хроноорудие</span>. Вместо остановки произошел Хроно-разлом — мир был разорван, ландшафты перемешались, а цивилизация застыла в вечном окислении.</p>
+                                        </div>
+                                        <div class="bg-white/5 border-l-4 border-white/20 rounded-r-lg p-4">
+                                            <h4 class="text-white font-bold mb-2">Настоящее время</h4>
+                                            <p class="text-gray-300 text-sm">Спустя века на эти земли прибыли игроки. Мир изменился до неузнаваемости: летающие острова, зоны замедленного времени, искаженные биомы. Легенды гласят о секретной лаборатории <span class="text-brand-red font-bold">Объект Ноль</span> и последнем големе <span class="text-purple-400 font-bold">Аэруго</span>.</p>
+                                        </div>
+                                        <a href="lore.html" class="inline-flex items-center gap-2 text-brand-copper hover:text-white transition-colors text-sm font-bold">
+                                            Подробнее в лоре <i class="fa-solid fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Как себя вести -->
+                            <div class="accordion-item glass rounded-2xl overflow-hidden border border-white/10 hover:border-brand-red/30 transition-colors">
+                                <button onclick="toggleAccordion(this)" class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/5 transition-all group">
+                                    <span class="font-display font-bold text-white flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-brand-red/20 flex items-center justify-center group-hover:bg-brand-red/30 transition-colors">
+                                            <i class="fa-solid fa-shield-halved text-brand-red"></i>
+                                        </div>
+                                        Как себя вести
+                                    </span>
+                                    <i class="fa-solid fa-chevron-down text-gray-400 accordion-icon group-hover:text-white transition-colors rotate"></i>
+                                </button>
+                                <div class="accordion-content open px-6 pb-5 pt-2">
+                                    <div class="space-y-4">
+                                        <div class="bg-green-500/5 border border-green-500/10 rounded-lg p-4">
+                                            <h4 class="text-green-400 font-bold mb-2 flex items-center gap-2">
+                                                <i class="fa-solid fa-check"></i> Разрешено
+                                            </h4>
+                                            <ul class="text-gray-300 text-sm space-y-1">
+                                                <li>• Litematica (без принтера)</li>
+                                                <li>• MiniHUD, ReplayMod</li>
+                                                <li>• Xaero's Minimap / WorldMap</li>
+                                                <li>• Оптимизирующие моды (Sodium, Lithium)</li>
+                                            </ul>
+                                        </div>
+                                        <div class="bg-red-500/5 border border-red-500/10 rounded-lg p-4">
+                                            <h4 class="text-red-400 font-bold mb-2 flex items-center gap-2">
+                                                <i class="fa-solid fa-xmark"></i> Запрещено
+                                            </h4>
+                                            <ul class="text-gray-300 text-sm space-y-1">
+                                                <li>• Токсичность, спам, мат в чате</li>
+                                                <li>• Гриф, воровство, читы</li>
+                                                <li>• X-Ray, Baritone, FreeCam</li>
+                                                <li>• Авто-кликеры в PvP</li>
+                                            </ul>
+                                        </div>
+                                        <a href="rules.html" class="inline-flex items-center gap-2 text-brand-red hover:text-white transition-colors text-sm font-bold">
+                                            Полные правила <i class="fa-solid fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Команда проекта -->
+                            <div class="accordion-item glass rounded-2xl overflow-hidden border border-white/10 hover:border-purple-500/30 transition-colors">
+                                <button onclick="toggleAccordion(this)" class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/5 transition-all group">
+                                    <span class="font-display font-bold text-white flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center group-hover:bg-purple-500/30 transition-colors">
+                                            <i class="fa-solid fa-users text-purple-400"></i>
+                                        </div>
+                                        Команда проекта
+                                    </span>
+                                    <i class="fa-solid fa-chevron-down text-gray-400 accordion-icon group-hover:text-white transition-colors rotate"></i>
+                                </button>
+                                <div class="accordion-content open px-6 pb-5 pt-2">
+                                    <!-- Команда проекта - красивые карточки -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                        <!-- LuMon1x -->
+                                        <div class="group relative bg-gradient-to-br from-purple-500/10 to-purple-600/5 rounded-2xl p-5 border border-purple-500/20 hover:border-purple-500/50 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] cursor-pointer" onclick="showTeamMember('lumon1x')">
+                                            <div class="absolute top-0 right-0 w-20 h-20 bg-purple-500/10 rounded-full blur-2xl group-hover:bg-purple-500/20 transition-all"></div>
+                                            <div class="relative">
+                                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center mb-3 shadow-lg">
+                                                    <i class="fa-solid fa-shield-halved text-2xl text-white"></i>
+                                                </div>
+                                                <h3 class="text-white font-display font-bold text-lg mb-1">LuMon1x</h3>
+                                                <p class="text-purple-400 text-sm font-medium">Owner / All-in-One</p>
+                                                <div class="mt-3 flex items-center gap-2 text-gray-500 text-xs">
+                                                    <i class="fa-solid fa-crown text-purple-500"></i>
+                                                    <span>Основатель проекта</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Hexdecillion -->
+                                        <div class="group relative bg-gradient-to-br from-red-500/10 to-red-600/5 rounded-2xl p-5 border border-red-500/20 hover:border-red-500/50 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,46,67,0.3)] cursor-pointer" onclick="showTeamMember('hexdecillion')">
+                                            <div class="absolute top-0 right-0 w-20 h-20 bg-red-500/10 rounded-full blur-2xl group-hover:bg-red-500/20 transition-all"></div>
+                                            <div class="relative">
+                                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center mb-3 shadow-lg">
+                                                    <i class="fa-solid fa-crown text-2xl text-white"></i>
+                                                </div>
+                                                <h3 class="text-white font-display font-bold text-lg mb-1">Hexdecillion</h3>
+                                                <p class="text-red-400 text-sm font-medium">Основатель</p>
+                                                <div class="mt-3 flex items-center gap-2 text-gray-500 text-xs">
+                                                    <i class="fa-solid fa-star text-red-500"></i>
+                                                    <span>Сооснователь</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- VelVel01 -->
+                                        <div class="group relative bg-gradient-to-br from-brand-patina/10 to-teal-600/5 rounded-2xl p-5 border border-brand-patina/20 hover:border-brand-patina/50 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(26,188,156,0.3)] cursor-pointer" onclick="showTeamMember('velvel01')">
+                                            <div class="absolute top-0 right-0 w-20 h-20 bg-brand-patina/10 rounded-full blur-2xl group-hover:bg-brand-patina/20 transition-all"></div>
+                                            <div class="relative">
+                                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-patina to-teal-700 flex items-center justify-center mb-3 shadow-lg">
+                                                    <i class="fa-solid fa-gavel text-2xl text-white"></i>
+                                                </div>
+                                                <h3 class="text-white font-display font-bold text-lg mb-1">VelVel01</h3>
+                                                <p class="text-brand-patina text-sm font-medium">Администратор</p>
+                                                <div class="mt-3 flex items-center gap-2 text-gray-500 text-xs">
+                                                    <i class="fa-solid fa-shield-halved text-brand-patina"></i>
+                                                    <span>Модерация</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- brajnito -->
+                                        <div class="group relative bg-gradient-to-br from-brand-blue/10 to-blue-600/5 rounded-2xl p-5 border border-brand-blue/20 hover:border-brand-blue/50 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(59,130,246,0.3)] cursor-pointer" onclick="showTeamMember('brajnito')">
+                                            <div class="absolute top-0 right-0 w-20 h-20 bg-brand-blue/10 rounded-full blur-2xl group-hover:bg-brand-blue/20 transition-all"></div>
+                                            <div class="relative">
+                                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-blue to-blue-700 flex items-center justify-center mb-3 shadow-lg">
+                                                    <i class="fa-solid fa-server text-2xl text-white"></i>
+                                                </div>
+                                                <h3 class="text-white font-display font-bold text-lg mb-1">brajnito</h3>
+                                                <p class="text-brand-blue text-sm font-medium">Тех Админ</p>
+                                                <div class="mt-3 flex items-center gap-2 text-gray-500 text-xs">
+                                                    <i class="fa-solid fa-cog text-brand-blue"></i>
+                                                    <span>Техническая поддержка</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- AttractiveModee -->
+                                        <div class="group relative bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 rounded-2xl p-5 border border-emerald-500/20 hover:border-emerald-500/50 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] cursor-pointer" onclick="showTeamMember('attractivemodee')">
+                                            <div class="absolute top-0 right-0 w-20 h-20 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-all"></div>
+                                            <div class="relative">
+                                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center mb-3 shadow-lg">
+                                                    <i class="fa-solid fa-shield text-2xl text-white"></i>
+                                                </div>
+                                                <h3 class="text-white font-display font-bold text-lg mb-1">AttractiveModee</h3>
+                                                <p class="text-emerald-400 text-sm font-medium">Модератор</p>
+                                                <div class="mt-3 flex items-center gap-2 text-gray-500 text-xs">
+                                                    <i class="fa-solid fa-user-shield text-emerald-500"></i>
+                                                    <span>Поддержка порядка</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- regander -->
+                                        <div class="group relative bg-gradient-to-br from-pink-500/10 to-pink-600/5 rounded-2xl p-5 border border-pink-500/20 hover:border-pink-500/50 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(236,72,153,0.3)] cursor-pointer" onclick="showTeamMember('regander')">
+                                            <div class="absolute top-0 right-0 w-20 h-20 bg-pink-500/10 rounded-full blur-2xl group-hover:bg-pink-500/20 transition-all"></div>
+                                            <div class="relative">
+                                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-500 to-pink-700 flex items-center justify-center mb-3 shadow-lg">
+                                                    <i class="fa-solid fa-palette text-2xl text-white"></i>
+                                                </div>
+                                                <h3 class="text-white font-display font-bold text-lg mb-1">regander</h3>
+                                                <p class="text-pink-400 text-sm font-medium">Дизайнер / Helper</p>
+                                                <div class="mt-3 flex items-center gap-2 text-gray-500 text-xs">
+                                                    <i class="fa-solid fa-paint-brush text-pink-500"></i>
+                                                    <span>Дизайн и помощь</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- GrandDang -->
+                                        <div class="group relative bg-gradient-to-br from-orange-500/10 to-orange-600/5 rounded-2xl p-5 border border-orange-500/20 hover:border-orange-500/50 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(249,115,22,0.3)] cursor-pointer" onclick="showTeamMember('granddang')">
+                                            <div class="absolute top-0 right-0 w-20 h-20 bg-orange-500/10 rounded-full blur-2xl group-hover:bg-orange-500/20 transition-all"></div>
+                                            <div class="relative">
+                                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-700 flex items-center justify-center mb-3 shadow-lg">
+                                                    <i class="fa-solid fa-comments text-2xl text-white"></i>
+                                                </div>
+                                                <h3 class="text-white font-display font-bold text-lg mb-1">GrandDang</h3>
+                                                <p class="text-orange-400 text-sm font-medium">Модератор чата</p>
+                                                <div class="mt-3 flex items-center gap-2 text-gray-500 text-xs">
+                                                    <i class="fa-solid fa-message text-orange-500"></i>
+                                                    <span>Модерация чата</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <a href="team.html" class="inline-flex items-center gap-2 text-purple-400 hover:text-white transition-colors text-sm font-bold mt-4">
+                                        Подробнее о команде <i class="fa-solid fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Быстрая навигация -->
+                            <div class="accordion-item glass rounded-2xl overflow-hidden border border-white/10 hover:border-white/30 transition-colors">
+                                <button onclick="toggleAccordion(this)" class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/5 transition-all group">
+                                    <span class="font-display font-bold text-white flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                                            <i class="fa-solid fa-compass text-white"></i>
+                                        </div>
+                                        Навигация по сайту
+                                    </span>
+                                    <i class="fa-solid fa-chevron-down text-gray-400 accordion-icon group-hover:text-white transition-colors rotate"></i>
+                                </button>
+                                <div class="accordion-content open px-6 pb-5 pt-2">
+                                    <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+                                        <a href="index.html" class="text-gray-300 hover:text-white transition-colors text-sm">Главная</a>
+                                        <a href="info.html" class="text-gray-300 hover:text-white transition-colors text-sm">Инфо</a>
+                                        <a href="lore.html" class="text-gray-300 hover:text-white transition-colors text-sm">Лор</a>
+                                        <a href="news.html" class="text-gray-300 hover:text-white transition-colors text-sm">Новости</a>
+                                        <a href="wiki.html" class="text-gray-300 hover:text-white transition-colors text-sm">Wiki</a>
+                                        <a href="rules.html" class="text-gray-300 hover:text-white transition-colors text-sm">Правила</a>
+                                        <a href="team.html" class="text-gray-300 hover:text-white transition-colors text-sm">Команда</a>
+                                        <a href="donate.html" class="text-gray-300 hover:text-white transition-colors text-sm">Магазин</a>
+                                        <a href="https://map.redoku.ru" target="_blank" class="text-gray-300 hover:text-white transition-colors text-sm">Карта</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </section>
 
@@ -557,7 +1013,75 @@
                             Команды
                         </h2>
                         <div class="glass rounded-2xl p-8 border border-white/10">
-                            <p class="text-gray-400">Контент будет добавлен позже.</p>
+                            <div class="space-y-6">
+                                <!-- Базовые команды -->
+                                <div>
+                                    <h3 class="font-display font-bold text-xl text-white mb-4 flex items-center gap-3">
+                                        <i class="fa-solid fa-list text-brand-copper"></i>
+                                        Базовые команды
+                                    </h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        <div class="bg-white/5 rounded-lg p-3 border border-white/10">
+                                            <code class="text-brand-red font-mono text-sm">/spawn</code>
+                                            <p class="text-gray-400 text-sm mt-1">Телепортация на спавн</p>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-3 border border-white/10">
+                                            <code class="text-brand-red font-mono text-sm">/sethome</code>
+                                            <p class="text-gray-400 text-sm mt-1">Установить точку дома</p>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-3 border border-white/10">
+                                            <code class="text-brand-red font-mono text-sm">/home</code>
+                                            <p class="text-gray-400 text-sm mt-1">Телепортация домой</p>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-3 border border-white/10">
+                                            <code class="text-brand-red font-mono text-sm">/delhome</code>
+                                            <p class="text-gray-400 text-sm mt-1">Удалить точку дома</p>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-3 border border-white/10">
+                                            <code class="text-brand-red font-mono text-sm">/tpa [ник]</code>
+                                            <p class="text-gray-400 text-sm mt-1">Запрос на телепортацию</p>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-3 border border-white/10">
+                                            <code class="text-brand-red font-mono text-sm">/tpahere [ник]</code>
+                                            <p class="text-gray-400 text-sm mt-1">Телепортировать к себе</p>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-3 border border-white/10">
+                                            <code class="text-brand-red font-mono text-sm">/reg [пароль]</code>
+                                            <p class="text-gray-400 text-sm mt-1">Регистрация аккаунта</p>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-3 border border-white/10">
+                                            <code class="text-brand-red font-mono text-sm">/login [пароль]</code>
+                                            <p class="text-gray-400 text-sm mt-1">Вход в аккаунт</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Экономические команды -->
+                                <div>
+                                    <h3 class="font-display font-bold text-xl text-white mb-4 flex items-center gap-3">
+                                        <i class="fa-solid fa-coins text-brand-copper"></i>
+                                        Экономика
+                                    </h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        <div class="bg-white/5 rounded-lg p-3 border border-white/10">
+                                            <code class="text-brand-red font-mono text-sm">/balance</code>
+                                            <p class="text-gray-400 text-sm mt-1">Проверить баланс</p>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-3 border border-white/10">
+                                            <code class="text-brand-red font-mono text-sm">/pay [ник] [сумма]</code>
+                                            <p class="text-gray-400 text-sm mt-1">Перевести деньги</p>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-3 border border-white/10">
+                                            <code class="text-brand-red font-mono text-sm">/shop</code>
+                                            <p class="text-gray-400 text-sm mt-1">Открыть магазин</p>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-3 border border-white/10">
+                                            <code class="text-brand-red font-mono text-sm">/ah</code>
+                                            <p class="text-gray-400 text-sm mt-1">Аукционный дом</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </section>
 
@@ -568,12 +1092,114 @@
                             Моды и РП
                         </h2>
                         <div class="glass rounded-2xl p-8 border border-white/10">
-                            <p class="text-gray-400">Контент будет добавлен позже.</p>
+                            <div class="space-y-6">
+                                <!-- Обязательные моды -->
+                                <div>
+                                    <h3 class="font-display font-bold text-xl text-white mb-4 flex items-center gap-3">
+                                        <i class="fa-solid fa-download text-brand-red"></i>
+                                        Обязательные моды
+                                    </h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <h4 class="text-white font-medium mb-2">Simple Voice Chat</h4>
+                                            <p class="text-gray-400 text-sm">Голосовой чат для общения с игроками рядом</p>
+                                            <a href="https://modrinth.com/mod/simple-voice-chat" target="_blank" class="text-brand-red text-sm hover:underline mt-2 inline-block">Скачать</a>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <h4 class="text-white font-medium mb-2">EmoteCraft</h4>
+                                            <p class="text-gray-400 text-sm">Эмоции и анимации для персонажей</p>
+                                            <a href="https://modrinth.com/mod/emotecraft" target="_blank" class="text-brand-red text-sm hover:underline mt-2 inline-block">Скачать</a>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <h4 class="text-white font-medium mb-2">DistantHorizons</h4>
+                                            <p class="text-gray-400 text-sm">Рендеринг дальних горизонтов</p>
+                                            <a href="https://modrinth.com/mod/distant-horizons" target="_blank" class="text-brand-red text-sm hover:underline mt-2 inline-block">Скачать</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- РП механики -->
+                                <div>
+                                    <h3 class="font-display font-bold text-xl text-white mb-4 flex items-center gap-3">
+                                        <i class="fa-solid fa-theater-masks text-brand-red"></i>
+                                        РП механики
+                                    </h3>
+                                    <div class="space-y-3">
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <h4 class="text-white font-medium mb-2">Механики брака</h4>
+                                            <p class="text-gray-400 text-sm">Система брака с официальными документами и разводом</p>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <h4 class="text-white font-medium mb-2">РП команды</h4>
+                                            <p class="text-gray-400 text-sm">Команды для отыгровки действий и эмоций</p>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <h4 class="text-white font-medium mb-2">Работы и профессии</h4>
+                                            <p class="text-gray-400 text-sm">Система профессий с уникальными возможностями</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Список модов -->
+                                <div>
+                                    <h3 class="font-display font-bold text-xl text-white mb-4 flex items-center gap-3">
+                                        <i class="fa-solid fa-list text-brand-red"></i>
+                                        Полный список модов
+                                    </h3>
+                                    <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 text-sm">
+                                            <button onclick="showModInfo('advancements_fullscreen-fabric', 'Улучшает экран достижений', 'https://modrinth.com/mod/advancements-fullscreen')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">advancements_fullscreen-fabric</button>
+                                            <button onclick="showModInfo('appleskin-fabric', 'Показывает информацию о насыщении', 'https://modrinth.com/mod/appleskin')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">appleskin-fabric</button>
+                                            <button onclick="showModInfo('BetterF3', 'Улучшает экран отладки F3', 'https://modrinth.com/mod/betterf3')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">BetterF3</button>
+                                            <button onclick="showModInfo('chat_heads', 'Показывает аватары игроков в чате', 'https://modrinth.com/mod/chat-heads')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">chat_heads</button>
+                                            <button onclick="showModInfo('Chunky-Fabric', 'Рендеринг высококачественных изображений', 'https://modrinth.com/mod/chunky')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">Chunky-Fabric</button>
+                                            <button onclick="showModInfo('collective', 'Библиотека для других модов', 'https://modrinth.com/mod/collective')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">collective</button>
+                                            <button onclick="showModInfo('Controlling-fabric', 'Улучшает управление контроллером', 'https://modrinth.com/mod/controlling')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">Controlling-fabric</button>
+                                            <button onclick="showModInfo('cool_elytra', 'Улучшает элитры', 'https://modrinth.com/mod/cool-elytra')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">cool_elytra</button>
+                                            <button onclick="showModInfo('DistantHorizons', 'Рендеринг дальних горизонтов', 'https://modrinth.com/mod/distant-horizons')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">DistantHorizons</button>
+                                            <button onclick="showModInfo('emotecraft-fabric', 'Эмоции и анимации персонажей', 'https://modrinth.com/mod/emotecraft')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">emotecraft-fabric</button>
+                                            <button onclick="showModInfo('fabric-api', 'Основной API для Fabric модов', 'https://modrinth.com/mod/fabric-api')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">fabric-api</button>
+                                            <button onclick="showModInfo('fabric-language-kotlin', 'Поддержка Kotlin для Fabric', 'https://modrinth.com/mod/fabric-language-kotlin')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">fabric-language-kotlin</button>
+                                            <button onclick="showModInfo('fallingleaves', 'Анимация падающих листьев', 'https://modrinth.com/mod/falling-leaves')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">fallingleaves</button>
+                                            <button onclick="showModInfo('ferritecore', 'Оптимизация памяти', 'https://modrinth.com/mod/ferrite-core')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">ferritecore</button>
+                                            <button onclick="showModInfo('Flashback', 'Запись и воспроизведение геймплея', 'https://modrinth.com/mod/flashback')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">Flashback</button>
+                                            <button onclick="showModInfo('fullbrightnesstoggle', 'Переключение полной яркости', 'https://modrinth.com/mod/fullbrightnesstoggle')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">fullbrightnesstoggle</button>
+                                            <button onclick="showModInfo('geckolib-fabric', 'Библиотека анимаций', 'https://modrinth.com/mod/geckolib')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">geckolib-fabric</button>
+                                            <button onclick="showModInfo('IAS', 'Улучшенный инвентарь', 'https://modrinth.com/mod/ias')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">IAS</button>
+                                            <button onclick="showModInfo('ImmediatelyFast-Fabric', 'Оптимизация рендеринга', 'https://modrinth.com/mod/immediatelyfast')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">ImmediatelyFast-Fabric</button>
+                                            <button onclick="showModInfo('inventoryhud.fabric', 'HUD инвентаря', 'https://modrinth.com/mod/inventory-hud')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">inventoryhud.fabric</button>
+                                            <button onclick="showModInfo('iris-fabric', 'Шейдеры для Minecraft', 'https://modrinth.com/mod/iris')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">iris-fabric</button>
+                                            <button onclick="showModInfo('litematica-fabric', 'Схемы и копирование построек', 'https://modrinth.com/mod/litematica')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">litematica-fabric</button>
+                                            <button onclick="showModInfo('lithium-fabric', 'Оптимизация общей логики', 'https://modrinth.com/mod/lithium')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">lithium-fabric</button>
+                                            <button onclick="showModInfo('malilib-fabric', 'Библиотека для других модов', 'https://modrinth.com/mod/malilib')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">malilib-fabric</button>
+                                            <button onclick="showModInfo('modmenu', 'Меню модов в настройках', 'https://modrinth.com/mod/modmenu')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">modmenu</button>
+                                            <button onclick="showModInfo('mouse-wheelie', 'Управление колесиком мыши', 'https://modrinth.com/mod/mouse-wheelie')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">mouse-wheelie</button>
+                                            <button onclick="showModInfo('NoChatReports-FABRIC', 'Отключает отправку отчетов чата', 'https://modrinth.com/mod/no-chat-reports')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">NoChatReports-FABRIC</button>
+                                            <button onclick="showModInfo('PlayerAnimationLibFabric', 'Анимации игроков', 'https://modrinth.com/mod/player-animation-lib')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">PlayerAnimationLibFabric</button>
+                                            <button onclick="showModInfo('PresenceFootsteps', 'Звуки шагов', 'https://modrinth.com/mod/presence-footsteps')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">PresenceFootsteps</button>
+                                            <button onclick="showModInfo('reeses-sodium-options-fabric', 'Настройки Sodium', 'https://modrinth.com/mod/reeses-sodium-options')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">reeses-sodium-options-fabric</button>
+                                            <button onclick="showModInfo('Searchables-fabric', 'Поиск в инвентаре', 'https://modrinth.com/mod/searchables')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">Searchables-fabric</button>
+                                            <button onclick="showModInfo('shulkerboxtooltip-fabric', 'Подсказки шалкеров', 'https://modrinth.com/mod/shulkerboxtooltip')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">shulkerboxtooltip-fabric</button>
+                                            <button onclick="showModInfo('skinlayers3d-fabric', '3D скины', 'https://modrinth.com/mod/3d-skin-layers')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">skinlayers3d-fabric</button>
+                                            <button onclick="showModInfo('sodium-extra-fabric', 'Дополнительные функции Sodium', 'https://modrinth.com/mod/sodium-extra')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">sodium-extra-fabric</button>
+                                            <button onclick="showModInfo('sodium-fabric', 'Оптимизация рендеринга', 'https://modrinth.com/mod/sodium')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">sodium-fabric</button>
+                                            <button onclick="showModInfo('sound-physics-remastered-fabric', 'Реалистичные звуки', 'https://modrinth.com/mod/sound-physics-remastered')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">sound-physics-remastered-fabric</button>
+                                            <button onclick="showModInfo('ViaFabricPlus', 'Подключение к другим версиям', 'https://modrinth.com/mod/viafabricplus')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">ViaFabricPlus</button>
+                                            <button onclick="showModInfo('voicechat-fabric', 'Голосовой чат', 'https://modrinth.com/mod/simple-voice-chat')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">voicechat-fabric</button>
+                                            <button onclick="showModInfo('waveycapes-fabric', 'Анимированные плащи', 'https://modrinth.com/mod/waveycapes')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">waveycapes-fabric</button>
+                                            <button onclick="showModInfo('worldedit-mod', 'Редактирование мира', 'https://modrinth.com/mod/worldedit')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">worldedit-mod</button>
+                                            <button onclick="showModInfo('xaerominimap-fabric', 'Миникарта', 'https://modrinth.com/mod/xaero-minimap')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">xaerominimap-fabric</button>
+                                            <button onclick="showModInfo('xaeroworldmap-fabric', 'Карта мира', 'https://modrinth.com/mod/xaero-world-map')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">xaeroworldmap-fabric</button>
+                                            <button onclick="showModInfo('zoomify', 'Зум камеры', 'https://modrinth.com/mod/zoomify')" class="text-gray-300 hover:text-brand-red hover:underline text-left p-1 rounded hover:bg-white/5 transition-all">zoomify</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </section>
 
                     <!-- Секция: Полные правила -->
-                    <section id="full-rules" class="wiki-section visible mb-16 pt-4">
+                    <section id="full-rules" class="wiki-section hidden mb-16 pt-4">
                         <h2 class="font-display font-bold text-3xl text-white mb-8 flex items-center gap-3">
                             <i class="fa-solid fa-book text-brand-copper"></i>
                             Полные правила сервера
@@ -968,6 +1594,10 @@
                                 </div>
                                 <div class="flex items-center gap-3 p-3 bg-green-500/10 rounded-lg border border-green-500/20">
                                     <i class="fa-solid fa-check text-green-400"></i>
+                                    <span class="text-white font-medium">DistantHorizons</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 bg-green-500/10 rounded-lg border border-green-500/20">
+                                    <i class="fa-solid fa-check text-green-400"></i>
                                     <span class="text-white font-medium">Litematica</span>
                                     <span class="text-gray-500 text-xs">(только голограммы)</span>
                                 </div>
@@ -1023,6 +1653,10 @@
                                         <a href="https://modrinth.com/mod/emotecraft" target="_blank" class="inline-flex items-center gap-2 bg-brand-copper/20 hover:bg-brand-copper/30 text-white px-4 py-2 rounded-lg border border-brand-copper/30 transition-colors">
                                             <i class="fa-solid fa-download"></i>
                                             EmoteCraft
+                                        </a>
+                                        <a href="https://modrinth.com/mod/distant-horizons" target="_blank" class="inline-flex items-center gap-2 bg-brand-copper/20 hover:bg-brand-copper/30 text-white px-4 py-2 rounded-lg border border-brand-copper/30 transition-colors">
+                                            <i class="fa-solid fa-download"></i>
+                                            DistantHorizons
                                         </a>
                                     </div>
 
@@ -1480,18 +2114,59 @@
                                         <p class="text-gray-400 text-sm">Администрация ответит за 10-15 минут</p>
                                     </div>
                                 </div>
-                            </div>
                         </div>
                     </section>
 
                     <!-- Секция: Основная инфа -->
-                    <section id="lore-basic" class="wiki-section hidden mb-16">
+                    <section id="lore-basic" class="wiki-section hidden mb-16 pt-4">
                         <h2 class="font-display font-bold text-3xl text-white mb-8 flex items-center gap-3">
                             <i class="fa-solid fa-book-open text-brand-copper"></i>
                             Основная инфа
                         </h2>
                         <div class="glass rounded-2xl p-8 border border-white/10">
-                            <p class="text-gray-400">Контент будет добавлен позже.</p>
+                            <div class="space-y-6">
+                                <!-- История мира -->
+                                <div>
+                                    <h3 class="font-display font-bold text-xl text-white mb-4 flex items-center gap-3">
+                                        <i class="fa-solid fa-scroll text-brand-copper"></i>
+                                        История мира
+                                    </h3>
+                                    <div class="space-y-4">
+                                        <p class="text-gray-300 leading-relaxed">
+                                            Мир Redoku существует уже три сезона. Каждый сезон приносит новые изменения и улучшения в игровой процесс. Сезон III представляет собой уникальное сочетание ванильного Minecraft с тщательно подобранными модификациями, которые создают атмосферу настоящего выживания с элементами ролевой игры.
+                                        </p>
+                                        <p class="text-gray-300 leading-relaxed">
+                                            Основная идея проекта - создать честное сообщество игроков, где каждый может найти себе занятие по душе: от строительства и фермерства до торговли и исследования мира.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Ключевые особенности -->
+                                <div>
+                                    <h3 class="font-display font-bold text-xl text-white mb-4 flex items-center gap-3">
+                                        <i class="fa-solid fa-star text-brand-copper"></i>
+                                        Ключевые особенности
+                                    </h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <h4 class="text-white font-medium mb-2">Честная экономика</h4>
+                                            <p class="text-gray-400 text-sm">Полностью игроко-экономика без донатных преимуществ</p>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <h4 class="text-white font-medium mb-2">Активное администрация</h4>
+                                            <p class="text-gray-400 text-sm">Онлайн поддержка и регулярные обновления</p>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <h4 class="text-white font-medium mb-2">Уникальные механики</h4>
+                                            <p class="text-gray-400 text-sm">Системы брака, работ и профессий</p>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <h4 class="text-white font-medium mb-2">Дружное сообщество</h4>
+                                            <p class="text-gray-400 text-sm">Активный Discord и постоянные ивенты</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </section>
 
@@ -1502,7 +2177,55 @@
                             Необычные механики
                         </h2>
                         <div class="glass rounded-2xl p-8 border border-white/10">
-                            <p class="text-gray-400">Контент будет добавлен позже.</p>
+                            <div class="space-y-6">
+                                <!-- Уникальные системы -->
+                                <div>
+                                    <h3 class="font-display font-bold text-xl text-white mb-4 flex items-center gap-3">
+                                        <i class="fa-solid fa-gem text-brand-red"></i>
+                                        Уникальные системы
+                                    </h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <h4 class="text-white font-medium mb-2">BreweryX</h4>
+                                            <p class="text-gray-400 text-sm">Система создания напитков и зелий с реалистичными рецептами</p>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <h4 class="text-white font-medium mb-2">Сигареты</h4>
+                                            <p class="text-gray-400 text-sm">Уникальная система курения с эффектами</p>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <h4 class="text-white font-medium mb-2">Аукционный дом</h4>
+                                            <p class="text-gray-400 text-sm">Продажа предметов через автоматизированные торги</p>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <h4 class="text-white font-medium mb-2">Кастомные мобы</h4>
+                                            <p class="text-gray-400 text-sm">Уникальные боссы и существ с дропом</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Социальные механики -->
+                                <div>
+                                    <h3 class="font-display font-bold text-xl text-white mb-4 flex items-center gap-3">
+                                        <i class="fa-solid fa-users text-brand-red"></i>
+                                        Социальные механики
+                                    </h3>
+                                    <div class="space-y-3">
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <h4 class="text-white font-medium mb-2">Гильдии</h4>
+                                            <p class="text-gray-400 text-sm">Создание гильдий с общими ресурсами и территориями</p>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <h4 class="text-white font-medium mb-2">Титулы и достижения</h4>
+                                            <p class="text-gray-400 text-sm">Получение уникальных титулов за достижения</p>
+                                        </div>
+                                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                                            <h4 class="text-white font-medium mb-2">Ивенты</h4>
+                                            <p class="text-gray-400 text-sm">Регулярные серверные ивенты с наградами</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </section>
 
@@ -1518,6 +2241,23 @@
         <span>IP скопирован!</span>
     </div>
 
+    <!-- Модальное окно для модов -->
+    <div id="mod-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[300] hidden flex items-center justify-center p-4">
+        <div class="glass bg-brand-surface border border-white/10 rounded-2xl p-6 max-w-md w-full shadow-2xl">
+            <div class="flex items-center justify-between mb-4">
+                <h3 id="mod-title" class="font-display font-bold text-2xl text-white">Название мода</h3>
+                <button onclick="closeModModal()" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+            <p id="mod-description" class="text-gray-300 mb-6">Описание мода</p>
+            <a id="mod-link" href="#" target="_blank" class="block w-full bg-brand-red hover:bg-brand-redHover text-white font-bold py-3 px-6 rounded-xl text-center transition-all">
+                <i class="fa-solid fa-download mr-2"></i>
+                Скачать на Modrinth
+            </a>
+        </div>
+    </div>
+
     <script>
         // Аккордеоны для правил
         function toggleAccordion(button) {
@@ -1530,6 +2270,152 @@
             // Поворачиваем иконку
             icon.classList.toggle('rotate');
         }
+
+        // Копирование в буфер обмена
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // Показываем уведомление
+                showToast('Скопировано: ' + text);
+            }).catch(err => {
+                console.error('Ошибка копирования:', err);
+            });
+        }
+
+        // Показать тост-уведомление
+        function showToast(message) {
+            // Создаем элемент тоста если его нет
+            let toast = document.getElementById('toast-notification');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'toast-notification';
+                toast.className = 'fixed bottom-8 right-8 bg-[#1f222b] border border-green-500/30 text-white px-6 py-4 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.5)] flex items-center gap-4 transform translate-y-24 opacity-0 pointer-events-none transition-all duration-500 z-[200]';
+                toast.innerHTML = `
+                    <div class="w-10 h-10 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-lg"></i></div>
+                    <div>
+                        <div class="font-display font-bold text-sm text-white">УСПЕШНО!</div>
+                        <div class="text-xs text-gray-400 toast-message"></div>
+                    </div>
+                `;
+                document.body.appendChild(toast);
+            }
+            
+            // Обновляем сообщение
+            toast.querySelector('.toast-message').textContent = message;
+            
+            // Показываем тост
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            
+            // Скрываем через 3 секунды
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+
+        // Показать информацию о моде
+        function showModInfo(name, description, link) {
+            const modal = document.getElementById('mod-modal');
+            const title = document.getElementById('mod-title');
+            const desc = document.getElementById('mod-description');
+            const linkEl = document.getElementById('mod-link');
+
+            title.textContent = name;
+            desc.textContent = description;
+            linkEl.href = link;
+
+            modal.classList.remove('hidden');
+        }
+
+        // Закрыть модальное окно мода
+        function closeModModal() {
+            const modal = document.getElementById('mod-modal');
+            modal.classList.add('hidden');
+        }
+
+        // Закрытие модального окна по клику вне его
+        document.getElementById('mod-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModModal();
+            }
+        });
+
+        // Показать информацию о члене команды
+        function showTeamMember(memberId) {
+            const teamData = {
+                'lumon1x': { name: 'LuMon1x', role: 'Owner / All-in-One', icon: 'fa-shield-halved', color: 'purple' },
+                'hexdecillion': { name: 'Hexdecillion', role: 'Основатель', icon: 'fa-crown', color: 'red' },
+                'velvel01': { name: 'VelVel01', role: 'Администратор', icon: 'fa-gavel', color: 'patina' },
+                'brajnito': { name: 'brajnito', role: 'Тех Админ', icon: 'fa-server', color: 'blue' },
+                'attractivemodee': { name: 'AttractiveModee', role: 'Модератор', icon: 'fa-shield', color: 'patina' },
+                'regander': { name: 'regander', role: 'Дизайнер / Helper', icon: 'fa-palette', color: 'pink' },
+                'granddang': { name: 'GrandDang', role: 'Модератор чата', icon: 'fa-comments', color: 'red' },
+                'placeholder1': { name: 'Здесь можешь быть и ты...', role: 'Свободное место', icon: 'fa-user-plus', color: 'gray' },
+                'placeholder2': { name: 'Здесь можешь быть и ты...', role: 'Свободное место', icon: 'fa-user-plus', color: 'gray' }
+            };
+
+            const member = teamData[memberId];
+            if (!member) return;
+
+            // Создаем модальное окно если его нет
+            let modal = document.getElementById('team-modal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'team-modal';
+                modal.className = 'team-modal';
+                modal.innerHTML = `
+                    <div class="team-modal-content">
+                        <button onclick="closeTeamModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
+                            <i class="fa-solid fa-xmark text-xl"></i>
+                        </button>
+                        <div class="text-center">
+                            <div id="team-modal-icon" class="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4"></div>
+                            <h3 id="team-modal-name" class="text-2xl font-display font-bold text-white mb-2"></h3>
+                            <p id="team-modal-role" class="text-gray-400 mb-4"></p>
+                            <p class="text-gray-500 text-sm">История будет добавлена позже...</p>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            }
+
+            // Заполняем данные
+            const iconEl = modal.querySelector('#team-modal-icon');
+            const nameEl = modal.querySelector('#team-modal-name');
+            const roleEl = modal.querySelector('#team-modal-role');
+
+            const colorMap = {
+                'purple': 'bg-purple-500/20 text-purple-400',
+                'red': 'bg-brand-red/20 text-brand-red',
+                'patina': 'bg-brand-patina/20 text-brand-patina',
+                'blue': 'bg-brand-blue/20 text-brand-blue',
+                'pink': 'bg-pink-500/20 text-pink-500'
+            };
+
+            iconEl.className = `w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4 ${colorMap[member.color]}`;
+            iconEl.innerHTML = `<i class="fa-solid ${member.icon} text-4xl"></i>`;
+            nameEl.textContent = member.name;
+            roleEl.textContent = member.role;
+
+            // Показываем модальное окно
+            modal.classList.add('active');
+        }
+
+        // Закрыть модальное окно команды
+        function closeTeamModal() {
+            const modal = document.getElementById('team-modal');
+            if (modal) {
+                modal.classList.remove('active');
+            }
+        }
+
+        // Закрытие модального окна по клику вне контента
+        document.addEventListener('click', (e) => {
+            const modal = document.getElementById('team-modal');
+            if (modal && modal.classList.contains('active')) {
+                if (e.target === modal) {
+                    closeTeamModal();
+                }
+            }
+        });
 
         // Переключение секций вики
         function showSection(sectionId) {
@@ -1572,8 +2458,8 @@
             if (hash && document.getElementById(hash)) {
                 showSection(hash);
             } else {
-                // По умолчанию показываем первую секцию
-                showSection('full-rules');
+                // По умолчанию показываем информацию о сервере
+                showSection('server-info');
             }
         }
 
@@ -1830,61 +2716,6 @@
             }
         });
     </script>
-
-    <!-- Footer -->
-    <footer class="pt-12 pb-6 px-4 border-t border-white/10 bg-black/60 backdrop-blur-md relative z-20">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            
-            <!-- Описание -->
-            <div class="md:col-span-1">
-                <div class="flex items-center gap-2 mb-4">
-                    <div class="w-7 h-7 rounded-lg flex items-center justify-center"><img src="logotip.jpg" alt="R" class="w-5 h-5 rounded-md"></div>
-                    <span class="font-display font-bold text-lg text-white tracking-widest uppercase">REDOKU</span>
-                </div>
-                <p class="text-gray-400 max-w-xs mb-4 text-xs leading-relaxed">
-                    Премиальный Vanilla+ проект. Честная игра, красивый мир и активное комьюнити.
-                </p>
-                <div class="flex gap-2">
-                    <a href="https://dsc.gg/redoku" target="_blank" class="w-8 h-8 glass rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#5865F2] hover:border-[#5865F2] transition-all" aria-label="Discord">
-                        <i class="fa-brands fa-discord text-sm"></i>
-                    </a>
-                    <a href="https://t.me/Redoku" target="_blank" class="w-8 h-8 glass rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#229ED9] hover:border-[#229ED9] transition-all" aria-label="Telegram">
-                        <i class="fa-brands fa-telegram text-sm"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Ссылки -->
-            <div>
-                <h4 class="text-white font-display font-bold mb-4 text-xs tracking-widest uppercase">Навигация</h4>
-                <ul class="space-y-2 text-xs text-gray-400">
-                    <li><a href="index.html" class="hover:text-brand-red transition-colors">Главная</a></li>
-                    <li><a href="info.html" class="hover:text-brand-red transition-colors">Как начать</a></li>
-                    <li><a href="lore.html" class="hover:text-brand-red transition-colors">Лор мира</a></li>
-                    <li><a href="rules.html" class="hover:text-brand-red transition-colors">Правила</a></li>
-                    <li><a href="donate.html" class="hover:text-brand-red transition-colors">Поддержать</a></li>
-                </ul>
-            </div>
-
-            <!-- Доки -->
-            <div>
-                <h4 class="text-white font-display font-bold mb-4 text-xs tracking-widest uppercase">Документы</h4>
-                <ul class="space-y-2 text-xs text-gray-400">
-                    <li><a href="offer.html" class="hover:text-white transition-colors">Публичная оферта</a></li>
-                    <li><a href="privacy.html" class="hover:text-white transition-colors">Политика конф-ти</a></li>
-                </ul>
-                <div class="mt-4 p-3 glass rounded-lg inline-block border-white/5">
-                    <div class="text-[9px] text-gray-500 font-bold uppercase tracking-widest mb-1">IP Сервера</div>
-                    <code class="text-[10px] text-white font-mono font-bold select-all">redoku.bisquit.host</code>
-                </div>
-            </div>
-        </div>
-
-        <div class="max-w-7xl mx-auto pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3 text-[10px] text-gray-500 font-bold tracking-widest uppercase">
-            <div>&copy; 2025 Redoku. Все права защищены.</div>
-            <div class="text-center md:text-right opacity-50">Not an official Minecraft product. Not approved by or associated with Mojang.</div>
-        </div>
-    </footer>
 
     <!-- Модальное окно BreweryX -->
     <div id="brewery-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
