@@ -207,7 +207,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <button class="w-full py-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold transition-colors">Выбрать</button>
+                            <button data-product-id="1090055" onclick="buyDonate(this)" class="w-full py-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold transition-colors">Выбрать</button>
                         </div>
                     </div>
                 </div>
@@ -251,7 +251,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <button class="w-full py-5 rounded-xl bg-brand-red hover:bg-brand-redHover shadow-[0_0_20px_rgba(255,46,67,0.4)] text-white font-black uppercase tracking-wider transition-all">Приобрести</button>
+                                <button data-product-id="1090056" onclick="buyDonate(this)" class="w-full py-5 rounded-xl bg-brand-red hover:bg-brand-redHover shadow-[0_0_20px_rgba(255,46,67,0.4)] text-white font-black uppercase tracking-wider transition-all">Приобрести</button>
                             </div>
                         </div>
                     </div>
@@ -296,7 +296,7 @@
                                     </div>
                                 </div>
                                 <div class="text-[10px] text-gray-600 mb-4">*Даже после окончания 6 месяцев, значок [Легенда] останется с вами навсегда как знак почета.</div>
-                                <button class="w-full py-4 rounded-xl bg-transparent border-2 border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-black font-bold uppercase tracking-wider transition-all">Взять выгодно</button>
+                                <button data-product-id="1090057" onclick="buyDonate(this)" class="w-full py-4 rounded-xl bg-transparent border-2 border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-black font-bold uppercase tracking-wider transition-all">Взять выгодно</button>
                             </div>
                         </div>
                     </div>
@@ -402,6 +402,18 @@
         </div>
     </footer>
 
+<div id="nicknameModal" class="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
+    <div class="glass p-8 rounded-3xl w-full max-w-md border border-white/10 text-center mx-4">
+        <h3 class="text-2xl font-display font-bold text-white mb-2">Введите ваш ник</h3>
+        <p class="text-gray-400 text-sm mb-6">Привилегия будет автоматически выдана на сервере указанному игроку</p>
+        <input type="text" id="playerNickname" placeholder="Пример: Notch" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white font-medium focus:outline-none focus:border-brand-red mb-6 transition-colors">
+        <div class="flex gap-3">
+            <button onclick="closeModal()" class="flex-1 py-3 bg-white/5 hover:bg-white/10 text-gray-400 font-bold rounded-xl transition-colors">Отмена</button>
+            <button onclick="submitPayment(event)" class="flex-1 py-3 bg-brand-red hover:bg-brand-redHover text-white font-bold rounded-xl transition-colors shadow-[0_0_15px_rgba(255,46,67,0.3)]">Перейти к оплате</button>
+        </div>
+    </div>
+</div>
+
     <script>
         window.addEventListener('load', () => {
             const preloader = document.getElementById('preloader');
@@ -463,6 +475,55 @@
             const details = button.nextElementSibling;
             details.classList.toggle('hidden');
             button.textContent = details.classList.contains('hidden') ? 'Подробнее' : 'Скрыть';
+        }
+
+        const EASYDONATE_TOKEN = '93456571bce7dc1c204cf7e5df8123c2';
+        const SERVER_ID = '137719';
+        let selectedProductId = null;
+
+        function buyDonate(button) {
+            selectedProductId = button.getAttribute('data-product-id');
+            const modal = document.getElementById('nicknameModal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.classList.add('opacity-100', 'pointer-events-auto');
+            document.getElementById('playerNickname').focus();
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('nicknameModal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.classList.remove('opacity-100', 'pointer-events-auto');
+            document.getElementById('playerNickname').value = '';
+            selectedProductId = null;
+        }
+
+        async function submitPayment(event) {
+            const nickname = document.getElementById('playerNickname').value.trim();
+            if (!nickname) { alert('Пожалуйста, введите ваш никнейм!'); return; }
+            if (!selectedProductId) { alert('Ошибка: Товар не выбран.'); return; }
+
+            const payButton = event.target;
+            payButton.disabled = true;
+            payButton.textContent = 'Создание...';
+
+            try {
+                const url = `https://easydonate.ru/api/v3/shop/payment/create?customer=${encodeURIComponent(nickname)}&server_id=${SERVER_ID}&products[${selectedProductId}]=1`;
+                const response = await fetch(url, { method: 'GET', headers: { 'X-EasyDonate-Token': EASYDONATE_TOKEN } });
+                const data = await response.json();
+
+                if (data.success && data.response && data.response.url) {
+                    window.location.href = data.response.url;
+                } else {
+                    alert('Ошибка API: ' + (data.response || 'Не удалось создать платеж.'));
+                    payButton.disabled = false;
+                    payButton.textContent = 'Перейти к оплате';
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Ошибка связи с сервером оплаты.');
+                payButton.disabled = false;
+                payButton.textContent = 'Перейти к оплате';
+            }
         }
     </script>
 </body>
