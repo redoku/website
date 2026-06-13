@@ -4,60 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 — Страница не найдена | Redoku Minecraft сервер</title>
-    <meta name="description" content="Страница не найдена на Minecraft сервере Redoku. Похоже, вы забрели за чанки, которые еще не сгенерировались. Возвращайтесь на главную страницу.">
-    <meta name="keywords" content="404 ошибка, страница не найдена, redoku, minecraft сервер, ошибка 404">
-    <meta name="author" content="Redoku Team">
+    <link rel="icon" type="image/jpeg" href="assets/logotip.jpg">
+    <meta name="description" content="Страница не найдена на Minecraft сервере Redoku. Похоже, вы забрели за чанки, которые еще не сгенерировались.">
     <meta name="robots" content="noindex, follow">
     
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://redoku.vercel.app/404.html">
     <meta property="og:title" content="404 — Страница не найдена | Redoku">
-    <meta property="og:description" content="Страница не найдена на Minecraft сервере Redoku. Возвращайтесь на главную страницу.">
-    <meta property="og:image" content="https://redoku.vercel.app/og-image.jpg">
+    <meta property="og:description" content="Страница не найдена на Minecraft сервере Redoku.">
     <meta property="og:site_name" content="Redoku">
     <meta property="og:locale" content="ru_RU">
     
-    <!-- Additional SEO -->
-    <meta name="theme-color" content="#ff2e43">
+    <meta name="theme-color" content="#e67e22">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
 
     <script>
         tailwind.config = {
             darkMode: 'class',
-            theme: { extend: { colors: { brand: { bg: '#050608', red: '#ff2e43' } }, fontFamily: { sans: ['Outfit', 'sans-serif'], display: ['Space Grotesk', 'sans-serif'] }, animation: { 'float': 'float 6s ease-in-out infinite', 'pulse-glow': 'pulse-glow 4s ease-in-out infinite' }, keyframes: { float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } }, 'pulse-glow': { '0%, 100%': { opacity: '0.3', transform: 'scale(1)' }, '50%': { opacity: '0.6', transform: 'scale(1.1)' } } } } }
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { bg:'#0a0b0e', surface:'#0F1116', copper:'#e67e22', copperHover:'#d68910', turquoise:'#1abc9c', accent:'#ff2e43', gold:'#f1c40f', purple:'#a855f7', discord:'#5865F2' }
+                    },
+                    fontFamily: { sans: ['Outfit', 'sans-serif'], display: ['Space Grotesk', 'sans-serif'] },
+                    animation: { 'float': 'float 6s ease-in-out infinite', 'pulse-glow': 'pulse-glow 4s ease-in-out infinite' },
+                    keyframes: {
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } },
+                        'pulse-glow': { '0%, 100%': { opacity: '0.3', transform: 'scale(1)' }, '50%': { opacity: '0.6', transform: 'scale(1.1)' } }
+                    }
+                }
+            }
         }
     </script>
 
     <style>
-        body { background-color: #050608; color: #e2e8f0; overflow: hidden; }
-        .text-glow { text-shadow: 0 0 30px rgba(255, 46, 67, 0.8); }
-        .bg-grid { position: fixed; inset: 0; background-image: linear-gradient(to right, rgba(255,46,67,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,46,67,0.05) 1px, transparent 1px); background-size: 50px 50px; mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%); z-index: -2; }
+        body { overflow: hidden; }
+        .text-glow-copper { text-shadow: 0 0 30px rgba(230, 126, 34, 0.8); }
+        .bg-grid-404 {
+            position: fixed; inset: 0;
+            background-image: linear-gradient(to right, rgba(230,126,34,0.05) 1px, transparent 1px),
+                             linear-gradient(to bottom, rgba(230,126,34,0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
+            z-index: -2;
+        }
     </style>
 </head>
-<body class="antialiased h-screen w-screen flex flex-col items-center justify-center relative">
+<body class="antialiased h-screen w-screen flex flex-col items-center justify-center relative bg-[#0a0b0e] text-white">
 
-    <div id="preloader" class="fixed inset-0 z-[999] bg-[#0a0b0e] flex items-center justify-center transition-opacity duration-500">
+    <div id="preloader" class="preloader">
         <div class="relative flex items-center justify-center">
-            <div class="absolute w-20 h-20 border-t-4 border-b-4 border-brand-red border-solid rounded-full animate-spin opacity-50"></div>
-            <div class="w-12 h-12 bg-brand-red rounded-xl flex items-center justify-center text-white font-display font-bold text-2xl rotate-3 shadow-[0_0_20px_rgba(255,46,67,0.5)]">R</div>
+            <div class="absolute w-20 h-20 border-t-4 border-b-4 border-brand-copper border-solid rounded-full animate-spin opacity-50"></div>
+            <div class="w-12 h-12 bg-brand-copper rounded-xl flex items-center justify-center text-white font-display font-bold text-2xl rotate-3 shadow-[0_0_20px_rgba(230,126,34,0.5)]">R</div>
         </div>
     </div>
 
-    <div class="bg-grid"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-red/20 blur-[100px] rounded-full animate-pulse-glow -z-10"></div>
+    <div class="bg-grid-404"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-copper/20 blur-[100px] rounded-full animate-pulse-glow -z-10"></div>
 
     <main class="text-center px-4 relative z-10 flex flex-col items-center">
-        <div class="relative animate-float mb-8"><i class="fa-solid fa-ghost text-9xl text-brand-red drop-shadow-[0_0_20px_rgba(255,46,67,0.5)]"></i></div>
-        <h1 class="text-7xl md:text-9xl font-display font-black text-white mb-4 tracking-tighter">4<span class="text-brand-red text-glow">0</span>4</h1>
+        <div class="relative animate-float mb-8">
+            <i class="fa-solid fa-ghost text-9xl text-brand-copper drop-shadow-[0_0_20px_rgba(230,126,34,0.5)]"></i>
+        </div>
+        <h1 class="text-7xl md:text-9xl font-display font-black text-white mb-4 tracking-tighter">
+            4<span class="text-brand-copper text-glow-copper">0</span>4
+        </h1>
         <h2 class="text-2xl md:text-4xl font-display font-bold text-white mb-6 uppercase tracking-widest">Вы упали в пустоту</h2>
-        <p class="text-gray-400 text-lg max-w-md mx-auto mb-10 leading-relaxed">Похоже, вы забрели за чанки, которые еще не сгенерировались. Страницы, которую вы ищете, не существует.</p>
-        <a href="index.html" class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-brand-red hover:bg-[#ff4c5e] text-white font-display font-bold text-lg rounded-2xl shadow-[0_0_30px_rgba(255,46,67,0.3)] hover:shadow-[0_0_50px_rgba(255,46,67,0.6)] transition-all group">
+        <p class="text-gray-400 text-lg max-w-md mx-auto mb-10 leading-relaxed">
+            Похоже, вы забрели за чанки, которые еще не сгенерировались. Страницы, которую вы ищете, не существует.
+        </p>
+        <a href="index.html" class="btn-primary inline-flex items-center justify-center gap-3 px-8 py-4 text-lg">
             <i class="fa-solid fa-compass group-hover:-rotate-45 transition-transform duration-500"></i> Вернуться на спавн
         </a>
     </main>

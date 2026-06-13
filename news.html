@@ -1,363 +1,323 @@
 <!DOCTYPE html>
 <html lang="ru" class="scroll-smooth dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Новости Redoku — Обновления, события и ивенты | Minecraft сервер</title>
-    <meta name="description" content="Последние новости, обновления и события Minecraft сервера Redoku. Следи за открытием Ада, Медными Раскопками и другими глобальными ивентами Сезона III.">
-    <meta name="keywords" content="redoku новости, minecraft сервер новости, обновления, события, ивенты, сезон 3, патчноут, серверные новости">
-    <meta name="author" content="Redoku Team">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://redoku.vercel.app/news.html">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://redoku.vercel.app/news.html">
-    <meta property="og:title" content="Новости Redoku — Обновления, события и ивенты">
-    <meta property="og:description" content="Последние новости, обновления и события Minecraft сервера Redoku. Следи за открытием Ада, Медными Раскопками и другими глобальными ивентами Сезона III.">
-    <meta property="og:image" content="https://redoku.vercel.app/og-image.jpg">
-    <meta property="og:site_name" content="Redoku">
-    <meta property="og:locale" content="ru_RU">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary">
-    <meta property="twitter:url" content="https://redoku.vercel.app/news.html">
-    <meta property="twitter:title" content="Новости Redoku — Обновления, события и ивенты">
-    <meta property="twitter:description" content="Последние новости, обновления и события Minecraft сервера Redoku. Следи за открытием Ада, Медными Раскопками и другими глобальными ивентами Сезона III.">
-    
-    <!-- Additional SEO -->
-    <meta name="theme-color" content="#ff2e43">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Новости — Redoku</title>
+  <link rel="icon" type="image/jpeg" href="assets/logotip.jpg">
+  <meta name="description" content="Последние новости Minecraft сервера Redoku: обновления, события и изменения.">
+  <meta name="theme-color" content="#e67e22">
 
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: { brand: { bg: '#0a0b0e', surface: '#0F1116', red: '#ff2e43', copper: '#e67e22', patina: '#1abc9c' } },
-                    fontFamily: { sans: ['Outfit', 'sans-serif'], display: ['Space Grotesk', 'sans-serif'] },
-                    animation: { 'blob': 'blob 7s infinite' }
-                }
-            }
-        }
-    </script>
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://redoku.vercel.app/news.html">
+  <meta property="og:title" content="Новости Redoku — Обновления и события сервера">
+  <meta property="og:description" content="Последние новости Minecraft сервера Redoku: обновления, события и изменения.">
+  <meta property="og:image" content="https://redoku.vercel.app/og-image.jpg">
+  <meta property="og:site_name" content="Redoku">
+  <meta property="og:locale" content="ru_RU">
 
-    <style>
-        body { background-color: #0a0b0e; color: #e2e8f0; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0a0b0e; }
-        ::-webkit-scrollbar-thumb { background: #1f222b; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #ff2e43; }
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Новости Redoku — Обновления и события сервера">
+  <meta name="twitter:description" content="Последние новости Minecraft сервера Redoku: обновления, события и изменения.">
+  <meta name="twitter:image" content="https://redoku.vercel.app/og-image.jpg">
 
-        .bg-grid { position: fixed; inset: 0; background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 40px 40px; mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%); z-index: -2; pointer-events: none; }
-        .ambient-light { position: fixed; top: -20%; left: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(255,46,67,0.1) 0%, transparent 60%); border-radius: 50%; z-index: -1; pointer-events: none; filter: blur(80px); }
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .glass-nav { background: rgba(15, 17, 22, 0.7); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-
-        .spotlight-card { position: relative; overflow: hidden; transition: transform 0.4s ease, border-color 0.4s ease; }
-        .spotlight-card::before { content: ""; position: absolute; top: var(--mouse-y, 0); left: var(--mouse-x, 0); transform: translate(-50%, -50%); width: 500px; height: 500px; background: radial-gradient(circle, rgba(255, 46, 67, 0.15) 0%, transparent 70%); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; z-index: 0; }
-        .spotlight-card:hover::before { opacity: 1; }
-        .spotlight-content { position: relative; z-index: 1; }
-
-        .text-glow { text-shadow: 0 0 20px rgba(255, 46, 67, 0.6); }
-        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: opacity, transform; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-    </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: {
+        colors: { brand: { bg:'#0a0b0e', surface:'#0F1116', copper:'#e67e22', copperHover:'#d68910', turquoise:'#1abc9c', accent:'#ff2e43', gold:'#f1c40f', purple:'#a855f7', discord:'#5865F2' }},
+        fontFamily: { sans:['Outfit','sans-serif'], display:['Space Grotesk','sans-serif'] }
+      }}
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="antialiased selection:bg-brand-red/30 selection:text-white">
+<body class="antialiased">
 
-    <!-- Прелоадер -->
-    <div id="preloader" class="fixed inset-0 z-[999] bg-[#0a0b0e] flex items-center justify-center transition-opacity duration-500">
-        <div class="relative flex items-center justify-center">
-            <div class="absolute w-20 h-20 border-t-4 border-b-4 border-brand-red border-solid rounded-full animate-spin opacity-50"></div>
-            <div class="w-12 h-12 bg-brand-red rounded-xl flex items-center justify-center rotate-3"><img src="logotip.jpg" alt="R" class="w-10 h-10 rounded-lg"></div>
-        </div>
+  <div id="preloader" class="preloader">
+    <div class="relative flex items-center justify-center">
+      <div class="absolute w-20 h-20 border-t-4 border-b-4 border-brand-copper rounded-full animate-spin opacity-50"></div>
+      <div class="w-12 h-12 bg-brand-copper rounded-xl flex items-center justify-center rotate-3"><img src="assets/logotip.jpg" alt="R" class="w-10 h-10 rounded-lg"></div>
     </div>
+  </div>
 
-    <div class="bg-grid"></div>
-    <div class="ambient-light animate-blob"></div>
+  <div class="bg-grid"></div>
+  <div class="ambient-light"></div>
+  <div class="ambient-light alt"></div>
 
-    <!-- Навигация -->
-    <nav class="fixed top-0 w-full z-[100] glass-nav transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
-            <!-- Логотип -->
-            <a href="index.html" class="flex items-center gap-2 group relative z-20">
-                <img src="logotip.jpg" alt="Redoku" class="w-8 h-8 rounded-lg rotate-3 group-hover:rotate-12 transition-all">
-                <span class="font-display font-bold text-xl tracking-tighter text-white">REDOKU</span>
-            </a>
-
-            <!-- Десктопное меню -->
-            <div class="hidden lg:flex items-center gap-6">
-                <a href="index.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Главная</a>
-                <a href="info.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Инфо</a>
-                <a href="lore.html" class="text-sm font-medium text-gray-400 hover:text-brand-copper transition-all">Лор</a>
-                <a href="news.html" class="text-sm font-medium text-brand-red drop-shadow-[0_0_8px_rgba(255,46,67,0.5)] transition-all">Новости</a>
-                <a href="wiki.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">wiki</a>
-                <a href="rules.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Правила</a>
-                <a href="https://map.redoku.ru" target="_blank" class="text-sm font-medium text-gray-400 hover:text-white transition-all flex items-center gap-1">
-                    Карта <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
-                </a>
-            </div>
-
-            <!-- Правый блок -->
-            <div class="hidden lg:flex items-center gap-3">
-                <a href="donate.html" class="text-sm font-medium text-yellow-500 hover:text-yellow-400 transition-colors flex items-center gap-1.5">
-                    <i class="fa-solid fa-store text-xs"></i> Магазин
-                </a>
-                <button onclick="copyIp()" class="btn-ip-copy bg-white/10 hover:bg-white/15 border border-white/10 text-white px-3 py-1.5 rounded-lg text-xs font-bold tracking-wide flex items-center gap-1.5 transition-all">
-                    <span id="ip-text-nav" class="font-display">redoku.bisquit.host</span>
-                    <i class="fa-regular fa-copy opacity-50 text-[10px]" id="ip-icon-nav"></i>
-                </button>
-            </div>
-
-            <!-- Гамбургер (Мобильный) -->
-            <button class="lg:hidden text-white p-1.5 relative z-20" onclick="toggleMobileMenu()">
-                <i class="fa-solid fa-bars text-xl" id="mobile-menu-icon"></i>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Мобильное меню -->
-    <div id="mobile-menu" class="fixed inset-0 bg-brand-bg/98 backdrop-blur-xl z-[90] flex flex-col items-center justify-center gap-6 opacity-0 pointer-events-none transition-all duration-300 mobile-nav-links">
-        <a href="index.html" class="text-2xl font-display font-bold text-white">Главная</a>
-        <a href="info.html" class="text-2xl font-display font-bold text-white">Как начать</a>
-        <a href="lore.html" class="text-2xl font-display font-bold text-white">Лор сервера</a>
-        <a href="news.html" class="text-2xl font-display font-bold text-white">Новости</a>
-        <a href="wiki.html" class="text-2xl font-display font-bold text-white">wiki</a>
-        <a href="rules.html" class="text-2xl font-display font-bold text-white">Правила</a>
-        <a href="team.html" class="text-2xl font-display font-bold text-white">Команда</a>
-        <a href="donate.html" class="text-2xl font-display font-bold text-yellow-500 mt-4">Магазин</a>
+  <!-- Navbar -->
+  <nav class="navbar glass-nav" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2 group relative z-20">
+        <img src="assets/logotip.jpg" alt="Redoku" class="w-8 h-8 rounded-lg rotate-3 group-hover:rotate-12 transition-all">
+        <span class="font-display font-bold text-xl tracking-tighter text-white">REDOKU</span>
+      </a>
+      <div class="hidden lg:flex items-center gap-6">
+        <a href="index.html" class="nav-link">Главная</a>
+        <a href="info.html" class="nav-link">Как начать</a>
+        <a href="lore.html" class="nav-link">Лор</a>
+        <a href="news.html" class="nav-link active">Новости</a>
+        <a href="wiki.html" class="nav-link">Документация</a>
+        <a href="rules.html" class="nav-link">Правила</a>
+        <a href="https://map.redoku.ru" target="_blank" class="nav-link flex items-center gap-1">Карта <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i></a>
+      </div>
+      <div class="hidden lg:flex items-center gap-3">
+        <a href="team.html" class="nav-link flex items-center gap-1.5"><i class="fa-solid fa-users text-xs"></i> Команда</a>
+        <a href="donate.html" class="nav-link flex items-center gap-1.5" style="color:#f1c40f"><i class="fa-solid fa-store text-xs"></i> Магазин</a>
+        <button onclick="copyIp()" class="btn-ip">
+          <span data-ip-text>redoku.bisquit.host</span>
+          <i class="fa-regular fa-copy opacity-50 text-[10px]"></i>
+        </button>
+      </div>
+      <button class="lg:hidden text-white p-1.5 relative z-20" onclick="toggleMobileMenu()">
+        <i class="fa-solid fa-bars text-xl" id="mobile-menu-icon"></i>
+      </button>
     </div>
+  </nav>
 
-    <!-- Page Header -->
-    <header class="pt-40 pb-12 px-4 relative z-10 text-center">
-        <div class="max-w-4xl mx-auto reveal">
-            <h1 class="text-4xl md:text-6xl font-display font-black text-white uppercase tracking-tighter mb-4">События <span class="text-brand-red text-glow">Redoku</span></h1>
-            <p class="text-gray-400 text-lg md:text-xl font-light max-w-2xl mx-auto mb-10">Оставайся в курсе всех обновлений, ивентов и изменений на сервере.</p>
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="mobile-menu">
+    <a href="index.html">Главная</a>
+    <a href="info.html">Как начать</a>
+    <a href="lore.html">Лор</a>
+    <a href="news.html">Новости</a>
+    <a href="wiki.html">Документация</a>
+    <a href="rules.html">Правила</a>
+    <a href="donate.html" class="text-yellow-500">Магазин</a>
+    <button onclick="copyIp()" class="mt-4 bg-brand-copper/20 border border-brand-copper text-white px-8 py-4 rounded-2xl text-lg font-bold flex items-center gap-3">
+      <span data-ip-text>redoku.bisquit.host</span>
+      <i class="fa-regular fa-copy"></i>
+    </button>
+  </div>
 
-            <!-- Фильтры -->
-            <div class="flex flex-wrap justify-center gap-3">
-                <button class="filter-btn px-5 py-2 rounded-full bg-brand-red border border-transparent text-white font-bold text-sm shadow-[0_0_15px_rgba(255,46,67,0.3)] transition-colors" data-filter="все">Все</button>
-                <button class="filter-btn px-5 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-gray-300 font-medium text-sm transition-colors" data-filter="обновления">Обновления</button>
-                <button class="filter-btn px-5 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-gray-300 font-medium text-sm transition-colors" data-filter="события">События</button>
-                <button class="filter-btn px-5 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-gray-300 font-medium text-sm transition-colors" data-filter="изменения">Изменения</button>
+  <!-- Hero -->
+  <header class="relative pt-32 pb-16 px-4 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-brand-copper/5 to-transparent pointer-events-none"></div>
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+      <div class="reveal inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-copper/10 border border-brand-copper/30 text-brand-copper text-xs font-bold uppercase tracking-widest mb-6">
+        <i class="fa-solid fa-newspaper"></i> Обновления сервера
+      </div>
+      <h1 class="reveal font-display font-black text-4xl md:text-6xl text-white uppercase tracking-tighter mb-4">Новости <span class="gradient-text">сервера</span></h1>
+      <p class="reveal text-gray-400 text-lg max-w-xl mx-auto">Будь в курсе последних событий, обновлений и изменений на Redoku.</p>
+    </div>
+  </header>
+
+  <!-- Filters -->
+  <section class="px-4 pb-4 relative z-20">
+    <div class="max-w-4xl mx-auto flex flex-wrap justify-center gap-3 reveal">
+      <button class="filter-btn active" data-filter="all">Все</button>
+      <button class="filter-btn" data-filter="update">Обновления</button>
+      <button class="filter-btn" data-filter="event">События</button>
+      <button class="filter-btn" data-filter="changes">Изменения</button>
+    </div>
+  </section>
+
+  <!-- News Cards -->
+  <section class="py-16 px-4 relative z-20">
+    <div class="max-w-4xl mx-auto space-y-6">
+
+      <!-- FEATURED: Масштабный патчноут -->
+      <div class="reveal spotlight-card card news-item" data-category="changes" style="border-color: rgba(230,126,34,0.2);">
+        <div class="spotlight-content">
+          <div class="flex flex-wrap items-center gap-3 mb-4">
+            <span class="tag bg-brand-accent/10 text-brand-accent border-brand-accent/30 text-[10px]">Глобальное Обновление</span>
+          </div>
+          <div class="flex items-start gap-4 mb-6">
+            <div class="icon-box bg-brand-copper/10 text-brand-copper border border-brand-copper/20 shrink-0"><i class="fa-solid fa-scroll"></i></div>
+            <div class="flex-1">
+              <h3 class="text-2xl font-display font-bold text-white mb-2 leading-tight">Масштабный патчноут 3-го Сезона</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">Мы проделали огромную работу, чтобы этот сезон стал самым незабываемым и технически совершенным. Полностью переработаны многие механики, добавлен уникальный контент и выстроена мощная система безопасности.</p>
             </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div class="p-3 bg-white/5 rounded-xl border border-white/5 flex items-start gap-3">
+              <i class="fa-solid fa-dungeon text-brand-copper mt-1"></i>
+              <div><span class="text-white text-sm font-bold">Кастомные данжи</span><p class="text-gray-500 text-xs mt-1">Глубокая переработка старых структур и множество новых опасных подземелий.</p></div>
+            </div>
+            <div class="p-3 bg-white/5 rounded-xl border border-white/5 flex items-start gap-3">
+              <i class="fa-solid fa-tree text-brand-turquoise mt-1"></i>
+              <div><span class="text-white text-sm font-bold">Генерация биомов</span><p class="text-gray-500 text-xs mt-1">Больше биомов, красивее и крупнее генерация.</p></div>
+            </div>
+            <div class="p-3 bg-white/5 rounded-xl border border-white/5 flex items-start gap-3">
+              <i class="fa-solid fa-book-skull text-brand-purple mt-1"></i>
+              <div><span class="text-white text-sm font-bold">Лорные механики</span><p class="text-gray-500 text-xs mt-1">Уникальные предметы и механики, привязанные к сюжету Коллапса.</p></div>
+            </div>
+            <div class="p-3 bg-white/5 rounded-xl border border-white/5 flex items-start gap-3">
+              <i class="fa-solid fa-house-chimney-user text-brand-copper mt-1"></i>
+              <div><span class="text-white text-sm font-bold">Точки дома</span><p class="text-gray-500 text-xs mt-1">Персональная система /sethome для быстрого возвращения на базу.</p></div>
+            </div>
+            <div class="p-3 bg-white/5 rounded-xl border border-white/5 flex items-start gap-3">
+              <i class="fa-solid fa-gem text-brand-gold mt-1"></i>
+              <div><span class="text-white text-sm font-bold">Спонсорство</span><p class="text-gray-500 text-xs mt-1">Новые косметические статусы для поддержавших проект.</p></div>
+            </div>
+            <div class="p-3 bg-white/5 rounded-xl border border-white/5 flex items-start gap-3">
+              <i class="fa-solid fa-users-viewfinder text-brand-turquoise mt-1"></i>
+              <div><span class="text-white text-sm font-bold">Система кланов</span><p class="text-gray-500 text-xs mt-1">Объединяйтесь в альянсы, создавайте города, защищайте территории.</p></div>
+            </div>
+            <div class="p-3 bg-white/5 rounded-xl border border-white/5 flex items-start gap-3">
+              <i class="fa-solid fa-user-shield text-brand-accent mt-1"></i>
+              <div><span class="text-white text-sm font-bold">Защита от админ-абуза</span><p class="text-gray-500 text-xs mt-1">Жёсткий мониторинг действий администрации — всё логируется.</p></div>
+            </div>
+            <div class="p-3 bg-white/5 rounded-xl border border-white/5 flex items-start gap-3">
+              <i class="fa-solid fa-microphone text-brand-copper mt-1"></i>
+              <div><span class="text-white text-sm font-bold">Voice & Emotes</span><p class="text-gray-500 text-xs mt-1">Полная интеграция Simple Voice (3D-голос) и Emotecraft (эмоции).</p></div>
+            </div>
+            <div class="p-3 bg-white/5 rounded-xl border border-white/5 flex items-start gap-3">
+              <i class="fa-brands fa-discord text-brand-discord mt-1"></i>
+              <div><span class="text-white text-sm font-bold">Обновление соцсетей</span><p class="text-gray-500 text-xs mt-1">Переработка архитектуры Discord-сервера и Telegram-канала.</p></div>
+            </div>
+            <div class="p-3 bg-white/5 rounded-xl border border-white/5 flex items-start gap-3">
+              <i class="fa-solid fa-dragon text-brand-purple mt-1"></i>
+              <div><span class="text-white text-sm font-bold">Битва с Драконом</span><p class="text-gray-500 text-xs mt-1">Эпическая переработка финального босса и процесса открытия Энда.</p></div>
+            </div>
+            <div class="p-3 bg-white/5 rounded-xl border border-white/5 flex items-start gap-3">
+              <i class="fa-solid fa-shield-halved text-brand-turquoise mt-1"></i>
+              <div><span class="text-white text-sm font-bold">Улучшенный античит</span><p class="text-gray-500 text-xs mt-1">Новые алгоритмы обнаружения читов и X-Ray без ложных срабатываний.</p></div>
+            </div>
+            <div class="p-3 bg-white/5 rounded-xl border border-white/5 flex items-start gap-3">
+              <i class="fa-solid fa-cross text-brand-copper mt-1"></i>
+              <div><span class="text-white text-sm font-bold">Могилы при смерти</span><p class="text-gray-500 text-xs mt-1">Лут больше не горит в лаве — аккуратная могила с предметами появится на месте гибели.</p></div>
+            </div>
+            <div class="p-3 bg-white/5 rounded-xl border border-white/5 flex items-start gap-3">
+              <i class="fa-solid fa-scale-balanced text-brand-gold mt-1"></i>
+              <div><span class="text-white text-sm font-bold">Обновление правил</span><p class="text-gray-500 text-xs mt-1">Законы сервера стали справедливее, прозрачнее и строже к гриферам.</p></div>
+            </div>
+            <div class="p-3 bg-white/5 rounded-xl border border-white/5 flex items-start gap-3">
+              <i class="fa-solid fa-wine-glass text-brand-accent mt-1"></i>
+              <div><span class="text-white text-sm font-bold">Алкоголь и сигареты</span><p class="text-gray-500 text-xs mt-1">Новые плагины для атмосферного РП в тавернах.</p></div>
+            </div>
+            <div class="p-3 bg-white/5 rounded-xl border border-white/5 flex items-start gap-3">
+              <i class="fa-solid fa-triangle-exclamation text-brand-accent mt-1"></i>
+              <div><span class="text-white text-sm font-bold">Система репортов</span><p class="text-gray-500 text-xs mt-1">Удобный ингейм-инструмент для мгновенных жалоб на нарушителей.</p></div>
+            </div>
+            <div class="p-3 bg-white/5 rounded-xl border border-white/5 flex items-start gap-3">
+              <i class="fa-solid fa-wand-magic-sparkles text-brand-copper mt-1"></i>
+              <div><span class="text-white text-sm font-bold">Сотни QoL-улучшений</span><p class="text-gray-500 text-xs mt-1">Огромное количество приятных мелочей для выживания.</p></div>
+            </div>
+          </div>
         </div>
-    </header>
+      </div>
 
-    <!-- Сетка новостей -->
-    <section class="py-12 px-4 mb-20 relative z-10">
-        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            
-            <!-- ГЛОБАЛЬНЫЙ ПАТЧНОУТ -->
-            <article class="news-card reveal spotlight-card glass p-8 md:p-12 rounded-[2.5rem] bg-[#0a0b0e] border border-brand-copper/20 hover:border-brand-copper/40 group md:col-span-2 lg:col-span-3 flex flex-col justify-between relative overflow-hidden" data-category="изменения">
-                <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-copper/5 blur-[120px] pointer-events-none rounded-full"></div>
-                <div class="spotlight-content relative z-10">
-                    <div class="flex items-center gap-3 mb-6">
-                        <span class="bg-brand-copper/20 text-brand-copper border border-brand-copper/30 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-lg shadow-[0_0_10px_rgba(230,126,34,0.3)]">Глобальное Обновление</span>
-                        <span class="text-gray-500 text-sm font-mono">Сезон III</span>
-                    </div>
-                    <h2 class="text-2xl md:text-4xl font-display font-black text-white mb-6 group-hover:text-brand-copper transition-colors">Масштабный патчноут 3-го Сезона</h2>
-                    <p class="text-gray-400 text-lg leading-relaxed mb-10 max-w-4xl">Мы проделали огромную работу, чтобы этот сезон стал самым незабываемым и технически совершенным. Полностью переработаны многие механики, добавлен уникальный контент и выстроена мощная система безопасности. Вот полный список нововведений:</p>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-dungeon text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Кастомные данжи</h4><p class="text-gray-400 text-sm">Глубокая переделка старых структур и добавление кучи новых опасных подземелий.</p></div></div>
-                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-tree text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Генерация биомов</h4><p class="text-gray-400 text-sm">Биомов стало в разы больше, а их генерация теперь еще красивее и масштабнее.</p></div></div>
-                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-book-skull text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Лорные механики</h4><p class="text-gray-400 text-sm">Добавлены особые предметы и механики, тесно связанные с историей Коллапса.</p></div></div>
-                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-house-chimney-user text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Точки дома</h4><p class="text-gray-400 text-sm">Удобная система персональных точек (sethome) для быстрого возвращения на базу.</p></div></div>
-                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-gem text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Спонсорство</h4><p class="text-gray-400 text-sm">Новые косметические статусы для тех, кто хочет честно поддержать проект.</p></div></div>
-                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-users-viewfinder text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Система кланов</h4><p class="text-gray-400 text-sm">Объединяйтесь в альянсы, создавайте города и защищайте свои земли вместе.</p></div></div>
-                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-user-shield text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Защита от админ-абуза</h4><p class="text-gray-400 text-sm">Жесткая система слежки за действиями администрации. Логируется абсолютно всё.</p></div></div>
-                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-microphone text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Voice & Emotes</h4><p class="text-gray-400 text-sm">Полная интеграция 3D голосового чата (Simple Voice) и эмоций (Emotecraft).</p></div></div>
-                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-brands fa-discord text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Обновление соцсетей</h4><p class="text-gray-400 text-sm">Глобальная переделка архитектуры Discord сервера и Telegram канала проекта.</p></div></div>
-                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-dragon text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Битва с Драконом</h4><p class="text-gray-400 text-sm">Эпичное изменение механики финального босса и процесса открытия Энда.</p></div></div>
-                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-shield-halved text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Улучшенный античит</h4><p class="text-gray-400 text-sm">Новые алгоритмы выявления софта и X-Ray без ложных срабатываний.</p></div></div>
-                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-cross text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Могилы при смерти</h4><p class="text-gray-400 text-sm">Лут больше не сгорает в лаве! На месте смерти появляется аккуратная могила с вещами.</p></div></div>
-                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-scale-balanced text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Обновление правил</h4><p class="text-gray-400 text-sm">Свод законов сервера стал честнее, прозрачнее и строже к вредителям.</p></div></div>
-                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-wine-glass text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Алкоголь и сигареты</h4><p class="text-gray-400 text-sm">Новые плагины для атмосферного RP-отыгрыша в тавернах ваших поселений.</p></div></div>
-                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-triangle-exclamation text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Система репортов</h4><p class="text-gray-400 text-sm">Удобный инструмент для моментальных жалоб на нарушителей прямо из игры.</p></div></div>
-                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-brand-copper/20 transition-all"><i class="fa-solid fa-wand-magic-sparkles text-2xl text-brand-copper mt-1 w-8 text-center drop-shadow-[0_0_8px_rgba(230,126,34,0.4)]"></i><div><h4 class="text-white font-bold mb-1">Сотни мелких QoL</h4><p class="text-gray-400 text-sm">Огромное количество приятных улучшений для вашего комфортного выживания.</p></div></div>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Карточки -->
-            <article class="news-card reveal spotlight-card glass p-8 rounded-[2.5rem] bg-[#0a0b0e] border border-white/5 hover:border-brand-red/30 group flex flex-col justify-between" data-category="события">
-                <div class="spotlight-content">
-                    <div class="w-12 h-12 rounded-xl bg-brand-red/10 text-brand-red flex items-center justify-center mb-6 border border-brand-red/20 group-hover:bg-brand-red group-hover:text-white transition-colors"><i class="fa-solid fa-gift"></i></div>
-                    <div class="flex items-center gap-3 mb-3"><span class="bg-white/10 text-gray-300 text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded">Событие</span><span class="text-gray-500 text-sm font-mono">04.03.2025</span></div>
-                    <h3 class="text-2xl font-display font-bold text-white mb-3 group-hover:text-brand-red transition-colors">Сезон III Открыт! Скидка -20%</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-6">Долгожданное открытие нового сезона состоялось. Вас ждут новые биомы, обновленная генерация и свежая экономика. Дарим скидку -20% в магазине в первый месяц игры!</p>
-                </div>
-                <a href="donate.html" class="text-brand-red font-bold text-sm hover:underline mt-auto relative z-10 w-max">Перейти в магазин</a>
-            </article>
-
-            <article class="news-card reveal spotlight-card glass p-8 rounded-[2.5rem] bg-[#0a0b0e] border border-white/5 hover:border-brand-copper/30 group flex flex-col justify-between" data-category="события">
-                <div class="spotlight-content">
-                    <div class="w-12 h-12 rounded-xl bg-brand-copper/10 text-brand-copper flex items-center justify-center mb-6 border border-brand-copper/20 group-hover:bg-brand-copper group-hover:text-white transition-colors"><i class="fa-solid fa-map"></i></div>
-                    <div class="flex items-center gap-3 mb-3"><span class="text-gray-500 text-sm font-mono">Скоро</span></div>
-                    <h3 class="text-2xl font-display font-bold text-white mb-3 group-hover:text-brand-copper transition-colors">Ивент: Медные Раскопки</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-6">Глобальное событие с лором сервера. Игрокам предстоит объединиться, чтобы отыскать Затерянную Лабораторию и бросить вызов Медному Стражу. Готовьте снаряжение!</p>
-                </div>
-                <a href="lore.html" class="text-brand-copper font-bold text-sm hover:underline mt-auto relative z-10 w-max">Подробнее в лоре</a>
-            </article>
-
-            <article class="news-card reveal spotlight-card glass p-8 rounded-[2.5rem] bg-[#0a0b0e] border border-white/5 hover:border-blue-500/30 group flex flex-col justify-between" data-category="обновления">
-                <div class="spotlight-content">
-                    <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center mb-6 border border-blue-500/20 group-hover:bg-blue-500 group-hover:text-white transition-colors"><i class="fa-solid fa-wrench"></i></div>
-                    <div class="flex items-center gap-3 mb-3"><span class="bg-white/10 text-gray-300 text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded">Обновление</span><span class="text-gray-500 text-sm font-mono">01.03.2025</span></div>
-                    <h3 class="text-2xl font-display font-bold text-white mb-3 group-hover:text-blue-500 transition-colors">Оптимизация и Багфиксы</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-6">Настроили системные файлы и плагины. Теперь лагов должно быть меньше при таком же количестве игроков. Исправили небольшие баги и ошибки. Полностью улучшили плагины и многое другое.</p>
-                </div>
-            </article>
-
-            <div class="news-card glass rounded-[2.5rem] border border-white/5 border-dashed flex flex-col items-center justify-center p-8 text-center opacity-50 md:col-span-2 lg:col-span-3 min-h-[250px]" data-category="placeholder" style="display: none;">
-                <i class="fa-solid fa-folder-open text-3xl text-gray-500 mb-4"></i>
-                <h3 class="text-lg font-display font-bold text-white mb-2">В этой категории пока пусто</h3>
-                <p class="text-sm text-gray-500">Следите за обновлениями</p>
+      <!-- Сезон III Открыт -->
+      <div class="reveal spotlight-card card news-item" data-category="event">
+        <div class="spotlight-content">
+          <div class="flex flex-wrap items-center gap-3 mb-4">
+            <span class="tag text-[10px]">04 Марта 2025</span>
+            <span class="tag bg-brand-turquoise/10 text-brand-turquoise border-brand-turquoise/30 text-[10px]">Событие</span>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="icon-box bg-brand-accent/10 text-brand-accent border border-brand-accent/20 shrink-0"><i class="fa-solid fa-gift"></i></div>
+            <div class="flex-1">
+              <h3 class="text-xl font-display font-bold text-white mb-2 leading-tight">Сезон III Открыт! Скидка -20%</h3>
+              <p class="text-gray-400 text-sm leading-relaxed mb-4">Долгожданное открытие нового сезона состоялось. Вас ждут новые биомы, обновленная генерация и свежая экономика. Дарим скидку -20% в магазине в первый месяц игры!</p>
+              <a href="donate.html" class="text-brand-copper text-sm font-bold hover:underline inline-flex items-center gap-1">Перейти в магазин <i class="fa-solid fa-arrow-right text-[10px]"></i></a>
             </div>
-
+          </div>
         </div>
-    </section>
+      </div>
 
-    <!-- Footer -->
-    <footer class="pt-12 pb-6 px-4 border-t border-white/10 bg-black/60 backdrop-blur-md relative z-20">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            
-            <!-- Описание -->
-            <div class="md:col-span-1">
-                <div class="flex items-center gap-2 mb-4">
-                    <div class="w-7 h-7 rounded-lg flex items-center justify-center"><img src="logotip.jpg" alt="R" class="w-5 h-5 rounded-md"></div>
-                    <span class="font-display font-bold text-lg text-white tracking-widest uppercase">REDOKU</span>
-                </div>
-                <p class="text-gray-400 max-w-xs mb-4 text-xs leading-relaxed">
-                    Премиальный Vanilla+ проект. Честная игра, красивый мир и активное комьюнити.
-                </p>
-                <div class="flex gap-2">
-                    <a href="https://dsc.gg/redoku" target="_blank" class="w-8 h-8 glass rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#5865F2] hover:border-[#5865F2] transition-all" aria-label="Discord">
-                        <i class="fa-brands fa-discord text-sm"></i>
-                    </a>
-                    <a href="https://t.me/Redoku" target="_blank" class="w-8 h-8 glass rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#229ED9] hover:border-[#229ED9] transition-all" aria-label="Telegram">
-                        <i class="fa-brands fa-telegram text-sm"></i>
-                    </a>
-                </div>
+      <!-- Ивент: Медные Раскопки -->
+      <div class="reveal spotlight-card card news-item" data-category="event">
+        <div class="spotlight-content">
+          <div class="flex flex-wrap items-center gap-3 mb-4">
+            <span class="tag text-[10px]">Скоро</span>
+            <span class="tag bg-brand-turquoise/10 text-brand-turquoise border-brand-turquoise/30 text-[10px]">Событие</span>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="icon-box bg-brand-copper/10 text-brand-copper border border-brand-copper/20 shrink-0"><i class="fa-solid fa-map"></i></div>
+            <div class="flex-1">
+              <h3 class="text-xl font-display font-bold text-white mb-2 leading-tight">Ивент: Медные Раскопки</h3>
+              <p class="text-gray-400 text-sm leading-relaxed mb-4">Глобальное событие с лором сервера. Игрокам предстоит объединиться, чтобы отыскать Затерянную Лабораторию и бросить вызов Медному Стражу. Готовьте снаряжение!</p>
+              <a href="lore.html" class="text-brand-copper text-sm font-bold hover:underline inline-flex items-center gap-1">Подробнее в лоре <i class="fa-solid fa-arrow-right text-[10px]"></i></a>
             </div>
-
-            <!-- Ссылки -->
-            <div>
-                <h4 class="text-white font-display font-bold mb-4 text-xs tracking-widest uppercase">Навигация</h4>
-                <ul class="space-y-2 text-xs text-gray-400">
-                    <li><a href="index.html" class="hover:text-brand-red transition-colors">Главная</a></li>
-                    <li><a href="info.html" class="hover:text-brand-red transition-colors">Как начать</a></li>
-                    <li><a href="lore.html" class="hover:text-brand-red transition-colors">Лор мира</a></li>
-                    <li><a href="rules.html" class="hover:text-brand-red transition-colors">Правила</a></li>
-                    <li><a href="donate.html" class="hover:text-brand-red transition-colors">Поддержать</a></li>
-                </ul>
-            </div>
-
-            <!-- Доки -->
-            <div>
-                <h4 class="text-white font-display font-bold mb-4 text-xs tracking-widest uppercase">Документы</h4>
-                <ul class="space-y-2 text-xs text-gray-400">
-                    <li><a href="offer.html" class="hover:text-white transition-colors">Публичная оферта</a></li>
-                    <li><a href="privacy.html" class="hover:text-white transition-colors">Политика конф-ти</a></li>
-                </ul>
-                <div class="mt-4 p-3 glass rounded-lg inline-block border-white/5">
-                    <div class="text-[9px] text-gray-500 font-bold uppercase tracking-widest mb-1">IP Сервера</div>
-                    <code class="text-[10px] text-white font-mono font-bold select-all">redoku.bisquit.host</code>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
 
-        <div class="max-w-7xl mx-auto pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3 text-[10px] text-gray-500 font-bold tracking-widest uppercase">
-            <div>&copy; 2025 Redoku. Все права защищены.</div>
-            <div class="text-center md:text-right opacity-50">Not an official Minecraft product. Not approved by or associated with Mojang.</div>
+      <!-- Оптимизация и Багфиксы -->
+      <div class="reveal spotlight-card card news-item" data-category="update">
+        <div class="spotlight-content">
+          <div class="flex flex-wrap items-center gap-3 mb-4">
+            <span class="tag text-[10px]">01 Марта 2025</span>
+            <span class="tag bg-brand-copper/10 text-brand-copper border-brand-copper/30 text-[10px]">Обновление</span>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="icon-box bg-blue-500/10 text-blue-400 border border-blue-500/20 shrink-0"><i class="fa-solid fa-wrench"></i></div>
+            <div class="flex-1">
+              <h3 class="text-xl font-display font-bold text-white mb-2 leading-tight">Оптимизация и Багфиксы</h3>
+              <p class="text-gray-400 text-sm leading-relaxed mb-4">Настроили системные файлы и плагины. Теперь лагов должно быть меньше при таком же количестве игроков. Исправили небольшие баги и ошибки. Полностью улучшили плагины и многое другое.</p>
+            </div>
+          </div>
         </div>
-    </footer>
+      </div>
 
-    <!-- Скрипты -->
-    <script>
-        window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            preloader.classList.add('opacity-0');
-            setTimeout(() => preloader.style.display = 'none', 500);
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer pt-12 pb-6 px-4 relative z-20">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      <div class="md:col-span-1">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-7 h-7 rounded-lg flex items-center justify-center"><img src="assets/logotip.jpg" alt="R" class="w-5 h-5 rounded-md"></div>
+          <span class="font-display font-bold text-lg text-white tracking-widest uppercase">REDOKU</span>
+        </div>
+        <p class="text-gray-400 max-w-xs mb-4 text-xs leading-relaxed">Премиальный Vanilla+ проект. Честная игра, красивый мир и активное комьюнити.</p>
+        <div class="flex gap-2">
+          <a href="https://dsc.gg/redoku" target="_blank" class="w-8 h-8 glass rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#5865F2] hover:border-[#5865F2] transition-all"><i class="fa-brands fa-discord text-sm"></i></a>
+          <a href="https://t.me/Redoku" target="_blank" class="w-8 h-8 glass rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#229ED9] hover:border-[#229ED9] transition-all"><i class="fa-brands fa-telegram text-sm"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="text-white font-display font-bold mb-4 text-xs tracking-widest uppercase">Навигация</h4>
+        <ul class="space-y-2 text-xs text-gray-400">
+          <li><a href="info.html" class="hover:text-brand-copper transition-colors">Как начать</a></li>
+          <li><a href="lore.html" class="hover:text-brand-copper transition-colors">Лор мира</a></li>
+          <li><a href="rules.html" class="hover:text-brand-copper transition-colors">Правила</a></li>
+          <li><a href="donate.html" class="hover:text-brand-copper transition-colors">Поддержать</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-display font-bold mb-4 text-xs tracking-widest uppercase">Документы</h4>
+        <ul class="space-y-2 text-xs text-gray-400">
+          <li><a href="offer.html" class="hover:text-white transition-colors">Публичная оферта</a></li>
+          <li><a href="privacy.html" class="hover:text-white transition-colors">Политика конф-ти</a></li>
+        </ul>
+        <div class="mt-4 p-3 glass rounded-lg inline-block border-white/5">
+          <div class="text-[9px] text-gray-500 font-bold uppercase tracking-widest mb-1">IP Сервера</div>
+          <code class="text-[10px] text-white font-mono font-bold select-all">redoku.bisquit.host</code>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3 text-[10px] text-gray-500 font-bold tracking-widest uppercase">
+      <div>&copy; 2025 Redoku. Все права защищены.</div>
+      <div class="text-center md:text-right opacity-50">Not an official Minecraft product. Not approved by or associated with Mojang.</div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.news-item').forEach(card => {
+          if (filter === 'all' || card.dataset.category === filter) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
         });
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                if (link.getAttribute('href') === currentPath) {
-                    link.classList.add('text-brand-red', 'drop-shadow-[0_0_8px_rgba(255,46,67,0.5)]');
-                    link.classList.remove('text-gray-400', 'hover:text-white');
-                }
-            });
-            document.querySelectorAll('.mobile-nav-links a').forEach(link => {
-                if (link.getAttribute('href') === currentPath && !link.classList.contains('text-yellow-500')) {
-                    link.classList.add('text-brand-red', 'text-3xl');
-                    link.classList.remove('text-white', 'text-2xl');
-                }
-            });
-        });
-
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            const icon = document.getElementById('mobile-menu-icon');
-            if (menu.classList.contains('opacity-0')) {
-                menu.classList.remove('opacity-0', 'pointer-events-none');
-                menu.classList.add('opacity-100', 'pointer-events-auto');
-                icon.className = 'fa-solid fa-xmark text-2xl'; document.body.style.overflow = 'hidden';
-            } else {
-                menu.classList.add('opacity-0', 'pointer-events-none');
-                menu.classList.remove('opacity-100', 'pointer-events-auto');
-                icon.className = 'fa-solid fa-bars text-2xl'; document.body.style.overflow = '';
-            }
-        }
-
-        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
-        }, observerOptions);
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 20) { nav.classList.add('shadow-lg'); nav.style.background = 'rgba(15, 17, 22, 0.85)'; } 
-            else { nav.classList.remove('shadow-lg'); nav.style.background = 'rgba(15, 17, 22, 0.7)'; }
-        });
-
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const newsCards = document.querySelectorAll('.news-card');
-
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.className = "filter-btn px-5 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-gray-300 font-medium text-sm transition-colors");
-                btn.className = "filter-btn px-5 py-2 rounded-full bg-brand-red border border-transparent text-white font-bold text-sm shadow-[0_0_15px_rgba(255,46,67,0.3)] transition-colors";
-                const filter = btn.getAttribute('data-filter');
-                let hasVisibleCards = false;
-
-                newsCards.forEach(card => {
-                    if (card.getAttribute('data-category') === 'placeholder') return;
-                    if (filter === 'все' || card.getAttribute('data-category') === filter) {
-                        card.style.display = '';
-                        card.classList.remove('active');
-                        setTimeout(() => card.classList.add('active'), 50);
-                        hasVisibleCards = true;
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-                const placeholder = document.querySelector('[data-category="placeholder"]');
-                if (placeholder) placeholder.style.display = hasVisibleCards ? 'none' : 'flex';
-            });
-        });
-    </script>
+      });
+    });
+  </script>
 </body>
 </html>

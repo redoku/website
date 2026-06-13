@@ -1,485 +1,356 @@
 <!DOCTYPE html>
 <html lang="ru" class="scroll-smooth dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Команда Redoku — Администраторы и разработчики | Наша команда проекта</title>
-    <meta name="description" content="Познакомьтесь с командой Minecraft сервера Redoku. Основатель Hexdecillion, администраторы, модераторы и разработчики, которые создают лучший Vanilla+ проект.">
-    <meta name="keywords" content="redoku команда, администраторы, модераторы, разработчики minecraft, hexdecillion, lumon1x, команда проекта, staff">
-    <meta name="author" content="Redoku Team">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://redoku.vercel.app/team.html">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://redoku.vercel.app/team.html">
-    <meta property="og:title" content="Команда Redoku — Администраторы и разработчики">
-    <meta property="og:description" content="Познакомьтесь с командой Minecraft сервера Redoku. Основатель Hexdecillion, администраторы, модераторы и разработчики проекта.">
-    <meta property="og:image" content="https://redoku.vercel.app/og-image.jpg">
-    <meta property="og:site_name" content="Redoku">
-    <meta property="og:locale" content="ru_RU">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary">
-    <meta property="twitter:url" content="https://redoku.vercel.app/team.html">
-    <meta property="twitter:title" content="Команда Redoku — Администраторы и разработчики">
-    <meta property="twitter:description" content="Познакомьтесь с командой Minecraft сервера Redoku. Основатель Hexdecillion, администраторы, модераторы и разработчики проекта.">
-    
-    <!-- Additional SEO -->
-    <meta name="theme-color" content="#ff2e43">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Fonts & Icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Команда — Redoku</title>
+  <link rel="icon" type="image/jpeg" href="assets/logotip.jpg">
+  <meta name="description" content="Команда проекта Redoku — люди, которые вдыхают жизнь в сервер.">
+  <meta name="theme-color" content="#e67e22">
 
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: { 
-                        brand: { 
-                            bg: '#0a0b0e', 
-                            surface: '#0F1116', 
-                            red: '#ff2e43', 
-                            patina: '#1abc9c',
-                            blue: '#3b82f6',
-                            purple: '#a855f7'
-                        } 
-                    },
-                    fontFamily: { sans: ['Outfit', 'sans-serif'], display: ['Space Grotesk', 'sans-serif'] }
-                }
-            }
-        }
-    </script>
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://redoku.vercel.app/team.html">
+  <meta property="og:title" content="Команда Redoku — Администраторы и разработчики">
+  <meta property="og:description" content="Познакомьтесь с командой Minecraft сервера Redoku. Основатель, администраторы, модераторы и разработчики проекта.">
+  <meta property="og:image" content="https://redoku.vercel.app/og-image.jpg">
+  <meta property="og:site_name" content="Redoku">
+  <meta property="og:locale" content="ru_RU">
 
-    <style>
-        body { background-color: #0a0b0e; color: #e2e8f0; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0a0b0e; }
-        ::-webkit-scrollbar-thumb { background: #1f222b; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #ff2e43; }
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Команда Redoku — Администраторы и разработчики">
+  <meta name="twitter:description" content="Познакомьтесь с командой Minecraft сервера Redoku. Основатель, администраторы, модераторы и разработчики проекта.">
+  <meta name="twitter:image" content="https://redoku.vercel.app/og-image.jpg">
 
-        .bg-grid { position: fixed; inset: 0; background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 40px 40px; mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%); z-index: -2; pointer-events: none; }
-        .glass-nav { background: rgba(15, 17, 22, 0.7); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-        .glass-card { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.4s ease; }
-        .glass-card:hover { border-color: rgba(255, 46, 67, 0.3); transform: translateY(-5px); }
-        
-        .text-glow { text-shadow: 0 0 20px rgba(255, 46, 67, 0.6); }
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
-        /* AI Chat Button Pulse */
-        @keyframes chat-pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 46, 67, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(255, 46, 67, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 46, 67, 0); }
-        }
-        .ai-btn-pulse { animation: chat-pulse 2s infinite; }
-    </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: {
+        colors: { brand: { bg:'#0a0b0e', surface:'#0F1116', copper:'#e67e22', copperHover:'#d68910', turquoise:'#1abc9c', accent:'#ff2e43', gold:'#f1c40f', purple:'#a855f7', discord:'#5865F2' }},
+        fontFamily: { sans:['Outfit','sans-serif'], display:['Space Grotesk','sans-serif'] }
+      }}
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="antialiased">
 
-    <!-- Прелоадер -->
-    <div id="preloader" class="fixed inset-0 z-[999] bg-[#0a0b0e] flex items-center justify-center transition-opacity duration-500">
-        <div class="relative flex items-center justify-center">
-            <div class="absolute w-20 h-20 border-t-2 border-brand-red border-solid rounded-full animate-spin"></div>
-            <div class="w-12 h-12 bg-brand-red rounded-xl flex items-center justify-center rotate-3"><img src="logotip.jpg" alt="R" class="w-10 h-10 rounded-lg"></div>
-        </div>
+  <div id="preloader" class="preloader">
+    <div class="relative flex items-center justify-center">
+      <div class="absolute w-20 h-20 border-t-4 border-b-4 border-brand-copper rounded-full animate-spin opacity-50"></div>
+      <div class="w-12 h-12 bg-brand-copper rounded-xl flex items-center justify-center rotate-3"><img src="assets/logotip.jpg" alt="R" class="w-10 h-10 rounded-lg"></div>
     </div>
+  </div>
 
-    <div class="bg-grid"></div>
+  <div class="bg-grid"></div>
+  <div class="ambient-light"></div>
+  <div class="ambient-light alt"></div>
 
-    <!-- Навигация -->
-    <nav class="fixed top-0 w-full z-[100] glass-nav transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
-            <!-- Логотип -->
-            <a href="index.html" class="flex items-center gap-2 group relative z-20">
-                <img src="logotip.jpg" alt="Redoku" class="w-8 h-8 rounded-lg rotate-3 group-hover:rotate-12 transition-all">
-                <span class="font-display font-bold text-xl tracking-tighter text-white">REDOKU</span>
-            </a>
-
-            <!-- Десктопное меню -->
-            <div class="hidden lg:flex items-center gap-6">
-                <a href="index.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Главная</a>
-                <a href="info.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Инфо</a>
-                <a href="lore.html" class="text-sm font-medium text-gray-400 hover:text-brand-copper transition-all">Лор</a>
-                <a href="news.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Новости</a>
-                <a href="wiki.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">wiki</a>
-                <a href="rules.html" class="text-sm font-medium text-gray-400 hover:text-white transition-all">Правила</a>
-                <a href="https://map.redoku.ru" target="_blank" class="text-sm font-medium text-gray-400 hover:text-white transition-all flex items-center gap-1">
-                    Карта <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
-                </a>
-            </div>
-
-            <!-- Правый блок -->
-            <div class="hidden lg:flex items-center gap-3">
-                <a href="team.html" class="text-sm font-medium text-gray-400 hover:text-white transition-colors flex items-center gap-1.5">
-                    <i class="fa-solid fa-users text-xs"></i> Команда
-                </a>
-                <a href="donate.html" class="text-sm font-medium text-yellow-500 hover:text-yellow-400 transition-colors flex items-center gap-1.5">
-                    <i class="fa-solid fa-store text-xs"></i> Магазин
-                </a>
-                <button onclick="copyIp()" class="btn-ip-copy bg-white/10 hover:bg-white/15 border border-white/10 text-white px-3 py-1.5 rounded-lg text-xs font-bold tracking-wide flex items-center gap-1.5 transition-all">
-                    <span id="ip-text-nav" class="font-display">redoku.bisquit.host</span>
-                    <i class="fa-regular fa-copy opacity-50 text-[10px]" id="ip-icon-nav"></i>
-                </button>
-            </div>
-
-            <!-- Гамбургер (Мобильный) -->
-            <button class="lg:hidden text-white p-1.5 relative z-20" onclick="toggleMobileMenu()">
-                <i class="fa-solid fa-bars text-xl" id="mobile-menu-icon"></i>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Мобильное меню -->
-    <div id="mobile-menu" class="fixed inset-0 bg-brand-bg/98 backdrop-blur-xl z-[90] flex flex-col items-center justify-center gap-6 opacity-0 pointer-events-none transition-all duration-300 mobile-nav-links">
-        <a href="index.html" class="text-2xl font-display font-bold text-white">Главная</a>
-        <a href="info.html" class="text-2xl font-display font-bold text-white">Как начать</a>
-        <a href="lore.html" class="text-2xl font-display font-bold text-white">Лор сервера</a>
-        <a href="news.html" class="text-2xl font-display font-bold text-white">Новости</a>
-        <a href="wiki.html" class="text-2xl font-display font-bold text-white">wiki</a>
-        <a href="rules.html" class="text-2xl font-display font-bold text-white">Правила</a>
-        <a href="team.html" class="text-2xl font-display font-bold text-white">Команда</a>
-        <a href="donate.html" class="text-2xl font-display font-bold text-yellow-500 mt-4">Магазин</a>
+  <!-- Navbar -->
+  <nav class="navbar glass-nav" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2 group relative z-20">
+        <img src="assets/logotip.jpg" alt="Redoku" class="w-8 h-8 rounded-lg rotate-3 group-hover:rotate-12 transition-all">
+        <span class="font-display font-bold text-xl tracking-tighter text-white">REDOKU</span>
+      </a>
+      <div class="hidden lg:flex items-center gap-6">
+        <a href="index.html" class="nav-link">Главная</a>
+        <a href="info.html" class="nav-link">Как начать</a>
+        <a href="lore.html" class="nav-link">Лор</a>
+        <a href="news.html" class="nav-link">Новости</a>
+        <a href="wiki.html" class="nav-link">Документация</a>
+        <a href="rules.html" class="nav-link">Правила</a>
+        <a href="https://map.redoku.ru" target="_blank" class="nav-link flex items-center gap-1">Карта <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i></a>
+      </div>
+      <div class="hidden lg:flex items-center gap-3">
+        <a href="team.html" class="nav-link active flex items-center gap-1.5"><i class="fa-solid fa-users text-xs"></i> Команда</a>
+        <a href="donate.html" class="nav-link flex items-center gap-1.5" style="color:#f1c40f"><i class="fa-solid fa-store text-xs"></i> Магазин</a>
+        <button onclick="copyIp()" class="btn-ip">
+          <span data-ip-text>redoku.bisquit.host</span>
+          <i class="fa-regular fa-copy opacity-50 text-[10px]"></i>
+        </button>
+      </div>
+      <button class="lg:hidden text-white p-1.5 relative z-20" onclick="toggleMobileMenu()">
+        <i class="fa-solid fa-bars text-xl" id="mobile-menu-icon"></i>
+      </button>
     </div>
+  </nav>
 
-    <!-- Header -->
-    <header class="pt-40 pb-16 px-4 text-center">
-        <div class="max-w-4xl mx-auto reveal">
-            <h1 class="text-4xl md:text-6xl font-display font-black text-white uppercase tracking-tighter mb-4">Наша <span class="text-brand-red text-glow">Команда</span></h1>
-            <p class="text-gray-400 text-lg max-w-2xl mx-auto font-light">Те, кто вдыхает жизнь в Redoku. От технической части до игрового порядка.</p>
-        </div>
-    </header>
-
-    <!-- Сетка команды -->
-    <section class="py-12 px-6 mb-24">
-        <div class="max-w-7xl mx-auto flex flex-wrap justify-center gap-6">
-            
-            <!-- Hexdecillion -->
-            <div class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33%-1rem)] reveal glass-card rounded-[2.5rem] p-8 text-center bg-gradient-to-b from-[#161214] to-[#0a0b0e]">
-                <div class="w-28 h-28 mx-auto rounded-full bg-[#1a0f12] mb-6 p-1.5 border-2 border-brand-red/40 shadow-[0_0_20px_rgba(255,46,67,0.2)] flex items-center justify-center">
-                    <i class="fa-solid fa-crown text-5xl text-brand-red"></i>
-                </div>
-                <h3 class="text-2xl font-display font-bold text-white mb-1">Hexdecillion</h3>
-                <p class="text-brand-red text-xs font-bold uppercase tracking-[0.2em] mb-4">Основатель</p>
-                <p class="text-gray-400 text-sm mb-6 h-12">Создатель и идейный вдохновитель. Определяет вектор развития сервера.</p>
-                <a href="https://t.me/Hexdecillion" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-[#229ED9] text-gray-400 hover:text-white transition-all text-sm">
-                    <i class="fa-brands fa-telegram"></i> @Hexdecillion
-                </a>
-            </div>
-
-            <!-- LuMon1x -->
-            <div class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33%-1rem)] reveal glass-card rounded-[2.5rem] p-8 text-center bg-gradient-to-b from-[#18121e] to-[#0a0b0e] border-purple-500/30 lg:scale-105 z-10" style="transition-delay: 100ms;">
-                <div class="w-28 h-28 mx-auto rounded-full bg-[#140a1a] mb-6 p-1.5 border-2 border-purple-500/50 shadow-[0_0_25px_rgba(168,85,247,0.3)] flex items-center justify-center">
-                    <i class="fa-solid fa-shield-halved text-5xl text-purple-400"></i>
-                </div>
-                <h3 class="text-2xl font-display font-bold text-white mb-1">LuMon1x</h3>
-                <p class="text-purple-400 text-xs font-bold uppercase tracking-[0.2em] mb-4">Owner / All-in-One</p>
-                <p class="text-gray-400 text-sm mb-6 h-12">Универсальный специалист. Помощь с заходом, фикс багов и технический прогресс.</p>
-                <div class="flex flex-col gap-2 items-center">
-                    <a href="https://t.me/kiri11krypko" target="_blank" class="w-full flex justify-center items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-[#229ED9] text-gray-400 hover:text-white transition-all text-sm">
-                        <i class="fa-brands fa-telegram"></i> @kiri11krypko
-                    </a>
-                    <button onclick="copyDiscord('prosto_lumon1x')" class="w-full flex justify-center items-center gap-2 px-4 py-2 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 text-[#5865F2] hover:bg-[#5865F2] hover:text-white transition-all text-sm">
-                        <i class="fa-brands fa-discord"></i> prosto_lumon1x
-                    </button>
-                </div>
-            </div>
-
-            <!-- VelVel01 -->
-            <div class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33%-1rem)] reveal glass-card rounded-[2.5rem] p-8 text-center bg-gradient-to-b from-[#0f1a18] to-[#0a0b0e] border-brand-patina/30" style="transition-delay: 200ms;">
-                <div class="w-28 h-28 mx-auto rounded-full bg-[#0a1412] mb-6 p-1.5 border-2 border-brand-patina/50 shadow-[0_0_20px_rgba(26,188,156,0.2)] flex items-center justify-center">
-                    <i class="fa-solid fa-gavel text-5xl text-brand-patina"></i>
-                </div>
-                <h3 class="text-2xl font-display font-bold text-white mb-1">VelVel01</h3>
-                <p class="text-brand-patina text-xs font-bold uppercase tracking-[0.2em] mb-4">Администратор</p>
-                <p class="text-gray-400 text-sm mb-6 h-12">Справедливый судья. Отвечает за порядок, решение споров и комфорт игроков.</p>
-                <a href="https://t.me/enotatat" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-[#229ED9] text-gray-400 hover:text-white transition-all text-sm">
-                    <i class="fa-brands fa-telegram"></i> @enotatat
-                </a>
-            </div>
-
-            <!-- Другие члены команды -->
-            <div class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)] reveal glass-card rounded-[2rem] p-6 text-center">
-                <div class="w-24 h-24 mx-auto rounded-full bg-white/5 mb-5 p-1 border-2 border-brand-blue/30 flex items-center justify-center">
-                    <i class="fa-solid fa-server text-4xl text-brand-blue"></i>
-                </div>
-                <h3 class="text-xl font-display font-bold text-white">brajnito</h3>
-                <p class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4">Тех Админ</p>
-                <a href="https://t.me/qweqeeer" target="_blank" class="text-gray-500 hover:text-white transition-colors text-sm underline underline-offset-4">@qweqeeer</a>
-            </div>
-
-            <div class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)] reveal glass-card rounded-[2rem] p-6 text-center" style="transition-delay: 100ms;">
-                <div class="w-24 h-24 mx-auto rounded-full bg-white/5 mb-5 p-1 border-2 border-brand-patina/30 flex items-center justify-center">
-                    <i class="fa-solid fa-shield text-4xl text-brand-patina"></i>
-                </div>
-                <h3 class="text-xl font-display font-bold text-white">AttractiveModee</h3>
-                <p class="text-brand-patina text-[10px] font-bold uppercase tracking-widest mb-4">Модератор</p>
-                <a href="https://t.me/dimaVerenich" target="_blank" class="text-gray-500 hover:text-white transition-colors text-sm underline underline-offset-4">@dimaVerenich</a>
-            </div>
-
-            <div class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)] reveal glass-card rounded-[2rem] p-6 text-center" style="transition-delay: 200ms;">
-                <div class="w-24 h-24 mx-auto rounded-full bg-white/5 mb-5 p-1 border-2 border-pink-500/30 flex items-center justify-center">
-                    <i class="fa-solid fa-palette text-4xl text-pink-500"></i>
-                </div>
-                <h3 class="text-xl font-display font-bold text-white">regander</h3>
-                <p class="text-pink-500 text-[10px] font-bold uppercase tracking-widest mb-4">Дизайнер / Helper</p>
-                <a href="https://t.me/Nuiviscas" target="_blank" class="text-gray-500 hover:text-white transition-colors text-sm underline underline-offset-4">@Nuiviscas</a>
-            </div>
-
-            <div class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)] reveal glass-card rounded-[2rem] p-6 text-center" style="transition-delay: 300ms;">
-                <div class="w-24 h-24 mx-auto rounded-full bg-white/5 mb-5 p-1 border-2 border-brand-red/30 flex items-center justify-center">
-                    <i class="fa-solid fa-comments text-4xl text-brand-red"></i>
-                </div>
-                <h3 class="text-xl font-display font-bold text-white">GrandDang</h3>
-                <p class="text-brand-red text-[10px] font-bold uppercase tracking-widest mb-4">Модератор чата</p>
-                <a href="https://t.me/GrandDang" target="_blank" class="text-gray-500 hover:text-white transition-colors text-sm underline underline-offset-4">@GrandDang</a>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- AI Chat Toggle Button -->
-    <button onclick="toggleAIChat()" class="fixed bottom-8 left-8 w-14 h-14 bg-brand-red text-white rounded-full shadow-2xl flex items-center justify-center z-[100] ai-btn-pulse hover:scale-110 transition-transform">
-        <i class="fa-solid fa-robot text-2xl"></i>
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="mobile-menu">
+    <a href="index.html">Главная</a>
+    <a href="info.html">Как начать</a>
+    <a href="lore.html">Лор</a>
+    <a href="news.html">Новости</a>
+    <a href="wiki.html">Документация</a>
+    <a href="rules.html">Правила</a>
+    <a href="team.html">Команда</a>
+    <a href="donate.html" class="text-yellow-500">Магазин</a>
+    <button onclick="copyIp()" class="mt-4 bg-brand-copper/20 border border-brand-copper text-white px-8 py-4 rounded-2xl text-lg font-bold flex items-center gap-3">
+      <span data-ip-text>redoku.bisquit.host</span>
+      <i class="fa-regular fa-copy"></i>
     </button>
+  </div>
 
-    <!-- AI Chat Modal -->
-    <div id="ai-chat-modal" class="fixed inset-0 bg-black/60 backdrop-blur-md z-[110] flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 px-4">
-        <div class="bg-brand-surface w-full max-w-lg rounded-[2rem] border border-white/10 shadow-2xl overflow-hidden flex flex-col h-[600px]">
-            <!-- Header -->
-            <div class="p-6 bg-brand-red/10 border-b border-white/5 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-brand-red rounded-xl flex items-center justify-center text-white"><i class="fa-solid fa-brain"></i></div>
-                    <div>
-                        <div class="font-display font-bold text-white leading-none mb-1">ИИ-Ассистент</div>
-                        <div class="text-[10px] text-brand-red uppercase font-bold tracking-widest">Онлайн | Redoku AI</div>
-                    </div>
-                </div>
-                <button onclick="toggleAIChat()" class="text-gray-500 hover:text-white transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
-            </div>
-            
-            <!-- Messages Area -->
-            <div id="chat-messages" class="flex-1 overflow-y-auto p-6 space-y-4">
-                <div class="bg-white/5 rounded-2xl rounded-tl-none p-4 max-w-[85%] text-sm text-gray-300">
-                    Привет! Я умный помощник Redoku. Могу рассказать о правилах, лоре, нашей команде или о том, как начать играть. Что тебя интересует?
-                </div>
-            </div>
-
-            <!-- Input Area -->
-            <div class="p-4 bg-black/40 border-t border-white/5">
-                <form id="ai-form" class="flex gap-2">
-                    <input type="text" id="ai-input" placeholder="Задай вопрос..." class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-red/50 transition-colors">
-                    <button type="submit" id="ai-send" class="w-12 h-12 bg-brand-red text-white rounded-xl flex items-center justify-center hover:bg-brand-redHover transition-colors">
-                        <i class="fa-solid fa-paper-plane"></i>
-                    </button>
-                </form>
-            </div>
-        </div>
+  <!-- Hero -->
+  <header class="relative pt-32 pb-16 px-4 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-brand-copper/5 to-transparent pointer-events-none"></div>
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+      <div class="reveal inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-copper/10 border border-brand-copper/30 text-brand-copper text-xs font-bold uppercase tracking-widest mb-6">
+        <i class="fa-solid fa-users"></i> Люди проекта
+      </div>
+      <h1 class="reveal font-display font-black text-4xl md:text-6xl text-white uppercase tracking-tighter mb-4">Команда <span class="gradient-text">проекта</span></h1>
+      <p class="reveal text-gray-400 text-lg max-w-xl mx-auto">Те, кто вдыхает жизнь в Redoku. Админы, модераторы, дизайнеры — все ради вас.</p>
     </div>
+  </header>
 
-    <!-- Footer -->
-    <footer class="pt-12 pb-6 px-4 border-t border-white/10 bg-black/60 backdrop-blur-md relative z-20">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            
-            <!-- Описание -->
-            <div class="md:col-span-1">
-                <div class="flex items-center gap-2 mb-4">
-                    <div class="w-7 h-7 rounded-lg flex items-center justify-center"><img src="logotip.jpg" alt="R" class="w-5 h-5 rounded-md"></div>
-                    <span class="font-display font-bold text-lg text-white tracking-widest uppercase">REDOKU</span>
-                </div>
-                <p class="text-gray-400 max-w-xs mb-4 text-xs leading-relaxed">
-                    Премиальный Vanilla+ проект. Честная игра, красивый мир и активное комьюнити.
-                </p>
-                <div class="flex gap-2">
-                    <a href="https://dsc.gg/redoku" target="_blank" class="w-8 h-8 glass rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#5865F2] hover:border-[#5865F2] transition-all" aria-label="Discord">
-                        <i class="fa-brands fa-discord text-sm"></i>
-                    </a>
-                    <a href="https://t.me/Redoku" target="_blank" class="w-8 h-8 glass rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#229ED9] hover:border-[#229ED9] transition-all" aria-label="Telegram">
-                        <i class="fa-brands fa-telegram text-sm"></i>
-                    </a>
-                </div>
-            </div>
+  <!-- Team Grid -->
+  <section class="py-16 px-4 relative z-20">
+    <div class="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-            <!-- Ссылки -->
-            <div>
-                <h4 class="text-white font-display font-bold mb-4 text-xs tracking-widest uppercase">Навигация</h4>
-                <ul class="space-y-2 text-xs text-gray-400">
-                    <li><a href="index.html" class="hover:text-brand-red transition-colors">Главная</a></li>
-                    <li><a href="info.html" class="hover:text-brand-red transition-colors">Как начать</a></li>
-                    <li><a href="lore.html" class="hover:text-brand-red transition-colors">Лор мира</a></li>
-                    <li><a href="rules.html" class="hover:text-brand-red transition-colors">Правила</a></li>
-                    <li><a href="donate.html" class="hover:text-brand-red transition-colors">Поддержать</a></li>
-                </ul>
-            </div>
-
-            <!-- Доки -->
-            <div>
-                <h4 class="text-white font-display font-bold mb-4 text-xs tracking-widest uppercase">Документы</h4>
-                <ul class="space-y-2 text-xs text-gray-400">
-                    <li><a href="offer.html" class="hover:text-white transition-colors">Публичная оферта</a></li>
-                    <li><a href="privacy.html" class="hover:text-white transition-colors">Политика конф-ти</a></li>
-                </ul>
-                <div class="mt-4 p-3 glass rounded-lg inline-block border-white/5">
-                    <div class="text-[9px] text-gray-500 font-bold uppercase tracking-widest mb-1">IP Сервера</div>
-                    <code class="text-[10px] text-white font-mono font-bold select-all">redoku.bisquit.host</code>
-                </div>
-            </div>
+      <div class="reveal spotlight-card card p-6 text-center">
+        <div class="spotlight-content">
+          <div class="w-24 h-24 mx-auto rounded-full bg-brand-copper/10 mb-5 flex items-center justify-center border-2 border-brand-copper/40"><i class="fa-solid fa-crown text-4xl text-brand-copper"></i></div>
+          <h3 class="text-xl font-display font-bold text-white mb-1">Hexdecillion</h3>
+          <p class="text-brand-copper text-xs font-bold uppercase tracking-widest mb-3">Основатель</p>
+          <p class="text-gray-400 text-sm leading-relaxed">Создатель проекта. Занимается идеями, лором и общим видением сервера.</p>
         </div>
+      </div>
 
-        <div class="max-w-7xl mx-auto pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3 text-[10px] text-gray-500 font-bold tracking-widest uppercase">
-            <div>&copy; 2025 Redoku. Все права защищены.</div>
-            <div class="text-center md:text-right opacity-50">Not an official Minecraft product. Not approved by or associated with Mojang.</div>
+      <div class="reveal spotlight-card card p-6 text-center">
+        <div class="spotlight-content">
+          <div class="w-24 h-24 mx-auto rounded-full bg-purple-500/10 mb-5 flex items-center justify-center border-2 border-purple-500/40"><i class="fa-solid fa-shield-halved text-4xl text-purple-400"></i></div>
+          <h3 class="text-xl font-display font-bold text-white mb-1">LuMon1x</h3>
+          <p class="text-purple-400 text-xs font-bold uppercase tracking-widest mb-3">Owner</p>
+          <p class="text-gray-400 text-sm leading-relaxed">Совладелец проекта. Отвечает за инфраструктуру и развитие сервера.</p>
         </div>
-    </footer>
+      </div>
 
-    <!-- Toast -->
-    <div id="toast" class="fixed bottom-8 right-8 bg-[#1f222b] border border-[#5865F2]/40 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 transform translate-y-24 opacity-0 transition-all duration-500 z-[200] pointer-events-none">
-        <i class="fa-brands fa-discord text-xl text-[#5865F2]"></i>
-        <div><div class="font-bold text-sm text-white">СКОПИРОВАНО!</div><div class="text-xs text-gray-400">Discord tag сохранен</div></div>
+      <div class="reveal spotlight-card card p-6 text-center">
+        <div class="spotlight-content">
+          <div class="w-24 h-24 mx-auto rounded-full bg-brand-turquoise/10 mb-5 flex items-center justify-center border-2 border-brand-turquoise/40"><i class="fa-solid fa-gavel text-4xl text-brand-turquoise"></i></div>
+          <h3 class="text-xl font-display font-bold text-white mb-1">VelVel01</h3>
+          <p class="text-brand-turquoise text-xs font-bold uppercase tracking-widest mb-3">Администратор</p>
+          <p class="text-gray-400 text-sm leading-relaxed">Управление сервером, настройка плагинов и поддержание порядка.</p>
+        </div>
+      </div>
+
+      <div class="reveal spotlight-card card p-6 text-center">
+        <div class="spotlight-content">
+          <div class="w-24 h-24 mx-auto rounded-full bg-blue-500/10 mb-5 flex items-center justify-center border-2 border-blue-500/40"><i class="fa-solid fa-server text-4xl text-blue-400"></i></div>
+          <h3 class="text-xl font-display font-bold text-white mb-1">brajnito</h3>
+          <p class="text-blue-400 text-xs font-bold uppercase tracking-widest mb-3">Тех Админ</p>
+          <p class="text-gray-400 text-sm leading-relaxed">Техническое обеспечение сервера: хостинг, оптимизация, плагины.</p>
+        </div>
+      </div>
+
+      <div class="reveal spotlight-card card p-6 text-center">
+        <div class="spotlight-content">
+          <div class="w-24 h-24 mx-auto rounded-full bg-green-500/10 mb-5 flex items-center justify-center border-2 border-green-500/40"><i class="fa-solid fa-shield text-4xl text-green-400"></i></div>
+          <h3 class="text-xl font-display font-bold text-white mb-1">AttractiveModee</h3>
+          <p class="text-green-400 text-xs font-bold uppercase tracking-widest mb-3">Модератор</p>
+          <p class="text-gray-400 text-sm leading-relaxed">Наблюдение за игроками, разбор конфликтов и помощь новичкам.</p>
+        </div>
+      </div>
+
+      <div class="reveal spotlight-card card p-6 text-center">
+        <div class="spotlight-content">
+          <div class="w-24 h-24 mx-auto rounded-full bg-pink-500/10 mb-5 flex items-center justify-center border-2 border-pink-500/40"><i class="fa-solid fa-palette text-4xl text-pink-400"></i></div>
+          <h3 class="text-xl font-display font-bold text-white mb-1">regander</h3>
+          <p class="text-pink-400 text-xs font-bold uppercase tracking-widest mb-3">Дизайнер / Helper</p>
+          <p class="text-gray-400 text-sm leading-relaxed">Создание визуала проекта и помощь игрокам в решении вопросов.</p>
+        </div>
+      </div>
+
+      <div class="reveal spotlight-card card p-6 text-center sm:col-span-2 lg:col-span-1">
+        <div class="spotlight-content">
+          <div class="w-24 h-24 mx-auto rounded-full bg-orange-500/10 mb-5 flex items-center justify-center border-2 border-orange-500/40"><i class="fa-solid fa-comments text-4xl text-orange-400"></i></div>
+          <h3 class="text-xl font-display font-bold text-white mb-1">GrandDang</h3>
+          <p class="text-orange-400 text-xs font-bold uppercase tracking-widest mb-3">Модератор чата</p>
+          <p class="text-gray-400 text-sm leading-relaxed">Контроль чата, борьба со спамом и поддержание здоровой атмосферы.</p>
+        </div>
+      </div>
+
     </div>
+  </section>
 
-    <script>
-        // --- ПРЕЛОАДЕР И АКТИВНОЕ МЕНЮ ---
-        window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            preloader.classList.add('opacity-0');
-            setTimeout(() => preloader.style.display = 'none', 500);
+  <!-- CTA -->
+  <section class="py-24 px-4 relative z-10">
+    <div class="max-w-3xl mx-auto reveal text-center">
+      <div class="glass rounded-2xl p-1 border border-brand-copper/30 overflow-hidden">
+        <div class="bg-gradient-to-br from-brand-copper/10 to-[#0a0b0e] rounded-[1.4rem] p-12 relative overflow-hidden">
+          <div class="absolute inset-0 bg-brand-copper/5 blur-[100px] rounded-full pointer-events-none"></div>
+          <i class="fa-solid fa-handshake-angle text-5xl text-brand-copper/30 mb-6 block"></i>
+          <h2 class="text-3xl font-display font-black text-white mb-4 uppercase">Хочешь в команду?</h2>
+          <p class="text-gray-400 mb-8 max-w-md mx-auto">Мы всегда рады новым_helpers, модераторам и талантливым людям. Присоединяйся к нашему Discord!</p>
+          <a href="https://dsc.gg/redoku" target="_blank" class="btn-primary">Присоединиться к Discord <i class="fa-brands fa-discord"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Chat Toggle Button -->
+  <button onclick="toggleAIChat()" class="fixed bottom-8 left-8 w-14 h-14 bg-brand-copper text-white rounded-full shadow-[0_0_30px_rgba(230,126,34,0.4)] flex items-center justify-center z-[100] hover:scale-110 transition-transform" style="animation: chat-pulse 2s infinite;">
+    <i class="fa-solid fa-robot text-2xl"></i>
+  </button>
+
+  <!-- AI Chat Modal -->
+  <div id="ai-chat-modal" class="fixed inset-0 bg-black/60 backdrop-blur-md z-[110] flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 px-4">
+    <div class="glass w-full max-w-lg rounded-[2rem] border border-white/10 shadow-2xl overflow-hidden flex flex-col h-[600px]">
+      <div class="p-6 bg-brand-copper/10 border-b border-white/5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-brand-copper rounded-xl flex items-center justify-center text-white"><i class="fa-solid fa-brain"></i></div>
+          <div>
+            <div class="font-display font-bold text-white leading-none mb-1">ИИ-Ассистент</div>
+            <div class="text-[10px] text-brand-copper uppercase font-bold tracking-widest">Онлайн | Redoku AI</div>
+          </div>
+        </div>
+        <button onclick="toggleAIChat()" class="text-gray-500 hover:text-white transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
+      </div>
+      <div id="chat-messages" class="flex-1 overflow-y-auto p-6 space-y-4">
+        <div class="bg-white/5 rounded-2xl rounded-tl-none p-4 max-w-[85%] text-sm text-gray-300">
+          Привет! Я умный помощник Redoku. Могу рассказать о правилах, лоре, нашей команде или о том, как начать играть. Что тебя интересует?
+        </div>
+      </div>
+      <div class="p-4 bg-black/40 border-t border-white/5">
+        <form id="ai-form" class="flex gap-2">
+          <input type="text" id="ai-input" placeholder="Задай вопрос..." class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-copper/50 transition-colors">
+          <button type="submit" class="w-12 h-12 bg-brand-copper text-white rounded-xl flex items-center justify-center hover:bg-brand-copperHover transition-colors">
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer pt-12 pb-6 px-4 relative z-20">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      <div class="md:col-span-1">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-7 h-7 rounded-lg flex items-center justify-center"><img src="assets/logotip.jpg" alt="R" class="w-5 h-5 rounded-md"></div>
+          <span class="font-display font-bold text-lg text-white tracking-widest uppercase">REDOKU</span>
+        </div>
+        <p class="text-gray-400 max-w-xs mb-4 text-xs leading-relaxed">Премиальный Vanilla+ проект. Честная игра, красивый мир и активное комьюнити.</p>
+        <div class="flex gap-2">
+          <a href="https://dsc.gg/redoku" target="_blank" class="w-8 h-8 glass rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#5865F2] hover:border-[#5865F2] transition-all"><i class="fa-brands fa-discord text-sm"></i></a>
+          <a href="https://t.me/Redoku" target="_blank" class="w-8 h-8 glass rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-[#229ED9] hover:border-[#229ED9] transition-all"><i class="fa-brands fa-telegram text-sm"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="text-white font-display font-bold mb-4 text-xs tracking-widest uppercase">Навигация</h4>
+        <ul class="space-y-2 text-xs text-gray-400">
+          <li><a href="info.html" class="hover:text-brand-copper transition-colors">Как начать</a></li>
+          <li><a href="lore.html" class="hover:text-brand-copper transition-colors">Лор мира</a></li>
+          <li><a href="rules.html" class="hover:text-brand-copper transition-colors">Правила</a></li>
+          <li><a href="donate.html" class="hover:text-brand-copper transition-colors">Поддержать</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-display font-bold mb-4 text-xs tracking-widest uppercase">Документы</h4>
+        <ul class="space-y-2 text-xs text-gray-400">
+          <li><a href="offer.html" class="hover:text-white transition-colors">Публичная оферта</a></li>
+          <li><a href="privacy.html" class="hover:text-white transition-colors">Политика конф-ти</a></li>
+        </ul>
+        <div class="mt-4 p-3 glass rounded-lg inline-block border-white/5">
+          <div class="text-[9px] text-gray-500 font-bold uppercase tracking-widest mb-1">IP Сервера</div>
+          <code class="text-[10px] text-white font-mono font-bold select-all">redoku.bisquit.host</code>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3 text-[10px] text-gray-500 font-bold tracking-widest uppercase">
+      <div>&copy; 2025 Redoku. Все права защищены.</div>
+      <div class="text-center md:text-right opacity-50">Not an official Minecraft product. Not approved by or associated with Mojang.</div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    @keyframes chat-pulse {
+      0% { box-shadow: 0 0 0 0 rgba(230, 126, 34, 0.4); }
+      70% { box-shadow: 0 0 0 15px rgba(230, 126, 34, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(230, 126, 34, 0); }
+    }
+
+    const aiModal = document.getElementById('ai-chat-modal');
+    const chatMessages = document.getElementById('chat-messages');
+    const aiForm = document.getElementById('ai-form');
+    const aiInput = document.getElementById('ai-input');
+
+    function toggleAIChat() {
+      if (aiModal.classList.contains('opacity-0')) {
+        aiModal.classList.remove('opacity-0', 'pointer-events-none');
+        document.body.style.overflow = 'hidden';
+      } else {
+        aiModal.classList.add('opacity-0', 'pointer-events-none');
+        document.body.style.overflow = '';
+      }
+    }
+
+    async function askGemini(query) {
+      const apiKey = "";
+      const systemPrompt = "Ты - официальный ИИ-ассистент Minecraft сервера Redoku. " +
+        "Твоя задача: помогать игрокам. На сервере версия 1.21.11. " +
+        "Основатель: Hexdecillion (@Hexdecillion). Руководитель: LuMon1x (@kiri11krypko). " +
+        "Тех админ: brajnito (@qweqeeer). Модератор: AttractiveModee. " +
+        "Админ по спорам: VelVel01. Дизайнер/Хелпер: regander. Модератор чата: GrandDang. " +
+        "Лор: Эхо Медного Коллапса (древние Големы, Хроно-Орудие). " +
+        "Правила: за гриф бан, за читы бан. Есть плагин CoreProtect. " +
+        "Отвечай кратко, вежливо и в стиле технологичного майнкрафт сервера.";
+
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+      const payload = {
+        contents: [{ parts: [{ text: query }] }],
+        systemInstruction: { parts: [{ text: systemPrompt }] }
+      };
+
+      try {
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
         });
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+        return data.candidates?.[0]?.content?.parts?.[0]?.text || "Извини, не смог обработать запрос.";
+      } catch (error) {
+        return "Ошибка связи с ядром ИИ. Попробуй позже.";
+      }
+    }
 
-        document.addEventListener("DOMContentLoaded", () => {
-            const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-            document.querySelectorAll('.nav-links a, .mobile-nav-links a').forEach(link => {
-                if (link.getAttribute('href') === currentPath) {
-                    link.classList.add('text-brand-red');
-                    link.classList.remove('text-gray-400', 'text-white');
-                }
-            });
-        });
+    aiForm.onsubmit = async (e) => {
+      e.preventDefault();
+      const text = aiInput.value.trim();
+      if (!text) return;
 
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            const icon = document.getElementById('mobile-menu-icon');
-            if (menu.classList.contains('opacity-0')) {
-                menu.classList.remove('opacity-0', 'pointer-events-none');
-                menu.classList.add('opacity-100', 'pointer-events-auto');
-                icon.className = 'fa-solid fa-xmark text-2xl'; document.body.style.overflow = 'hidden';
-            } else {
-                menu.classList.add('opacity-0', 'pointer-events-none');
-                menu.classList.remove('opacity-100', 'pointer-events-auto');
-                icon.className = 'fa-solid fa-bars text-2xl'; document.body.style.overflow = '';
-            }
-        }
+      const userMsg = document.createElement('div');
+      userMsg.className = 'bg-brand-copper/20 border border-brand-copper/20 rounded-2xl rounded-tr-none p-4 ml-auto max-w-[85%] text-sm text-white';
+      userMsg.innerText = text;
+      chatMessages.appendChild(userMsg);
+      aiInput.value = '';
+      chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        function copyDiscord(tag) {
-            navigator.clipboard.writeText(tag).then(() => {
-                const toast = document.getElementById('toast');
-                toast.classList.remove('translate-y-24', 'opacity-0');
-                setTimeout(() => toast.classList.add('translate-y-24', 'opacity-0'), 3000);
-            });
-        }
+      const loadingMsg = document.createElement('div');
+      loadingMsg.className = 'bg-white/5 rounded-2xl rounded-tl-none p-4 max-w-[85%] text-sm text-gray-400 italic';
+      loadingMsg.innerText = 'Ассистент думает...';
+      chatMessages.appendChild(loadingMsg);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      const response = await askGemini(text);
 
-        // --- GEMINI AI CHAT LOGIC ---
-        const apiKey = ""; // API Key подставляется автоматически в окружении
-        const aiModal = document.getElementById('ai-chat-modal');
-        const chatMessages = document.getElementById('chat-messages');
-        const aiForm = document.getElementById('ai-form');
-        const aiInput = document.getElementById('ai-input');
-
-        function toggleAIChat() {
-            if (aiModal.classList.contains('opacity-0')) {
-                aiModal.classList.remove('opacity-0', 'pointer-events-none');
-                document.body.style.overflow = 'hidden';
-            } else {
-                aiModal.classList.add('opacity-0', 'pointer-events-none');
-                document.body.style.overflow = '';
-            }
-        }
-
-        async function askGemini(query) {
-            const systemPrompt = "Ты - официальный ИИ-ассистент Minecraft сервера Redoku. " +
-                "Твоя задача: помогать игрокам. На сервере версия 1.21.11. " +
-                "Основатель: Hexdecillion (@Hexdecillion). Руководитель: LuMon1x (@kiri11krypko). " +
-                "Тех админ: brajnito (@qweqeeer). Модератор: AttractiveModee. " +
-                "Админ по спорам: VelVel01. Дизайнер/Хелпер: regander. Модератор чата: GrandDang. " +
-                "Лор: Эхо Медного Коллапса (древние Големы, Хроно-Орудие). " +
-                "Правила: за гриф бан, за читы бан. Есть плагин CoreProtect. " +
-                "Отвечай кратко, вежливо и в стиле технологичного майнкрафт сервера.";
-
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-            
-            const payload = {
-                contents: [{ parts: [{ text: query }] }],
-                systemInstruction: { parts: [{ text: systemPrompt }] }
-            };
-
-            const fetchWithRetry = async (url, options, retries = 5, backoff = 1000) => {
-                try {
-                    const res = await fetch(url, options);
-                    if (!res.ok) throw new Error(res.status);
-                    return await res.json();
-                } catch (err) {
-                    if (retries > 0) {
-                        await new Promise(r => setTimeout(r, backoff));
-                        return fetchWithRetry(url, options, retries - 1, backoff * 2);
-                    }
-                    throw err;
-                }
-            };
-
-            try {
-                const data = await fetchWithRetry(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                return data.candidates?.[0]?.content?.parts?.[0]?.text || "Извини, не смог обработать запрос.";
-            } catch (error) {
-                return "Ошибка связи с ядром ИИ. Попробуй позже.";
-            }
-        }
-
-        aiForm.onsubmit = async (e) => {
-            e.preventDefault();
-            const text = aiInput.value.trim();
-            if (!text) return;
-
-            // Add User message
-            const userMsg = document.createElement('div');
-            userMsg.className = 'bg-brand-red/20 border border-brand-red/20 rounded-2xl rounded-tr-none p-4 ml-auto max-w-[85%] text-sm text-white';
-            userMsg.innerText = text;
-            chatMessages.appendChild(userMsg);
-            aiInput.value = '';
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-
-            // Loading state
-            const loadingMsg = document.createElement('div');
-            loadingMsg.className = 'bg-white/5 rounded-2xl rounded-tl-none p-4 max-w-[85%] text-sm text-gray-400 italic';
-            loadingMsg.innerText = 'Ассистент думает...';
-            chatMessages.appendChild(loadingMsg);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-
-            const response = await askGemini(text);
-            
-            loadingMsg.remove();
-            const botMsg = document.createElement('div');
-            botMsg.className = 'bg-white/5 rounded-2xl rounded-tl-none p-4 max-w-[85%] text-sm text-gray-300';
-            botMsg.innerText = response;
-            chatMessages.appendChild(botMsg);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        };
-    </script>
+      loadingMsg.remove();
+      const botMsg = document.createElement('div');
+      botMsg.className = 'bg-white/5 rounded-2xl rounded-tl-none p-4 max-w-[85%] text-sm text-gray-300';
+      botMsg.innerText = response;
+      chatMessages.appendChild(botMsg);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    };
+  </script>
 </body>
 </html>
