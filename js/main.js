@@ -248,9 +248,6 @@ function showSection(id) {
   if (link) link.classList.add('active');
   updateToc(id);
   history.pushState(null, null, `#${id}`);
-  if (window.innerWidth < 1024) {
-    window.scrollTo({ top: 280, behavior: 'smooth' });
-  }
 }
 
 function updateToc(sectionId) {
@@ -330,7 +327,7 @@ function checkWikiHash() {
   if (hash && document.getElementById(hash)) {
     showSection(hash);
   } else {
-    showSection('server-info');
+    showSection('basic-info');
   }
 }
 

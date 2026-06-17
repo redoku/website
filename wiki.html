@@ -6,7 +6,7 @@
   <title>База знаний Redoku — Полная wiki сервера | Рецепты, механики, правила</title>
   <link rel="icon" type="image/jpeg" href="assets/logotip.jpg">
   <meta name="description" content="Полная база знаний Minecraft сервера Redoku. Рецепты BreweryX, механики игры, правила сервера, лор Сезона III и полезные команды.">
-  <meta name="keywords" content="redoku wiki, minecraft сервер, рецепты, механики, правила, breweryx, emotecraft, simple voice chat, faq, помощь">
+  <meta name="keywords" content="redoku wiki, minecraft сервер, рецепты, механики, правила, breweryx, emotecraft, plasma voice, faq, помощь">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://redoku.vercel.app/wiki.html">
   <meta property="og:type" content="website">
@@ -87,19 +87,13 @@
     </button>
   </div>
 
-  <main class="pt-28 pb-20 px-4 min-h-screen">
-    <div class="max-w-7xl mx-auto">
+  <main class="h-screen pt-20 px-4 flex flex-col overflow-hidden">
+    <div class="max-w-7xl mx-auto w-full flex-1 flex flex-col overflow-hidden">
       
-      <div class="reveal mb-12">
-        <h1 class="font-display font-black text-4xl md:text-5xl text-white mb-4">
-          <span class="gradient-text">wiki</span> Redoku
-        </h1>
-      </div>
-
-      <div class="flex flex-col lg:flex-row gap-8">
+      <div class="flex flex-col lg:flex-row gap-6 flex-1 overflow-hidden">
         
         <!-- Sidebar -->
-        <aside class="lg:w-72 flex-shrink-0 lg:sticky lg:top-28 lg:self-start lg:overflow-y-auto lg:max-h-[calc(100vh-8rem)]" style="scrollbar-width:thin; scrollbar-color: #e67e22 transparent;">
+        <aside class="lg:w-60 flex-shrink-0 lg:overflow-y-auto lg:max-h-full" style="scrollbar-width:thin; scrollbar-color: #e67e22 transparent;">
           <div class="lg:hidden mb-6 overflow-x-auto pb-2">
             <div class="flex gap-2 whitespace-nowrap">
               <button onclick="showSection('welcome'); return false;" class="sidebar-link active px-4 py-2 rounded-lg bg-white/5 text-sm font-medium text-gray-300 hover:bg-white/10 transition-all border-l-2 border-transparent" data-section="welcome">Добро пожаловать</button>
@@ -153,7 +147,7 @@
         </aside>
 
         <!-- Content -->
-        <div class="flex-1 min-w-0">
+        <div class="flex-1 min-w-0 overflow-y-auto pr-1" style="scrollbar-width:thin; scrollbar-color: #e67e22 transparent;">
 
           <!-- Welcome -->
           <section id="welcome" class="wiki-section visible mb-16 pt-4">
@@ -207,6 +201,35 @@
                     <h4 class="text-white font-bold mb-2">Остались какие-либо вопросы?</h4>
                     <p class="text-gray-300 text-sm leading-relaxed mb-3">Скорее всего ответ на них найдется в сборнике часто задаваемых вопросов (<a href="#" onclick="showSection('faq'); return false;" class="text-brand-copper hover:underline font-medium">F.A.Q.</a>)</p>
                     <p class="text-gray-300 text-sm leading-relaxed">Если же и там не нашлось ответа, то мы с радостью готовы помочь вам в нашем <a href="https://dsc.gg/redoku" target="_blank" class="text-brand-discord hover:underline font-medium">Discord сервере</a>.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Basic Info -->
+          <section id="basic-info" class="wiki-section hidden mb-16 pt-4">
+            <h2 class="font-display font-bold text-3xl text-white mb-8 flex items-center gap-3">
+              <i class="fa-solid fa-circle-info text-brand-copper"></i> Основная информация
+            </h2>
+            <div class="space-y-4">
+              <div class="glass-strong rounded-2xl p-6 border border-white/5">
+                <div class="space-y-4">
+                  <div class="bg-white/5 rounded-lg p-4 border border-white/5 flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-brand-copper/20 flex items-center justify-center shrink-0"><i class="fa-solid fa-server text-brand-copper"></i></div>
+                    <div><h4 class="text-white font-medium">IP-адрес</h4><p class="text-gray-400 text-sm mt-1"><code class="bg-black/50 px-1.5 py-0.5 rounded text-white border border-white/10">redoku.bisquit.host</code></p></div>
+                  </div>
+                  <div class="bg-white/5 rounded-lg p-4 border border-white/5 flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-brand-copper/20 flex items-center justify-center shrink-0"><i class="fa-solid fa-code-branch text-brand-copper"></i></div>
+                    <div><h4 class="text-white font-medium">Версия</h4><p class="text-gray-400 text-sm mt-1"><code class="bg-black/50 px-1.5 py-0.5 rounded text-white border border-white/10">Fabric 1.21.11</code></p></div>
+                  </div>
+                  <div class="bg-white/5 rounded-lg p-4 border border-white/5 flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-brand-copper/20 flex items-center justify-center shrink-0"><i class="fa-solid fa-globe text-brand-copper"></i></div>
+                    <div><h4 class="text-white font-medium">Сайт</h4><p class="text-gray-400 text-sm mt-1"><a href="https://redoku.vercel.app" target="_blank" class="text-brand-copper hover:underline">redoku.vercel.app</a></p></div>
+                  </div>
+                  <div class="bg-white/5 rounded-lg p-4 border border-white/5 flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-brand-copper/20 flex items-center justify-center shrink-0"><i class="fa-brands fa-discord text-brand-copper"></i></div>
+                    <div><h4 class="text-white font-medium">Discord</h4><p class="text-gray-400 text-sm mt-1"><a href="https://dsc.gg/redoku" target="_blank" class="text-brand-copper hover:underline">dsc.gg/redoku</a></p></div>
                   </div>
                 </div>
               </div>
@@ -280,7 +303,7 @@
                       <span class="text-brand-copper font-bold text-lg">3</span>
                       <div>
                         <span class="text-white font-medium">Добавь моды</span>
-                        <p class="text-gray-400 text-sm mt-1"><a href="https://modrinth.com/plugin/simple-voice-chat" target="_blank" class="text-brand-copper hover:underline">Voice Chat</a> и <a href="https://modrinth.com/mod/emotecraft" target="_blank" class="text-brand-copper hover:underline">Emotecraft</a> для лучшего опыта.</p>
+                        <p class="text-gray-400 text-sm mt-1"><a href="https://modrinth.com/plugin/plasma-voice" target="_blank" class="text-brand-copper hover:underline">Plasma Voice</a> и <a href="https://modrinth.com/mod/emotecraft" target="_blank" class="text-brand-copper hover:underline">Emotecraft</a> для лучшего опыта.</p>
                       </div>
                     </li>
                     <li class="flex gap-3 p-3 bg-white/5 rounded-lg border-l-2 border-brand-copper/50">
@@ -314,7 +337,7 @@
                     <div class="cmd-item" onclick="copyToClipboard('/discord')"><div><code class="text-brand-turquoise font-mono font-bold">/discord</code><span class="text-gray-400 text-xs ml-2">Discord</span></div><i class="fa-regular fa-copy text-gray-500 text-xs"></i></div>
                     <div class="cmd-item" onclick="copyToClipboard('/reg')"><div><code class="text-brand-turquoise font-mono font-bold">/reg</code><span class="text-gray-400 text-xs ml-2">Регистрация</span></div><i class="fa-regular fa-copy text-gray-500 text-xs"></i></div>
                     <div class="cmd-item" onclick="copyToClipboard('/login')"><div><code class="text-brand-turquoise font-mono font-bold">/login</code><span class="text-gray-400 text-xs ml-2">Вход</span></div><i class="fa-regular fa-copy text-gray-500 text-xs"></i></div>
-                    <div class="cmd-item" onclick="copyToClipboard('/q')"><div><code class="text-brand-turquoise font-mono font-bold">/q</code><span class="text-gray-400 text-xs ml-2">Квесты</span></div><i class="fa-regular fa-copy text-gray-500 text-xs"></i></div>
+
                     <div class="cmd-item" onclick="copyToClipboard('/clan')"><div><code class="text-brand-turquoise font-mono font-bold">/clan</code><span class="text-gray-400 text-xs ml-2">Кланы</span></div><i class="fa-regular fa-copy text-gray-500 text-xs"></i></div>
                     <div class="cmd-item" onclick="copyToClipboard('/skin')"><div><code class="text-brand-turquoise font-mono font-bold">/skin</code><span class="text-gray-400 text-xs ml-2">Смена скина</span></div><i class="fa-regular fa-copy text-gray-500 text-xs"></i></div>
                   </div>
@@ -418,7 +441,7 @@
                 <div class="accordion-content px-6 pb-5 pt-2">
                   <ul class="space-y-4">
                     <li class="flex gap-3 p-3 bg-brand-accent/5 rounded-lg border-l-2 border-brand-accent"><span class="text-brand-accent font-bold text-lg">3.1</span><div><span class="text-white font-medium">Гриферство.</span><p class="text-gray-400 text-sm mt-1">Строго запрещено уничтожение чужих построек, воровство предметов и убийство чужих питомцев.</p><span class="text-brand-accent text-xs font-bold block mt-2">Наказание: Варн или Бан по IP</span></div></li>
-                    <li class="flex gap-3 p-3 bg-white/5 rounded-lg border-l-2 border-green-400/50"><span class="text-green-400 font-bold text-lg">3.2</span><div><span class="text-white font-medium">PvP.</span><p class="text-gray-400 text-sm mt-1">Сражения разрешены только при обоюдном согласии или на аренах.</p></div></li>
+                    <li class="flex gap-3 p-3 bg-brand-accent/5 rounded-lg border-l-2 border-brand-accent"><span class="text-brand-accent font-bold text-lg">3.2</span><div><span class="text-white font-medium">PvP.</span><p class="text-gray-400 text-sm mt-1">PvP запрещено полностью. Исключение: если другой игрок не выполняет ваши обоснованные требования или сам начинает нападать без причины — самозащита допускается.</p><span class="text-brand-accent text-xs font-bold block mt-2">Наказание: Бан от 3 дней</span></div></li>
                     <li class="flex gap-3 p-3 bg-brand-accent/5 rounded-lg border-l-2 border-brand-accent"><span class="text-brand-accent font-bold text-lg">3.3</span><div><span class="text-white font-medium">Модификации.</span><p class="text-gray-400 text-sm mt-1">Запрещено использование X-Ray, FreeCam, авто-кликеров и любых чит-клиентов.</p></div></li>
                   </ul>
                 </div>
@@ -434,7 +457,7 @@
                 </button>
                 <div class="accordion-content px-6 pb-5 pt-2">
                   <ul class="space-y-4">
-                    <li class="flex gap-3 p-3 bg-brand-accent/5 rounded-lg border-l-2 border-brand-accent"><span class="text-brand-accent font-bold text-lg">4.1</span><div><span class="text-white font-medium">Спавн.</span><p class="text-gray-400 text-sm mt-1">Радиус 700 блоков от спавна должен быть красиво обустроен.</p></div></li>
+                    <li class="flex gap-3 p-3 bg-brand-accent/5 rounded-lg border-l-2 border-brand-accent"><span class="text-brand-accent font-bold text-lg">4.1</span><div><span class="text-white font-medium">Спавн.</span><p class="text-gray-400 text-sm mt-1">Чтобы строиться вблизи спавна, необходимо обсудить это с администрацией или мэром верхнего мира.</p></div></li>
                     <li class="flex gap-3 p-3 bg-white/5 rounded-lg border-l-2 border-yellow-400/50"><span class="text-yellow-400 font-bold text-lg">4.2</span><div><span class="text-white font-medium">Соседство.</span><p class="text-gray-400 text-sm mt-1">Игроки должны строиться на приличном расстоянии друг от друга.</p></div></li>
                     <li class="flex gap-3 p-3 bg-brand-accent/5 rounded-lg border-l-2 border-brand-accent"><span class="text-brand-accent font-bold text-lg">4.3</span><div><span class="text-white font-medium">Сложные механизмы.</span><p class="text-gray-400 text-sm mt-1">Строить большие и сложные механизмы, загружающие сервер — запрещено.</p></div></li>
                   </ul>
@@ -517,7 +540,7 @@
                 <div class="flex items-center gap-3 p-3 bg-green-500/5 rounded-lg border border-green-500/10"><i class="fa-solid fa-check text-green-400"></i><span class="text-white font-medium">Lithium</span></div>
                 <div class="flex items-center gap-3 p-3 bg-green-500/5 rounded-lg border border-green-500/10"><i class="fa-solid fa-check text-green-400"></i><span class="text-white font-medium">Iris / Oculus</span></div>
                 <div class="flex items-center gap-3 p-3 bg-green-500/5 rounded-lg border border-green-500/10"><i class="fa-solid fa-check text-green-400"></i><span class="text-white font-medium">Distant Horizons / Voxy</span></div>
-                <div class="flex items-center gap-3 p-3 bg-green-500/5 rounded-lg border border-green-500/10"><i class="fa-solid fa-check text-green-400"></i><span class="text-white font-medium">Simple Voice Chat</span></div>
+                <div class="flex items-center gap-3 p-3 bg-green-500/5 rounded-lg border border-green-500/10"><i class="fa-solid fa-check text-green-400"></i><span class="text-white font-medium">Plasma Voice</span></div>
                 <div class="flex items-center gap-3 p-3 bg-green-500/5 rounded-lg border border-green-500/10"><i class="fa-solid fa-check text-green-400"></i><span class="text-white font-medium">EmoteCraft</span></div>
                 <div class="flex items-center gap-3 p-3 bg-green-500/5 rounded-lg border border-green-500/10"><i class="fa-solid fa-check text-green-400"></i><span class="text-white font-medium">Litematica</span><span class="text-gray-500 text-xs">(только голограммы)</span></div>
                 <div class="flex items-center gap-3 p-3 bg-green-500/5 rounded-lg border border-green-500/10"><i class="fa-solid fa-check text-green-400"></i><span class="text-white font-medium">Xaero's Minimap</span></div>
@@ -537,14 +560,14 @@
                   <div class="bg-white/5 rounded-lg p-4 border border-white/5"><h4 class="text-white font-medium mb-2">Какая версия Minecraft нужна?</h4><p class="text-gray-400 text-sm">Версия игры: <span class="text-brand-copper font-bold">1.21.11</span>. Рекомендуем использовать Fabric.</p></div>
                   <div class="bg-white/5 rounded-lg p-4 border border-white/5"><h4 class="text-white font-medium mb-2">Какой IP адрес сервера?</h4><p class="text-gray-400 text-sm">IP: <code class="bg-black/50 text-brand-copper px-2 py-1 rounded mx-1 select-all border border-brand-copper/20">redoku.bisquit.host</code></p></div>
                   <div class="bg-white/5 rounded-lg p-4 border border-white/5"><h4 class="text-white font-medium mb-2">Нужен ли лицензионный аккаунт?</h4><p class="text-gray-400 text-sm">Нет! Вход разрешен как с лицензионных аккаунтов, так и с пиратских лаунчеров.</p></div>
-                  <div class="bg-white/5 rounded-lg p-4 border border-white/5"><h4 class="text-white font-medium mb-2">Какие моды обязательны?</h4><p class="text-gray-400 text-sm">Simple Voice Chat, Emotecraft и DistantHorizons или Voxy на выбор.</p></div>
+                  <div class="bg-white/5 rounded-lg p-4 border border-white/5"><h4 class="text-white font-medium mb-2">Какие моды обязательны?</h4><p class="text-gray-400 text-sm">Plasma Voice, Emotecraft и DistantHorizons или Voxy на выбор.</p></div>
                 </div>
               </div>
               <div class="glass-strong rounded-2xl p-6 border border-white/5">
                 <h3 class="font-display font-bold text-xl text-white mb-4 flex items-center gap-3"><i class="fa-solid fa-microchip text-brand-copper"></i> Техническая часть</h3>
                 <div class="space-y-4">
                   <div class="bg-white/5 rounded-lg p-4 border border-white/5"><h4 class="text-white font-medium mb-2">Хостинг?</h4><p class="text-gray-400 text-sm"><span class="text-brand-copper font-bold">Bisquit.Host</span> — топовый хостинг.</p></div>
-                  <div class="bg-white/5 rounded-lg p-4 border border-white/5"><h4 class="text-white font-medium mb-2">Железо?</h4><p class="text-gray-400 text-sm">AMD Ryzen, 16 ГБ ОЗУ, 100 ГБ NVMe SSD.</p></div>
+                  <div class="bg-white/5 rounded-lg p-4 border border-white/5"><h4 class="text-white font-medium mb-2">Железо?</h4><p class="text-gray-400 text-sm">AMD Ryzen, 12 ГБ ОЗУ, 150 ГБ обычной.</p></div>
                   <div class="bg-white/5 rounded-lg p-4 border border-white/5"><h4 class="text-white font-medium mb-2">Аптайм?</h4><p class="text-gray-400 text-sm">Стабильные <span class="text-brand-copper font-bold">99%</span> аптайма.</p></div>
                 </div>
               </div>
@@ -564,7 +587,7 @@
                 <div class="cmd-item" onclick="copyToClipboard('/reg [пароль]')"><div><code class="text-brand-copper font-mono text-sm">/reg [пароль]</code><p class="text-gray-400 text-xs mt-1">Регистрация аккаунта</p></div><i class="fa-regular fa-copy text-gray-500 text-xs"></i></div>
                 <div class="cmd-item" onclick="copyToClipboard('/login [пароль]')"><div><code class="text-brand-copper font-mono text-sm">/login [пароль]</code><p class="text-gray-400 text-xs mt-1">Вход в аккаунт</p></div><i class="fa-regular fa-copy text-gray-500 text-xs"></i></div>
                 <div class="cmd-item" onclick="copyToClipboard('/report <ник> <причина>')"><div><code class="text-brand-copper font-mono text-sm">/report</code><p class="text-gray-400 text-xs mt-1">Репорт на игрока</p></div><i class="fa-regular fa-copy text-gray-500 text-xs"></i></div>
-                <div class="cmd-item" onclick="copyToClipboard('/q')"><div><code class="text-brand-copper font-mono text-sm">/q</code><p class="text-gray-400 text-xs mt-1">Квесты</p></div><i class="fa-regular fa-copy text-gray-500 text-xs"></i></div>
+
                 <div class="cmd-item" onclick="copyToClipboard('/clan')"><div><code class="text-brand-copper font-mono text-sm">/clan</code><p class="text-gray-400 text-xs mt-1">Кланы</p></div><i class="fa-regular fa-copy text-gray-500 text-xs"></i></div>
                 <div class="cmd-item" onclick="copyToClipboard('/skin')"><div><code class="text-brand-copper font-mono text-sm">/skin</code><p class="text-gray-400 text-xs mt-1">Смена скина</p></div><i class="fa-regular fa-copy text-gray-500 text-xs"></i></div>
               </div>
@@ -581,7 +604,7 @@
                 <div>
                   <h3 class="font-display font-bold text-xl text-white mb-4 flex items-center gap-3"><i class="fa-solid fa-download text-brand-copper"></i> Обязательные моды</h3>
                   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-white/5 rounded-lg p-4 border border-white/5"><h4 class="text-white font-medium mb-2">Simple Voice Chat</h4><p class="text-gray-400 text-sm">Голосовой чат</p><a href="https://modrinth.com/mod/simple-voice-chat" target="_blank" class="text-brand-copper text-sm hover:underline mt-2 inline-block">Скачать</a></div>
+                    <div class="bg-white/5 rounded-lg p-4 border border-white/5"><h4 class="text-white font-medium mb-2">Plasma Voice</h4><p class="text-gray-400 text-sm">Голосовой чат</p><a href="https://modrinth.com/plugin/plasma-voice" target="_blank" class="text-brand-copper text-sm hover:underline mt-2 inline-block">Скачать</a></div>
                     <div class="bg-white/5 rounded-lg p-4 border border-white/5"><h4 class="text-white font-medium mb-2">EmoteCraft</h4><p class="text-gray-400 text-sm">Эмоции и анимации</p><a href="https://modrinth.com/mod/emotecraft" target="_blank" class="text-brand-copper text-sm hover:underline mt-2 inline-block">Скачать</a></div>
                     <div class="bg-white/5 rounded-lg p-4 border border-white/5"><h4 class="text-white font-medium mb-2">DistantHorizons</h4><p class="text-gray-400 text-sm">Рендеринг дальних горизонтов</p><a href="https://modrinth.com/mod/distant-horizons" target="_blank" class="text-brand-copper text-sm hover:underline mt-2 inline-block">Скачать</a></div>
                   </div>
@@ -701,6 +724,7 @@
           </section>
 
         </div>
+
       </div>
     </div>
   </main>
